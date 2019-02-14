@@ -18,3 +18,14 @@ yarn-error.log*
 ssl/
 package-lock.json
 public/dotenv.php
+public/jjkBands
+public/jjkMusic
+public/jjkPhotos
+public/jjkPhotosSmaller
+public/jjkPhotosThumbs
+public/jjkVideos
+.editorconfig
+public/emoncms
+googleAnalytics.js
+images
+secrets.php

@@ -1,0 +1,179 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>John J Kauflin website</title>
+	<meta name="keywords" 	content="kauflin, jkauflin, jkauflin.com, johnkauflin.com, john kauflin, john j kauflin, jjk, dayton, oh, ohio, music" />
+	<meta name="description" content="John J Kauflin personal website" />
+	<meta name="Author" 	content="John J Kauflin"/>
+	<meta name="viewport" 	content="width=device-width, initial-scale=1">
+
+	<meta property="og:url"                content="http://johnkauflin.com" />
+	<meta property="og:type"               content="article" />
+	<meta property="og:title"              content="John J Kauflin website" />
+	<meta property="og:description"        content="John J Kauflin personal website" />
+	<meta property="og:image"              content="http://johnkauflin.com/images/jjk.jpg" />
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/blueimp-gallery.min.css">
+	<link rel="stylesheet" href="css/bootstrap-image-gallery.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/main.css?ver=1.8008" />
+
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+</head>
+
+<body>
+	<!--[if lt IE 8]>
+    	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" data-toggle="modal" href="#aboutModal">JJK Music</a>
+        </div> <!-- navbar-header -->
+
+        <div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="active"><a href="#HomePage" data-toggle="tab"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+				<li><a href="#MusicPage" data-toggle="tab"><span class="glyphicon glyphicon-music"></span> Music</a></li>
+				<li><a href="#SearchPage" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+	    	</ul>
+
+        </div> <!-- navbar-collapse (controlled by the collapse toggle button) -->
+      </div> <!-- container -->
+
+</nav><!-- <nav class="navbar navbar-default navbar-fixed-top"> -->
+
+<div class="container-fluid">
+	<div class="tab-content">
+		<div class="tab-pane active" id="HomePage">
+			<div class="row">
+				<div class="hidden-xs col-sm-6 col-md-4">
+					<h4>Music</h4>
+ 					<div id="MusicMenu" class="panel-group" >
+  					</div> 				
+				</div>
+
+				<div class="col-sm-6 col-md-8">
+  					<ol id="MusicBreadcrumbs" class="breadcrumb"></ol>
+					<div id="MusicFolders"></div>
+					<div id="MusicThumbnails"></div>
+					<table id="SonglistDisplay" class="table table-condensed">
+		            	<tbody>
+		               	</tbody>
+		           	</table>
+					
+				</div>
+			</div><!-- end of Home row -->
+	    </div><!-- end of Home tab -->
+
+	    <div class="tab-pane" id="MusicPage">
+			<div class="row">
+				<div class="hidden-xs col-sm-6 col-md-4">
+					<h4>Player</h4>
+				</div>
+
+				<div class="col-sm-6 col-md-8">
+					<div id="PlayListContainer" class="hidden">
+						<div id="mediaError"></div>
+						<div id="tempConsole"></div>
+						<div id="currentArtistAlbum"></div>
+						<div id="currentTitle"></div>
+						<audio id="AudioPlayer" controls src=""> 
+		          			Your browser does not support the audio element.
+						</audio>
+						<table id="AudioControlsContainer">
+							<tr>
+								<td><a id="AudioPrev" href="#" ><span class="glyphicon glyphicon-step-backward audioControlIcon"></span></a></td>
+								<td><a id="AudioNext" href="#"><span class="glyphicon glyphicon-step-forward audioControlIcon"></span></a></td>
+								<!-- 
+								<td><a id="AudioRandom" href="#"><span class="glyphicon glyphicon-random audioControlIcon"></span></a></td>
+								<td><a id="AudioRepeat" href="#"><span class="glyphicon glyphicon-retweet audioControlIcon"></span></a></td>
+								 -->
+							</tr>
+						</table>
+						<table id="PlaylistDisplay" class="table table-condensed">
+		            		<tbody>
+		               		</tbody>
+		           		</table>
+					</div>
+				</div>
+
+			</div><!-- end of Music row -->
+		</div><!-- end of Music -->
+
+	    <div class="tab-pane" id="SearchPage">
+			<div class="row">
+				<div class="hidden-xs col-sm-6 col-md-4">
+					<h4>Player</h4>
+				</div>
+
+				<div class="col-sm-6 col-md-8">
+					Search
+				</div>
+
+			</div><!-- end of Search row -->
+		</div><!-- end of Search -->
+
+
+	</div><!-- end of main tab content -->
+</div><!-- end of main container -->
+
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="aboutModal" role="dialog">
+	    <div class="modal-dialog modal-lg">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+	          <h4 class="modal-title">John J Kauflin</h4>
+	        </div>
+	        <div class="modal-body">
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	    </div>
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/jquery.blueimp-gallery.min.js"></script>
+<script src="js/vendor/bootstrap-image-gallery.js"></script>
+<script src="js/vendor/bootstrap-add-clear.min.js"></script>
+<script src="js/vendor/js-webshim/minified/polyfiller.js"></script>
+<script src="js/music.js?ver=1.003009"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-xxxxxxxx-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<!-- 
+    'UA-46107646-1' actual code for johnkauflin.com
+ -->
+
+</body>
+</html>

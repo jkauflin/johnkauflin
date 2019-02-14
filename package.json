@@ -1,0 +1,21 @@
+{
+  "name": "johnkauflin",
+  "version": "1.0.0",
+  "description": "Utilities for the web site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Kauflin",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "latest",
+    "express": "latest",
+    "get-json": "latest",
+    "lodash": "latest",
+    "merge": "1.2.1",
+    "node-datetime": "latest",
+    "nodemon": "latest",
+    "url": "^0.11.0"
+  }
+}
