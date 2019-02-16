@@ -67,7 +67,8 @@ var walkSync = function (dir, filelist) {
 };
 
 //var dir = "E:/jjkPhotos";
-var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1987-to-1993\\1992";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1987-to-1993\\1992";
+var dir = "E:\\jjkPhotos";
 var fileList = walkSync(dir);
 
 /*
@@ -97,18 +98,32 @@ function createThumbnail(index) {
         resp.on('end', () => {
             //console.log("data = " + data);
             // Maybe return if it created one or not?  and do less time if not created
-            console.log(index + " of " + fileList.length + ", file = " + fileNameAndPath+", "+data);
-            var delayMs = 1000;
+            console.log(dateTime.create().format('Y-m-d H:M:S ') + index + " of " + fileList.length + ", " + fileNameAndPath + ", " + data);
+            var delayMs = 2000;
             if (data == 'Created') {
-                delayMs = 2000;
+                delayMs = 4000;
             }
             if (index < fileList.length - 1) {
-                setTimeout(createThumbnail, delayMs, index+1);
+                setTimeout(createThumbnail, delayMs, index + 1);
             }
         });
 
     }).on("error", (e) => {
         console.log("Error: " + e.message);
+        // Wait 10 seconds and try the same one again
+        setTimeout(createThumbnail, 10000, index);
+
+        //Error: connect ETIMEDOUT 173.205.127.190:443
+
+        /* need a timestamp here
+        6539 of 19768, file = jjkPhotos/1 John J Kauflin/2009-to-2015/2013/03 Summer/2013-07-02 098.JPG, Already exists
+6540 of 19768, file = jjkPhotos/1 John J Kauflin/2009-to-2015/2013/03 Summer/2013-07-02 099.JPG, Already exists
+6541 of 19768, file = jjkPhotos/1 John J Kauflin/2009-to-2015/2013/03 Summer/2013-07-02 106.JPG, Already exists
+6542 of 19768, file = jjkPhotos/1 John J Kauflin/2009-to-2015/2013/03 Summer/2013-07-15 011.JPG, Already exists
+6543 of 19768, file = jjkPhotos/1 John J Kauflin/2009-to-2015/2013/03 Summer/2013-07-15 013.JPG, Already exists
+6544 of 19768, file = jjkPhotos/1 John J Kauflin/2009-to-2015/2013/03 Summer/2013-07-15 017.JPG, Already exists
+Error: connect ETIMEDOUT 173.205.127.190:443
+*/
     });
 
 } // function createThumbnail(fileNameAndPath) {
