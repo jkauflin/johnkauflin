@@ -66,9 +66,8 @@ var walkSync = function (dir, filelist) {
     return filelist;
 };
 
-//var dir = "E:/jjkPhotos";
-//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1987-to-1993\\1992";
-var dir = "E:\\jjkPhotos";
+//var dir = "E:\\jjkPhotos";
+var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1994-to-2001\\1998";
 var fileList = walkSync(dir);
 
 /*
