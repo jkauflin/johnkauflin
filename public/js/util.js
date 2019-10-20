@@ -53,7 +53,7 @@
      });
 
      // Using addClear plug-in function to add a clear button on input text fields
-     $resetval.addClear();
+     //$resetval.addClear();
 
     //=================================================================================================================
     // Module methods

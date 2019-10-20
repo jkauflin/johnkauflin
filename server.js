@@ -26,7 +26,7 @@ const url = require('url');
 var dateTime = require('node-datetime');
 
 // Create a web server
-/*
+
 var express = require('express');
 var app = express();
 var webServer;
@@ -46,7 +46,7 @@ app.use(function (err, req, res, next) {
     console.error(err.stack)
     res.status(500).send('Something broke!')
 })
-*/
+
 
 // List all files in a directory in Node.js recursively in a synchronous fashion
 var walkSync = function (dir, filelist) {
@@ -67,7 +67,12 @@ var walkSync = function (dir, filelist) {
 };
 
 //var dir = "E:\\jjkPhotos";
-var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1994-to-2001\\1998";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1994-to-2001\\1998";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2002-to-2008\\2002";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\02 - Spring";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\04 - Fall";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\05 - Winter";
+var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2019-EA";
 var fileList = walkSync(dir);
 
 /*
@@ -79,7 +84,7 @@ for (var i = 0, len = fl.length; i < len; i++) {
 var backSlashRegExp = new RegExp("\\\\", "g");
 
 // Start recursive function
-createThumbnail(0);
+//createThumbnail(0);
 
 function createThumbnail(index) {
     var fileNameAndPath = fileList[index].substring(3).replace(backSlashRegExp, "/");
