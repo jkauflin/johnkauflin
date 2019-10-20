@@ -41,7 +41,6 @@ var mgallery = (function(){
 
     // Build the initial photos menu from the root
     createMenu(photosRoot, "PhotosMenu", "photoFolderLink");
-    displayThumbnails(photosRoot, "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
     // Respond to click on a photo menu or a folder in the thumbnails display
     $(document).on("click", ".photoFolderLink", function () {
         var $this = $(this);
@@ -116,6 +115,8 @@ var mgallery = (function(){
         var $this = $(this);
         displayThumbnails(decodeURIComponent(dataDir), "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
         $displayPage.tab('show');
+    } else {
+        displayThumbnails(photosRoot, "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
     }
 
     // Add event listeners to the audio player
