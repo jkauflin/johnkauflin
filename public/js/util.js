@@ -87,6 +87,8 @@
         }
     }
     /*
+    decodeURIComponent(util.urlParam('data-dir'))
+    
     example.com?param1=name&param2=&id=6
         urlParam('param1');     // name
         urlParam('id');         // 6

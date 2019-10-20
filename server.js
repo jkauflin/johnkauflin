@@ -84,7 +84,7 @@ for (var i = 0, len = fl.length; i < len; i++) {
 var backSlashRegExp = new RegExp("\\\\", "g");
 
 // Start recursive function
-//createThumbnail(0);
+createThumbnail(0);
 
 function createThumbnail(index) {
     var fileNameAndPath = fileList[index].substring(3).replace(backSlashRegExp, "/");

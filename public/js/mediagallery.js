@@ -18,6 +18,7 @@
  *                  *** work to make it even more abstracted and generic ***
  * 2019-01-12 JJK   Modified to add a title above the video iframe, and 
  *                  solved the order problem by updating the getDirList.php
+ * 2019-10-20 JJK   
  *============================================================================*/
 var mgallery = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -38,14 +39,13 @@ var mgallery = (function(){
     // Get the audio player object
     var audioPlayer = $('#AudioPlayer')[0];
 
-    // Could this be moved to the main and call this module?
-
     // Build the initial photos menu from the root
     createMenu(photosRoot, "PhotosMenu", "photoFolderLink");
     displayThumbnails(photosRoot, "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
     // Respond to click on a photo menu or a folder in the thumbnails display
     $(document).on("click", ".photoFolderLink", function () {
         var $this = $(this);
+        //console.log("$this.attr('data-dir') = " + $this.attr('data-dir'));
         displayThumbnails($this.attr('data-dir'), "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
     });	
 
@@ -102,10 +102,21 @@ var mgallery = (function(){
     //=================================================================================================================
     // Variables cached from the DOM
     var $document = $(document);
+    var $displayPage = $document.find('#navbar a[href="#PhotosPage"]');
 
     //=================================================================================================================
     // Bind events
     // General AJAX error handler to log the exception and set a message in DIV tags with a ajaxError class
+
+    // If there is a data-dir parameters, build and display the Photo page
+    //var dataDir = decodeURIComponent(util.urlParam('data-dir'));
+    var dataDir = util.urlParam('data-dir');
+    //console.log("dataDir = " + dataDir);
+    if (dataDir != null) {
+        var $this = $(this);
+        displayThumbnails(decodeURIComponent(dataDir), "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
+        $displayPage.tab('show');
+    }
 
     // Add event listeners to the audio player
     // When a song ends, see if there is a next one to play
@@ -267,6 +278,7 @@ var mgallery = (function(){
 
                 } else {
                     // If a directory, add the name with the folder icon
+                    //console.log("Folder container, dir.filename = " + dir.filename);
                     $('<button>')
                         .append($('<span>').prop('class', "glyphicon glyphicon-folder-open").html(' ' + dir.filename))
                         .prop('class', 'btn dirButton ' + linkClass)
@@ -299,20 +311,20 @@ var mgallery = (function(){
          var dirArray = dirName.split("/");
          //console.log('setBreadcrumbs dirName = '+dirName);
          var urlStr = '';
-         $.each(dirArray, function (index, dirName) {
+         $.each(dirArray, function (index, dirName2) {
              if (index == dirArray.length - 1) {
                  $('<li>')
                      .prop('class', 'active')
-                     .html(dirName)
+                     .html(dirName2)
                      .appendTo(breadcrumbContainer);
              } else {
                  if (index == 0) {
-                     urlStr += dirName;
+                     urlStr += dirName2;
                  } else {
-                     urlStr += '/' + dirName;
+                     urlStr += '/' + dirName2;
                  }
                  $('<li>')
-                     .append($('<a>').prop('href', '#').html(dirName).prop('class', linkClass).attr('data-dir', urlStr))
+                     .append($('<a>').prop('href', '#').html(dirName2).prop('class', linkClass).attr('data-dir', urlStr))
                      .appendTo(breadcrumbContainer);
              }
          });
