@@ -33,6 +33,7 @@ var mgallery = (function(){
 
     var musicRoot = "jjkBands";
     var videosRoot = "jjkVideos";
+    var docsRoot = "Docs";
 
     var plIndex = 0;
     var playlist;
@@ -55,6 +56,14 @@ var mgallery = (function(){
     $(document).on("click", ".videoFolderLink", function () {
         var $this = $(this);
         displayThumbnails($this.attr('data-dir'), "videoFolderLink", $("#VideosBreadcrumbs"), $("#VideosFolders"), $("#VideosThumbnails"));
+    });
+
+    createMenu(docsRoot, "DocsMenu", "docFolderLink");
+    displayThumbnails(docsRoot, "docFolderLink", $("#DocsBreadcrumbs"), $("#DocsFolders"), $("#DocsThumbnails"));
+    // Respond to click on a menu or a folder in the thumbnails display
+    $(document).on("click", ".docFolderLink", function () {
+        var $this = $(this);
+        displayThumbnails($this.attr('data-dir'), "docFolderLink", $("#DocsBreadcrumbs"), $("#DocsFolders"), $("#DocsThumbnails"));
     });
 
     // Build the initial music menu from the root
@@ -242,39 +251,16 @@ var mgallery = (function(){
                             .appendTo(thumbnailContainer);
                     } else if (fileExt == "MP3") {
                         audioFiles = true;
+                    } else if (fileExt == "PDF") {
+
+                        $('<a/>')
+                            .append(dir.filename)
+                            .prop('href', filePath)
+                            .prop('title', dir.filename)
+                            .appendTo(thumbnailContainer);
+
                     } else if (dir.filename == "youtube.txt") {
-                         // Get the list of youtube ids
-                         var cPos = 0;
-                         $.getJSON("getVideoList.php", "file=" + filePath, function (videoList) {
-                             var videoIframe = '';
-                             var videoId = '';
-                             var videoName = '';
-                             $.each(videoList, function (index, videoStr) {
-                                 videoId = '';
-                                 videoName = '';
 
-                                 cPos = videoStr.indexOf(":");
-                                 if (cPos >= 0) {
-                                     videoName = videoStr.substr(0, cPos);
-                                     videoId = util.cleanStr(videoStr.substr(cPos + 2));
-                                 } else {
-                                     videoId = util.cleanStr(videoStr);
-                                 }
-
-                                 if (videoId != '') {
-                                    //console.log("videoName = "+videoName+", videoId = "+videoId);
-                                    // Add a table with a title above the iframe
-                                    $('<table style="float: left">')
-                                        .append("<tr><td>"+videoName+"</td></tr>")
-                                        .append($('<tr>').append($('<td>')
-                                            .append($('<iframe>')
-                                                .prop('src', "//www.youtube.com/embed/" + videoId)
-                                                .attr('allowfullscreen', true)))
-                                        ).appendTo(thumbnailContainer);
-                                 }
-                            });
-
-                        });
                     }
 
                 } else {

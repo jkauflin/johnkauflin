@@ -48,7 +48,8 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a href="#HomePage" data-toggle="tab"><i class="fa fa-home"></i> Home</a></li>
 					<li><a href="#PhotosPage" data-toggle="tab"><i class="fa fa-camera"></i> Photos</a></li>
-					<li><a href="#VideosPage" data-toggle="tab"><i class="fa fa-video-camera"></i> Videos</a></li>
+                    <li><a href="#VideosPage" data-toggle="tab"><i class="fa fa-video-camera"></i> Videos</a></li>
+                    <li><a href="#DocsPage" data-toggle="tab"><i class="fa fa-document"></i> Docs</a></li>
 					<li><a href="#MusicPage" data-toggle="tab"><i class="fa fa-music"></i> Music</a></li>
 				</ul>
 			</div> <!-- navbar-collapse (controlled by the collapse toggle button) -->
@@ -63,21 +64,9 @@
 					<img src="images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
 					<h1>Welcome!</h1>
 					<p>Welcome to the John J Kauflin personal website.</p>
-					<h5>(Click on the Menu at the top to see Photos, Videos, and Music)</h5>
-					<!-- 
-						<img id="HomePhoto" src="" class="img-rounded img-responsive"
-							style="margin: 0 0 15px 15px;" alt="John J Kauflin family"
-							width="400" />
-					<div id="HeadshotsDisplay" class=""></div>
-					<div id="HeadshotsDisplaySmall" class="invisible">
-				<img src="images/johnk-headshot.jpg" class="img-responsive img-circle pull-left" alt="John Kauflin photo" width="50%" style="margin:0 10px 10px 0;" >
-					</div>
-					 -->
-					 		<!--
-							<a id="PhotosButton" href="#PhotosPage" data-toggle="tab" class="btn btn-primary"><i class="fa fa-camera"></i> Photos</a>
-							<a id="VideosButton" href="#VideosPage" data-toggle="tab" class="btn btn-success" role="button"><i class="fa fa-camera-video"></i> Videos</a>
-							<a id="MusicButton" href="#MusicPage" data-toggle="tab" class="btn btn-warning" role="button"><i class="fa fa-music"></i> Music</a>
-							 -->
+                    <h5>(Click on the Menu at the top to see Photos, Videos, and Music)</h5>
+                    
+                <iframe src="//www.youtube.com/embed/d9nBqqKexPo" frameborder="0" allowfullscreen></iframe>
 			</div>
 
 		</div><!-- end of Home tab -->
@@ -116,6 +105,22 @@
 			
 		</div><!-- row -->	                
 	</div><!-- end of Detail -->
+
+            <div class="tab-pane" id="DocsPage">
+                <div class="row">
+                    <div class="hidden-xs col-sm-5 col-md-3">
+                        <h4>Docs</h4>
+                        <div id="DocsMenu" class="panel-group"></div>
+                    </div>
+            
+                    <div class="col-sm-7 col-md-9">
+                        <ol id="DocsBreadcrumbs" class="breadcrumb"></ol>
+                        <div id="DocsFolders"></div>
+                        <div id="DocsThumbnails"></div>
+                    </div>
+            
+                </div><!-- row -->
+            </div><!-- end of Detail -->
 
 		<div class="tab-pane" id="MusicPage">
 		<div class="row">
@@ -296,7 +301,7 @@ in bands with a group of friends since High School and we have created a music c
     </script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/js/blueimp-gallery.min.js"></script>
 	<script src="js/util.js?ver=2.104"></script>
-	<script src="js/mediagallery.js?ver=1.036"></script>
+	<script src="js/mediagallery.js?ver=1.037"></script>
 	<script src="js/main.js?ver=3.003"></script>
 	<script src="js/googleAnalytics.js?ver=1.000"></script>
 	<script src="https://www.google-analytics.com/analytics.js" async defer></script>

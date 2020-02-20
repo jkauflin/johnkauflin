@@ -71,8 +71,15 @@ var walkSync = function (dir, filelist) {
 //var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2002-to-2008\\2002";
 //var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\02 - Spring";
 //var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\04 - Fall";
-//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\05 - Winter";
-var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2019-EA";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\04 - Fall";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1994-to-2001";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\1987-to-1993";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\Kid's artwork";
+//var dir = "E:\\jjkPhotos\\2 John E Kauflin";
+//var dir = "E:\\jjkPhotos\\3 Baker family";
+//var dir = "E:\\jjkPhotos\\4 Mann family";
+//var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2019-EA";
+var dir = "E:\\jjkPhotos\\1 John J Kauflin\\2016-to-2022\\2019\\05 - Winter";
 var fileList = walkSync(dir);
 
 /*
@@ -103,9 +110,9 @@ function createThumbnail(index) {
             //console.log("data = " + data);
             // Maybe return if it created one or not?  and do less time if not created
             console.log(dateTime.create().format('Y-m-d H:M:S ') + index + " of " + fileList.length + ", " + fileNameAndPath + ", " + data);
-            var delayMs = 2000;
+            var delayMs = 1000;
             if (data == 'Created') {
-                delayMs = 4000;
+                delayMs = 2000;
             }
             if (index < fileList.length - 1) {
                 setTimeout(createThumbnail, delayMs, index + 1);
