@@ -26,7 +26,8 @@ var mgallery = (function(){
     //=================================================================================================================
     // Private variables for the Module
     //var photosRoot = "Photos";
-    var photosRoot = "jjkPhotos";
+    //var photosRoot = "jjkPhotos";
+    var photosRoot = "Data/jjkPhotos";
     var photosThumbsRoot = photosRoot + "Thumbs";
     var photosSmallerRoot = photosRoot + "Smaller";
 
@@ -37,13 +38,14 @@ var mgallery = (function(){
     var config = [
         {
             "name": "Photos",
-            "rootDir": "jjkPhotos",
+            "rootDir": "Data/jjkPhotos",
             "menuDiv": "PhotosMenu",
             "breadcrumbsDiv": "PhotosBreadcrumbs",
             "foldersDiv": "PhotosFolders",
             "thumbnailsDiv": "PhotosThumbnails",
             "folderLinkClass": "PhotosFolderLink"
-        },
+        }
+        /*
         {
             "name": "Videos",
             "rootDir": "jjkVideos",
@@ -53,6 +55,7 @@ var mgallery = (function(){
             "thumbnailsDiv": "VideosThumbnails",
             "folderLinkClass": "VideosFolderLink"
         }
+        */
     ];
 
 /*
@@ -77,7 +80,7 @@ addPerson: function(value) {
         // Respond to click on a photo menu or a folder in the thumbnails display
         $(document).on("click", "." + config[i].folderLinkClass, function () {
             var $this = $(this);
-            //console.log("$this.attr('data-dir') = " + $this.attr('data-dir'));
+            console.log("$this.attr('data-dir') = " + $this.attr('data-dir'));
             displayThumbnails($this.attr('data-dir'), config[i].folderLinkClass, $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
         });	
     }
@@ -238,6 +241,11 @@ addPerson: function(value) {
         if (slashPos >= 0) {
             subPath = dirName.substr(slashPos);
         }
+        console.log("subPath = "+subPath);
+
+        //var photosThumbsRoot = dirName + "Thumbs";
+        //var photosSmallerRoot = dirName + "Smaller";
+
         var photosThumbDir = photosThumbsRoot + subPath;
         var photosSmallerDir = photosSmallerRoot + subPath;
 
