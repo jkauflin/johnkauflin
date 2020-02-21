@@ -18,7 +18,8 @@
  *                  *** work to make it even more abstracted and generic ***
  * 2019-01-12 JJK   Modified to add a title above the video iframe, and 
  *                  solved the order problem by updating the getDirList.php
- * 2019-10-20 JJK   
+ * 2020-02-20 JJK   Trying to make it more of a self-contained, configurable
+ *                  library.  Starting with a configuration array.
  *============================================================================*/
 var mgallery = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -28,35 +29,60 @@ var mgallery = (function(){
     var photosRoot = "jjkPhotos";
     var photosThumbsRoot = photosRoot + "Thumbs";
     var photosSmallerRoot = photosRoot + "Smaller";
-    var HDphotos = false;
-    var selectedPhotosDir = photosRoot;
 
     var musicRoot = "jjkBands";
     var videosRoot = "jjkVideos";
     var docsRoot = "Docs";
+
+    var config = [
+        {
+            "name": "Photos",
+            "rootDir": "jjkPhotos",
+            "menuDiv": "PhotosMenu",
+            "breadcrumbsDiv": "PhotosBreadcrumbs",
+            "foldersDiv": "PhotosFolders",
+            "thumbnailsDiv": "PhotosThumbnails",
+            "folderLinkClass": "PhotosFolderLink"
+        },
+        {
+            "name": "Videos",
+            "rootDir": "jjkVideos",
+            "menuDiv": "VideosMenu",
+            "breadcrumbsDiv": "VideosBreadcrumbs",
+            "foldersDiv": "VideosFolders",
+            "thumbnailsDiv": "VideosThumbnails",
+            "folderLinkClass": "VideosFolderLink"
+        }
+    ];
+
+/*
+addPerson: function(value) {
+    this.people.push(value || this.$input.val());
+    var name = (typeof value === "string") ? value : $input.val();
+*/
 
     var plIndex = 0;
     var playlist;
     // Get the audio player object
     var audioPlayer = $('#AudioPlayer')[0];
 
-    // Build the initial photos menu from the root
-    createMenu(photosRoot, "PhotosMenu", "photoFolderLink");
-    // Respond to click on a photo menu or a folder in the thumbnails display
-    $(document).on("click", ".photoFolderLink", function () {
-        var $this = $(this);
-        //console.log("$this.attr('data-dir') = " + $this.attr('data-dir'));
-        displayThumbnails($this.attr('data-dir'), "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
-    });	
 
-    // Build the initial menu from the root
-    createMenu(videosRoot, "VideosMenu", "videoFolderLink");
-    displayThumbnails(videosRoot, "videoFolderLink", $("#VideosBreadcrumbs"), $("#VideosFolders"), $("#VideosThumbnails"));
-    // Respond to click on a menu or a folder in the thumbnails display
-    $(document).on("click", ".videoFolderLink", function () {
-        var $this = $(this);
-        displayThumbnails($this.attr('data-dir'), "videoFolderLink", $("#VideosBreadcrumbs"), $("#VideosFolders"), $("#VideosThumbnails"));
-    });
+    // Build the initial photos menu from the root
+    var i = 0;
+    for (i in config) {
+        console.log(">>> config[i].menuDiv = " + config[i].menuDiv);
+        createMenu(config[i].rootDir, config[i].menuDiv, config[i].folderLinkClass);
+        displayThumbnails(config[i].rootDir, config[i].folderLinkClass, $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
+
+        // Respond to click on a photo menu or a folder in the thumbnails display
+        $(document).on("click", "." + config[i].folderLinkClass, function () {
+            var $this = $(this);
+            //console.log("$this.attr('data-dir') = " + $this.attr('data-dir'));
+            displayThumbnails($this.attr('data-dir'), config[i].folderLinkClass, $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
+        });	
+    }
+    
+
 
     createMenu(docsRoot, "DocsMenu", "docFolderLink");
     displayThumbnails(docsRoot, "docFolderLink", $("#DocsBreadcrumbs"), $("#DocsFolders"), $("#DocsThumbnails"));
@@ -91,11 +117,6 @@ var mgallery = (function(){
     $('#fullscreen-checkbox').on('change', function () {
         $('#blueimp-gallery').data('fullScreen', $(this).is(':checked'))
     })
-    $('#hd-checkbox').on('change', function () {
-        HDphotos = $(this).is(':checked');
-        // keep a current selected photos dir (instead of just going to root)
-        displayThumbnails(selectedPhotosDir);
-    })
 
     document.getElementById('PhotosThumbnails').onclick = function (event) {
         event = event || window.event;
@@ -106,27 +127,31 @@ var mgallery = (function(){
         blueimp.Gallery(links, options);
     };
 
-    
     //=================================================================================================================
     // Variables cached from the DOM
-    var $document = $(document);
-    var $displayPage = $document.find('#navbar a[href="#PhotosPage"]');
 
     //=================================================================================================================
     // Bind events
-    // General AJAX error handler to log the exception and set a message in DIV tags with a ajaxError class
 
     // If there is a data-dir parameters, build and display the Photo page
     //var dataDir = decodeURIComponent(util.urlParam('data-dir'));
+    // *** if coming in with a qualified link - look for the data-dir and display that one
+    //     ELSE just display the default Photos root
+    /*
     var dataDir = util.urlParam('data-dir');
     //console.log("dataDir = " + dataDir);
     if (dataDir != null) {
         var $this = $(this);
         displayThumbnails(decodeURIComponent(dataDir), "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
+
+        var $document = $(document);
+        var $displayPage = $document.find('#navbar a[href="#PhotosPage"]');
+
         $displayPage.tab('show');
     } else {
         displayThumbnails(photosRoot, "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
     }
+    */
 
     // Add event listeners to the audio player
     // When a song ends, see if there is a next one to play
@@ -204,7 +229,6 @@ var mgallery = (function(){
     // Create breadcrumbs, folder and entity links (for photos, audio, video, etc.)
     function displayThumbnails(dirName, linkClass, breadcrumbContainer, folderContainer, thumbnailContainer) {
         // if (photos)
-        selectedPhotosDir = dirName;
         setBreadcrumbs(dirName, linkClass, breadcrumbContainer);
         folderContainer.empty();
         thumbnailContainer.empty();
@@ -239,9 +263,7 @@ var mgallery = (function(){
                     if (fileExt == "JPG" || fileExt == "JPEG" || fileExt == "GIF") {
                         // If not a directory, add the photo to the gallery link list
                         // Just assume the thumbnail image will be there for now
-                        if (!HDphotos) {
-                            filePath = photosSmallerDir + '/' + dir.filename;
-                        }
+                        filePath = photosSmallerDir + '/' + dir.filename;
 
                         //console.log("photosThumbDir/filename = "+photosThumbDir+'/'+dir.filename);
                         $('<a/>')
