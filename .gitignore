@@ -17,6 +17,7 @@ yarn-error.log*
 *.mp3
 ssl/
 package-lock.json
+public/Data
 public/dotenv.php
 public/jjkBands
 public/jjkMusic
