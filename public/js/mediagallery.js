@@ -35,6 +35,8 @@ var mgallery = (function(){
     var videosRoot = "jjkVideos";
     var docsRoot = "Docs";
 
+    //var mediaRoot = "";
+    var mediaRoot = "Data/";
     var config = [
         {
             "name": "Photos",
@@ -86,7 +88,7 @@ addPerson: function(value) {
     }
     
 
-
+    /*
     createMenu(docsRoot, "DocsMenu", "docFolderLink");
     displayThumbnails(docsRoot, "docFolderLink", $("#DocsBreadcrumbs"), $("#DocsFolders"), $("#DocsThumbnails"));
     // Respond to click on a menu or a folder in the thumbnails display
@@ -103,6 +105,7 @@ addPerson: function(value) {
         var $this = $(this);
         displayThumbnails($this.attr('data-dir'), "musicFolderLink", $("#MusicBreadcrumbs"), $("#MusicFolders"), $("#MusicThumbnails"));
     });
+    */
 
     //=====================================================================================
     // Default the controls to borderless fullscreen
@@ -181,7 +184,8 @@ addPerson: function(value) {
      // Create a collapsible menu from a directory structure
      function createMenu(dirName, panelGroupId, linkClass) {
         //Pass in sort (0 for alpha photos and 1 for years) ???
-        $.getJSON("getDirList.php", "dir=" + dirName, function (dirList) {
+         console.log("createMenu, dir=" + dirName);
+         $.getJSON("getDirList.php", "dir=" + dirName, function (dirList) {
             var htmlStr = '';
             var panelContent = '';
             var panelCollapseIn = "";
@@ -191,7 +195,6 @@ addPerson: function(value) {
                 if (dir.filename.indexOf(".") >= 0) {
                     return true;
                 }
-                //console.log("createMenu, dirFileName = "+dirFileName);
                 if (index == 0) {
                     panelCollapseIn = " in";
                 } else {
@@ -206,7 +209,7 @@ addPerson: function(value) {
                  panelContent = '<ul class="' + panelGroupId + 'List">'
                  $.each(dir.contents, function (index2, filename) {
                      // Skip any non-directory files at this level
-                     //console.log("create menu, filename = "+filename);
+                     console.log("create menu, filename = "+filename);
 
                      if (filename.indexOf(".") >= 0) {
                          if (index2 == 0) {
@@ -243,13 +246,13 @@ addPerson: function(value) {
         }
         console.log("subPath = "+subPath);
 
-        //var photosThumbsRoot = dirName + "Thumbs";
-        //var photosSmallerRoot = dirName + "Smaller";
+        var photosThumbsRoot = dirName + "Thumbs";
+        var photosSmallerRoot = dirName + "Smaller";
 
         var photosThumbDir = photosThumbsRoot + subPath;
         var photosSmallerDir = photosSmallerRoot + subPath;
 
-        //console.log("dirName = "+dirName);
+        console.log("getDirList dirName = " + dirName);
         $.getJSON("getDirList.php", "dir=" + dirName, function (dirList) {
             // loop through the list and display thumbnails in a div
             var periodPos = 0;

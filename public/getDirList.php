@@ -22,10 +22,12 @@ try {
 	$rootDir = '';				
 	if (isset($_GET["dir"])) { 
 		$rootDir = $_GET["dir"];
-		// make sure it starts with data or Photos
+        // make sure it starts with data or Photos
+        /*
 		if (!(substr($rootDir,0,3) == 'jjk')) {
 			die("Dir list limited to specified directories");
-		}
+        }
+        */
 	} 
 
 	$sort = '0';				
