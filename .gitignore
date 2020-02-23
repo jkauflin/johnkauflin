@@ -18,6 +18,7 @@ yarn-error.log*
 ssl/
 package-lock.json
 public/Data
+public/Media
 public/dotenv.php
 public/jjkBands
 public/jjkMusic

@@ -20,6 +20,8 @@
  *                  solved the order problem by updating the getDirList.php
  * 2020-02-20 JJK   Trying to make it more of a self-contained, configurable
  *                  library.  Starting with a configuration array.
+ * 2020-02-22 JJK   Got it working with folders under a parent directory
+ *                  (looking for the 2nd slash)
  *============================================================================*/
 var mgallery = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -27,37 +29,42 @@ var mgallery = (function(){
     // Private variables for the Module
     //var photosRoot = "Photos";
     //var photosRoot = "jjkPhotos";
-    var photosRoot = "Data/jjkPhotos";
-    var photosThumbsRoot = photosRoot + "Thumbs";
-    var photosSmallerRoot = photosRoot + "Smaller";
+    //var photosRoot = "Data/jjkPhotos";
+    //var photosThumbsRoot = photosRoot + "Thumbs";
+    //var photosSmallerRoot = photosRoot + "Smaller";
 
     var musicRoot = "jjkBands";
     var videosRoot = "jjkVideos";
     var docsRoot = "Docs";
 
-    //var mediaRoot = "";
-    var mediaRoot = "Data/";
     var config = [
         {
             "name": "Photos",
-            "rootDir": "Data/jjkPhotos",
+            "rootDir": "Media/Photos",
             "menuDiv": "PhotosMenu",
             "breadcrumbsDiv": "PhotosBreadcrumbs",
             "foldersDiv": "PhotosFolders",
             "thumbnailsDiv": "PhotosThumbnails",
-            "folderLinkClass": "PhotosFolderLink"
-        }
-        /*
+            "folderLinkClass": "MediaFolderLink"
+        },
+        {
+            "name": "Music",
+            "rootDir": "Media/Music",
+            "menuDiv": "MusicMenu",
+            "breadcrumbsDiv": "MusicBreadcrumbs",
+            "foldersDiv": "MusicFolders",
+            "thumbnailsDiv": "MusicThumbnails",
+            "folderLinkClass": "MediaFolderLink"
+        },
         {
             "name": "Videos",
-            "rootDir": "jjkVideos",
+            "rootDir": "Media/Videos",
             "menuDiv": "VideosMenu",
             "breadcrumbsDiv": "VideosBreadcrumbs",
             "foldersDiv": "VideosFolders",
             "thumbnailsDiv": "VideosThumbnails",
-            "folderLinkClass": "VideosFolderLink"
+            "folderLinkClass": "MediaFolderLink"
         }
-        */
     ];
 
 /*
@@ -74,18 +81,23 @@ addPerson: function(value) {
 
     // Build the initial photos menu from the root
     var i = 0;
+    // *** problem i is not scoped in the loop - so it just gets the last one 
     for (i in config) {
-        console.log(">>> config[i].menuDiv = " + config[i].menuDiv);
+        console.log(">>> config[i].menuDiv = " + config[i].menuDiv+", config[i].folderLinkClass = "+config[i].folderLinkClass);
         createMenu(config[i].rootDir, config[i].menuDiv, config[i].folderLinkClass);
-        displayThumbnails(config[i].rootDir, config[i].folderLinkClass, $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
+        displayThumbnails(config[i].rootDir, config[i].folderLinkClass, 
+            $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
 
-        // Respond to click on a photo menu or a folder in the thumbnails display
-        $(document).on("click", "." + config[i].folderLinkClass, function () {
-            var $this = $(this);
-            console.log("$this.attr('data-dir') = " + $this.attr('data-dir'));
-            displayThumbnails($this.attr('data-dir'), config[i].folderLinkClass, $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
-        });	
     }
+
+    // respond to a common link, check what it is and find it in the array, and use those values
+    // Respond to click on a photo menu or a folder in the thumbnails display
+    $(document).on("click", "." + config[i].folderLinkClass, function () {
+        var $this = $(this);
+        console.log("Click on .MediaFolderLink, data-dir = " + $this.attr('data-dir'));
+        //displayThumbnails($this.attr('data-dir'), "MediaFolderLink",
+        //    $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
+    });	
     
 
     /*
@@ -239,8 +251,7 @@ addPerson: function(value) {
         folderContainer.empty();
         thumbnailContainer.empty();
 
-        // Data/jjkPhotos
-        // Assuming the media folder are under a parent media folder
+        // Assuming the media folder are under a parent media folder (look for 2nd slash to get sub-path)
         var firstSlashPos = dirName.indexOf("/");
         var secondSlashPos = dirName.indexOf("/",firstSlashPos+1);
         var rootDir = dirName;

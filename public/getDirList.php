@@ -8,6 +8,7 @@
  * 2014-04-03 JJK 	Initial version to return a directory list
  * 2019-01-12 JJK	Introduced a DirRec and turned the top level as a 
  * 					proper array (to solve the order problem)
+ * 2020-02-23 JJK   Changed the top level restriction to be "Media"
  *============================================================================*/
 
 class DirRec
@@ -23,11 +24,9 @@ try {
 	if (isset($_GET["dir"])) { 
 		$rootDir = $_GET["dir"];
         // make sure it starts with data or Photos
-        /*
-		if (!(substr($rootDir,0,3) == 'jjk')) {
+		if (!(substr($rootDir,0,5) == 'Media')) {
 			die("Dir list limited to specified directories");
         }
-        */
 	} 
 
 	$sort = '0';				
