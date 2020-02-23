@@ -84,22 +84,29 @@ addPerson: function(value) {
     // *** problem i is not scoped in the loop - so it just gets the last one 
     for (i in config) {
         console.log(">>> config[i].menuDiv = " + config[i].menuDiv+", config[i].folderLinkClass = "+config[i].folderLinkClass);
+
         createMenu(config[i].rootDir, config[i].menuDiv, config[i].folderLinkClass);
         displayThumbnails(config[i].rootDir, config[i].folderLinkClass, 
             $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
-
     }
 
     // respond to a common link, check what it is and find it in the array, and use those values
     // Respond to click on a photo menu or a folder in the thumbnails display
-    $(document).on("click", "." + config[i].folderLinkClass, function () {
+    $(document).on("click", ".MediaFolderLink", function () {
         var $this = $(this);
         console.log("Click on .MediaFolderLink, data-dir = " + $this.attr('data-dir'));
+
+        // name - Videos, Music, Photos, Docs
+
+        // how to get to the 3 DIV names
+        //"breadcrumbsDiv": "VideosBreadcrumbs",
+        //    "foldersDiv": "VideosFolders",
+        // "thumbnailsDiv": "VideosThumbnails",
+
         //displayThumbnails($this.attr('data-dir'), "MediaFolderLink",
         //    $("#" + config[i].breadcrumbsDiv), $("#" + config[i].foldersDiv), $("#" + config[i].thumbnailsDiv));
     });	
     
-
     /*
     createMenu(docsRoot, "DocsMenu", "docFolderLink");
     displayThumbnails(docsRoot, "docFolderLink", $("#DocsBreadcrumbs"), $("#DocsFolders"), $("#DocsThumbnails"));
@@ -246,6 +253,10 @@ addPerson: function(value) {
     // Display thumbnails and add photo links to gallery container
     // Create breadcrumbs, folder and entity links (for photos, audio, video, etc.)
     function displayThumbnails(dirName, linkClass, breadcrumbContainer, folderContainer, thumbnailContainer) {
+
+        // can dynamically create the breadcrumbs 
+        // but not the breadcrumb one?
+
         // if (photos)
         setBreadcrumbs(dirName, linkClass, breadcrumbContainer);
         folderContainer.empty();
@@ -258,6 +269,8 @@ addPerson: function(value) {
         if (secondSlashPos >= 0) {
             rootDir = dirName.substr(0,secondSlashPos);
         }
+
+        // Assume a parent media dir and that the 2nd segment is the "name" to use for the DIV's
 
         // Assume the subpath starts at the 2nd slash
         var subPath = "";
@@ -303,6 +316,7 @@ addPerson: function(value) {
                             .prop('href', filePath)
                             .prop('title', dir.filename)
                             .appendTo(thumbnailContainer);
+
                     } else if (fileExt == "MP3") {
                         audioFiles = true;
                     } else if (fileExt == "PDF") {
