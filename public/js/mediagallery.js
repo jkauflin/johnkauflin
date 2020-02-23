@@ -184,7 +184,7 @@ addPerson: function(value) {
      // Create a collapsible menu from a directory structure
      function createMenu(dirName, panelGroupId, linkClass) {
         //Pass in sort (0 for alpha photos and 1 for years) ???
-         console.log("createMenu, dir=" + dirName);
+         //console.log("createMenu, dir=" + dirName);
          $.getJSON("getDirList.php", "dir=" + dirName, function (dirList) {
             var htmlStr = '';
             var panelContent = '';
@@ -209,7 +209,7 @@ addPerson: function(value) {
                  panelContent = '<ul class="' + panelGroupId + 'List">'
                  $.each(dir.contents, function (index2, filename) {
                      // Skip any non-directory files at this level
-                     console.log("create menu, filename = "+filename);
+                     //console.log("create menu, filename = "+filename);
 
                      if (filename.indexOf(".") >= 0) {
                          if (index2 == 0) {
@@ -239,20 +239,29 @@ addPerson: function(value) {
         folderContainer.empty();
         thumbnailContainer.empty();
 
-        var subPath = "";
-        var slashPos = dirName.indexOf("/");
-        if (slashPos >= 0) {
-            subPath = dirName.substr(slashPos);
+        // Data/jjkPhotos
+        // Assuming the media folder are under a parent media folder
+        var firstSlashPos = dirName.indexOf("/");
+        var secondSlashPos = dirName.indexOf("/",firstSlashPos+1);
+        var rootDir = dirName;
+        if (secondSlashPos >= 0) {
+            rootDir = dirName.substr(0,secondSlashPos);
         }
-        console.log("subPath = "+subPath);
 
-        var photosThumbsRoot = dirName + "Thumbs";
-        var photosSmallerRoot = dirName + "Smaller";
+        // Assume the subpath starts at the 2nd slash
+        var subPath = "";
+        if (secondSlashPos >= 0) {
+            subPath = dirName.substr(secondSlashPos)
+        }
 
+        //console.log("rootDir = "+rootDir+", subPath = "+subPath);
+
+        var photosThumbsRoot = rootDir + "Thumbs";
+        var photosSmallerRoot = rootDir + "Smaller";
         var photosThumbDir = photosThumbsRoot + subPath;
         var photosSmallerDir = photosSmallerRoot + subPath;
 
-        console.log("getDirList dirName = " + dirName);
+        //console.log("getDirList dirName = " + dirName);
         $.getJSON("getDirList.php", "dir=" + dirName, function (dirList) {
             // loop through the list and display thumbnails in a div
             var periodPos = 0;
@@ -262,8 +271,8 @@ addPerson: function(value) {
 
             //$.each(dirFileList, function (filename, subDirList) {
             $.each(dirList, function (index, dir) {
-                //console.log("file = "+dir.filename);
                 filePath = dirName + '/' + dir.filename;
+                //console.log("file = " + dir.filename + ", filePath = " + filePath);
 
                 // Check if it is an image file or a directory (if period found assume file, if not directory)
                 periodPos = dir.filename.indexOf(".");
@@ -274,9 +283,10 @@ addPerson: function(value) {
                     if (fileExt == "JPG" || fileExt == "JPEG" || fileExt == "GIF") {
                         // If not a directory, add the photo to the gallery link list
                         // Just assume the thumbnail image will be there for now
+                        
                         filePath = photosSmallerDir + '/' + dir.filename;
-
                         //console.log("photosThumbDir/filename = "+photosThumbDir+'/'+dir.filename);
+                        
                         $('<a/>')
                             .append($('<img>').prop('src', photosThumbDir + '/' + dir.filename).prop('class', "img-thumbnail"))
                             .prop('href', filePath)
