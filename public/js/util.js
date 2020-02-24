@@ -38,7 +38,8 @@
     //=================================================================================================================
     // Bind events
     // General AJAX error handler to log the exception and set a message in DIV tags with a ajaxError class
-    /* 2019-09-28 JJK - Commented out (just handle within the AJAX calls)
+    // 2019-09-28 JJK - Commented out (just handle within the AJAX and .getJSON calls with .fail(function (jqXHR, textStatus, exception))
+    /*
     $document.ajaxError(function (e, xhr, settings, exception) {
         console.log("ajax exception = " + exception);
         console.log("ajax url = " + settings.url);

@@ -67,7 +67,11 @@ $albumParam = '';
 	$rootDir = '';
 	if (isset($_REQUEST["dir"])) {
 		$rootDir = urldecode($_REQUEST["dir"]);
-	}
+    }
+    
+		error_log(date('[Y-m-d H:i] '). "rootDir: " . $rootDir . PHP_EOL, 3, "getMP3Filelist.log");
+
+
 	if (!file_exists($rootDir)) {
 		return;
 	}
@@ -210,7 +214,9 @@ D:\jjkMusic\Easy Listening\Misc\Misc\Firefall - Strange Way.mp3
 
 	} else {
 		// Loop through the files in the directory
-		$files = scandir($rootDir);
+        $files = scandir($rootDir);
+        
+
 		foreach($files as $file)  {
 			// Skip invalid files and directories
 			if ($file == "." || $file == ".." || is_dir($file)) {
@@ -313,10 +319,16 @@ D:\jjkMusic\Easy Listening\Misc\Misc\Firefall - Strange Way.mp3
 						*/
 						
 			//echo '<br><br> song = ' . json_encode($song);
-			array_push($songArray,$song);
+            array_push($songArray,$song);
+            
+		    //error_log(date('[Y-m-d H:i] '). "pushed file  " . $mp3File . PHP_EOL, 3, "getMP3Filelist.log");
+		    //error_log(date('[Y-m-d H:i] '). "mp3File =  " . $mp3File . PHP_EOL, 3, "getMP3Filelist.log");
 			
 		} // foreach($files as $file)  {
 	} // if NOT playlist
+
+	error_log(date('[Y-m-d H:i] '). "songArray (json) =  " . json_encode($songArray) . PHP_EOL, 3, "getMP3Filelist.log");
+	error_log(date('[Y-m-d H:i] '). "after json_encode  " . PHP_EOL, 3, "getMP3Filelist.log");
 
 	echo json_encode($songArray);
 

@@ -156,15 +156,16 @@ li {
   
 /*
 .playMusic {font-size: 2em;}
-*/
-.addMusic {margin:0 10px 0 10px;}
+#PlayListContainer,audio{background:#666;width:400px;padding:20px;}
+audio {border:none; padding:0 0 6px 0;}
 
-/* #PlayListContainer,audio{background:#666;width:400px;padding:20px;} */
+.addMusic {margin:0 10px 0 10px;}
 #PlayListContainer {padding:0 10px 0 10px; margin: 5px 0 0 0;}
 tr.smalltext {font-size:1em;}
 .audioControlIcon {font-size:1.8em; margin: 8px 5px 5px 0;}
-/* audio {padding:0 0 6px 0;} */
+*/
 iframe {border:none; margin:0 3px 3px 0;}
+
 
 /* ==========================================================================
    Helper classes

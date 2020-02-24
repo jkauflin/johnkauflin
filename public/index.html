@@ -25,7 +25,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/css/blueimp-gallery.min.css">
-	<link rel="stylesheet" href="css/main.css?ver=3.001">
+	<link rel="stylesheet" href="css/main.css?ver=3.004">
 </head>
 
 <body>
@@ -47,10 +47,10 @@
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a href="#HomePage" data-toggle="tab"><i class="fa fa-home"></i> Home</a></li>
-					<li><a href="#PhotosPage" data-toggle="tab"><i class="fa fa-camera"></i> Photos</a></li>
-                    <li><a href="#VideosPage" data-toggle="tab"><i class="fa fa-video-camera"></i> Videos</a></li>
-                    <li><a href="#DocsPage" data-toggle="tab"><i class="fa fa-document"></i> Docs</a></li>
-					<li><a href="#MusicPage" data-toggle="tab"><i class="fa fa-music"></i> Music</a></li>
+					<li><a href="#MediaPage" data-dir="Media/Photos" data-toggle="tab"><i class="fa fa-camera"></i> Photos</a></li>
+                    <li><a href="#MediaPage" data-dir="Media/Videos" data-toggle="tab"><i class="fa fa-video-camera"></i> Videos</a></li>
+                    <li><a href="#MediaPage" data-dir="Media/Docs" data-toggle="tab"><i class="fa fa-document"></i> Docs</a></li>
+					<li><a href="#MediaPage" data-dir="Media/Music" data-toggle="tab"><i class="fa fa-music"></i> Music</a></li>
 				</ul>
 			</div> <!-- navbar-collapse (controlled by the collapse toggle button) -->
 	</div> <!-- container -->
@@ -58,165 +58,61 @@
 
 <div class="container-fluid">
 <div class="tab-content">
+
 	<div class="tab-pane active" id="HomePage">
-		
-			<div class="jumbotron">
-					<img src="Media/images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
-					<h1>Welcome!</h1>
-					<p>Welcome to the John J Kauflin personal website.</p>
-                    <h5>(Click on the Menu at the top to see Photos, Videos, and Music)</h5>
-                <!--
-                <iframe src="//www.youtube.com/embed/d9nBqqKexPo" frameborder="0" allowfullscreen></iframe>
-                --> 
-			</div>
+		<div class="jumbotron">
+			<img src="Media/images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
+			<h1>Welcome!</h1>
+			<p>Welcome to the John J Kauflin personal website.</p>
+            <h5>(Click on the Menu at the top to see Photos, Videos, and Music)</h5>
+            <!--
+            <iframe src="//www.youtube.com/embed/d9nBqqKexPo" frameborder="0" allowfullscreen></iframe>
+            --> 
+		</div>
+	</div><!-- end of Home tab -->
 
-		</div><!-- end of Home tab -->
-
-
-		<div class="tab-pane" id="PhotosPage">
-			<div class="row">
-				<div class="hidden-xs col-sm-5 col-md-3">
-					<h4>Photos</h4>
-					<div id="PhotosMenu" class="panel-group"></div>
-				</div>
-					
-				<div class="col-sm-7 col-md-9">
-					<!--
-					<a data-toggle="modal" href="#photosConfigModal"><i class="fa fa-cog"></i></a>
-					-->
-					<ol id="PhotosBreadcrumbs" class="breadcrumb"></ol>
-					<div id="PhotosFolders"></div>
-					<div id="PhotosThumbnails"></div>
-				</div>
-			</div><!-- row -->	                
-		</div><!-- end of Detail -->
-
-		<div class="tab-pane" id="VideosPage">
-		<div class="row">
+	<div class="tab-pane" id="MediaPage">
+        <div class="row">
 			<div class="hidden-xs col-sm-5 col-md-3">
-				<h4>Videos</h4>
-				 <div id="VideosMenu" class="panel-group" ></div> 				
+				<h4 id=MediaHeader></h4>
+				<div id="MediaMenu" class="panel-group"></div>
 			</div>
-
+					
 			<div class="col-sm-7 col-md-9">
-					<ol id="VideosBreadcrumbs" class="breadcrumb"></ol>
-				<div id="VideosFolders"></div>
-				<div id="VideosThumbnails"></div>
-			</div>
-			
+				<ol id="MediaBreadcrumbs" class="breadcrumb"></ol>
+				<div id="MediaFolders"></div>
+                <div id="MediaThumbnails"></div>
+
+                <!--
+                <div id="PlayListContainer" class="hidden">
+                    <h4>PlayListcontainer</h4>
+                    <div id="currentArtistAlbum"></div>
+                    <div id="currentTitle"></div>
+                    <audio id="AudioPlayer" controls src=""> 
+                                        Your browser does not support the audio element.
+                    </audio>
+                    <table id="AudioControlsContainer">
+                        <tr>
+                            <td><a id="AudioPrev" href="#" ><span class="glyphicon glyphicon-step-backward audioControlIcon"></span></a></td>
+                            <td><a id="AudioNext" href="#"><span class="glyphicon glyphicon-step-forward audioControlIcon"></span></a></td>
+                            <td><a id="AudioRandom" href="#"><span class="glyphicon glyphicon-random audioControlIcon"></span></a></td>
+                            <td><a id="AudioRepeat" href="#"><span class="glyphicon glyphicon-retweet audioControlIcon"></span></a></td>
+                        </tr>
+                    </table>
+                    <table id="PlaylistDisplay" class="table table-condensed">
+                        <tbody></tbody>
+                    </table>
+				</div>
+                -->
+            </div>
+            
 		</div><!-- row -->	                
 	</div><!-- end of Detail -->
-
-            <div class="tab-pane" id="DocsPage">
-                <div class="row">
-                    <div class="hidden-xs col-sm-5 col-md-3">
-                        <h4>Docs</h4>
-                        <div id="DocsMenu" class="panel-group"></div>
-                    </div>
-            
-                    <div class="col-sm-7 col-md-9">
-                        <ol id="DocsBreadcrumbs" class="breadcrumb"></ol>
-                        <div id="DocsFolders"></div>
-                        <div id="DocsThumbnails"></div>
-                    </div>
-            
-                </div><!-- row -->
-            </div><!-- end of Detail -->
-
-		<div class="tab-pane" id="MusicPage">
-		<div class="row">
-			<div class="hidden-xs col-sm-5 col-md-3">
-				<h4>Music</h4>
-				 <div id="MusicMenu" class="panel-group" >
-					</div> 				
-			</div>
-
-			<div class="col-sm-7 col-md-9">
-					<ol id="MusicBreadcrumbs" class="breadcrumb"></ol>
-				<div id="MusicFolders"></div>
-				<div id="MusicThumbnails"></div>
-				
-				<div id="PlayListContainer" class="hidden">
-					<div id="currentArtistAlbum"></div>
-					<div id="currentTitle"></div>
-					<audio id="AudioPlayer" controls src=""> 
-									Your browser does not support the audio element.
-					</audio>
-					<table id="AudioControlsContainer">
-						<tr>
-							<td><a id="AudioPrev" href="#" ><span class="glyphicon glyphicon-step-backward audioControlIcon"></span></a></td>
-							<td><a id="AudioNext" href="#"><span class="glyphicon glyphicon-step-forward audioControlIcon"></span></a></td>
-							<!-- 
-							<td><a id="AudioRandom" href="#"><span class="glyphicon glyphicon-random audioControlIcon"></span></a></td>
-							<td><a id="AudioRepeat" href="#"><span class="glyphicon glyphicon-retweet audioControlIcon"></span></a></td>
-							 -->
-						</tr>
-					</table>
-					<table id="PlaylistDisplay" class="table table-condensed">
-									<tbody>
-										 </tbody>
-								 </table>
-				</div>
-				
-			</div>
-
-		</div><!-- end of Music row -->
-		
-	</div><!-- end of Detail -->
-
-
-		<div class="tab-pane" id="PlayerPage">
-		<div class="row">
-			<div class="col-sm-7 col-md-6">
-
-				
-<!-- 
-play-circle
-list-alt
-headphones
-glyphicon glyphicon-step-backward	Try it
-glyphicon glyphicon-fast-backward	Try it
-glyphicon glyphicon-backward	Try it
-glyphicon glyphicon-play	Try it
-glyphicon glyphicon-pause	Try it
-glyphicon glyphicon-stop	Try it
-glyphicon glyphicon-forward	Try it
-glyphicon glyphicon-fast-forward	Try it
-glyphicon glyphicon-step-forward
-
-plus-sign
-plus
-remove
-arrow-up
-arrow-down
-random
-retweet
-save  (download)
-cd
-option-horizontal
-option-vertical
-
-triangle left right bottom top
--->					
-				
-			</div>
-
-			<div class="col-sm-5 col-md-6">
-				<h4>Player</h4>
-			</div>
-			
-		</div><!-- end of Music row -->
-		
-	</div><!-- end of Detail -->
-
 
 </div><!-- end of main tab content -->
 </div><!-- end of main container -->
 
-
-
 <!-- Modal -->
-
 <div class="modal fade" id="aboutModal" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -273,7 +169,7 @@ in bands with a group of friends since High School and we have created a music c
     </script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/js/blueimp-gallery.min.js"></script>
 	<script src="js/util.js?ver=2.104"></script>
-	<script src="js/mediagallery.js?ver=1.0414"></script>
+	<script src="js/mediagallery.js?ver=1.0421"></script>
     <script src="js/main.js?ver=3.003"></script>
     <!--
 	<script src="js/googleAnalytics.js?ver=1.000"></script>

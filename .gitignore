@@ -15,6 +15,7 @@ yarn-error.log*
 *-search.json
 *.wav
 *.mp3
+*.log
 ssl/
 package-lock.json
 public/Data
