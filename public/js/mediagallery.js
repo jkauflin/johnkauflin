@@ -55,8 +55,6 @@ var mgallery = (function(){
     elem.style.height = '150px';
 
 
-    audio { border: none; padding: 0 0 6px 0; }
-
 .addMusic { margin:0 10px 0 10px;}
 #PlayListContainer { padding: 0 10px 0 10px; margin: 5px 0 0 0; }
 tr.smalltext { font - size: 1em; }
@@ -101,7 +99,10 @@ tr.smalltext { font - size: 1em; }
             link = target.src ? target.parentNode : target,
             options = { index: link, event: event },
             links = this.getElementsByTagName('a');
-        blueimp.Gallery(links, options);
+
+        if (target.className.indexOf("img-thumbnail") >= 0) {
+            blueimp.Gallery(links, options);
+        }
     };
 
     //=====================================================================================
