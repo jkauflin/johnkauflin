@@ -339,16 +339,6 @@ tr.smalltext { font - size: 1em; }
                             .html(fileNameNoExt)));
 
                         tr.appendTo($playlistTbody);
-                        /*
-                        .playMusic {font-size: 2em;}
-                        #PlayListContainer,audio{background:#666;width:400px;padding:20px;}
-                        audio {border:none; padding:0 0 6px 0;}
-                        
-                        .addMusic {margin:0 10px 0 10px;}
-                        #PlayListContainer {padding:0 10px 0 10px; margin: 5px 0 0 0;}
-                        tr.smalltext {font-size:1em;}
-                        .audioControlIcon {font-size:1.8em; margin: 8px 5px 5px 0;}
-                        */
                     }
 
                 } else {
@@ -375,42 +365,27 @@ tr.smalltext { font - size: 1em; }
                 .appendTo($thumbnailContainer);
                 document.getElementById("MediaThumbnails").appendChild(audioPlayer);
 
-            /*
-.playMusic {font-size: 2em;}
-#PlayListContainer,audio{background:#666;width:400px;padding:20px;}
-audio {border:none; padding:0 0 6px 0;}
-
-.addMusic {margin:0 10px 0 10px;}
-#PlayListContainer {padding:0 10px 0 10px; margin: 5px 0 0 0;}
-tr.smalltext {font-size:1em;}
-.audioControlIcon {font-size:1.8em; margin: 8px 5px 5px 0;}
-*/
-
                 $('<table>')
                     .attr('id', 'AudioControlsContainer')
                     .prop('class', 'table table-condensed')
-
                     .append(
                         $('<tr>').append(
                             $('<td>').append(
                                 $('<a>').attr('id', "AudioPrev")
                                     .attr('href', "#").append(
-                                        $('<span>').prop('class', 'glyphicon glyphicon-step-backward audioControlIcon')
+                                        $('<span>').prop('class', 'glyphicon glyphicon-step-backward')
+                                            .attr('style','font-size:1.6em; margin: 8px 5px 5px 0;')
                                     )
-                            )
-                        ).append(
-                            $('<td>').append(
+                            ).append(
                                 $('<a>').attr('id', "AudioNext")
                                     .attr('href', "#").append(
-                                        $('<span>').prop('class', 'glyphicon glyphicon-step-forward audioControlIcon')
+                                        $('<span>').prop('class', 'glyphicon glyphicon-step-forward')
+                                                .attr('style', 'font-size:1.6em; margin: 8px 5px 5px 0;')
                                     )
                             )
                         )
                     )
                     .appendTo($thumbnailContainer);
-
-                //                        .audioControlIcon {font-size:1.8em; margin: 8px 5px 5px 0;}
-
 
                 // append the tbody to the table, adn the table to the thumbnail container
                 var $playlistTable = $('<table>')
@@ -418,67 +393,14 @@ tr.smalltext {font-size:1em;}
                     .prop('class', 'table table-condensed');
                 $playlistTbody.appendTo($playlistTable);
                 $playlistTable.appendTo($thumbnailContainer);
-
-                // Load the first song in the playlist
-                loadSong(0);
-
-                /*
-
-<audio id="pop">
-  <source src="audio/pop.wav" type="audio/mpeg">
-</audio>
-<audio controls>
-  <source src="horse.mp3" type="audio/mpeg">
-</audio>
-
-$('audio#pop')[0].play()
-
-
-  var audioLink=$(this).find("link").eq(1).attr("href"); //grab music file
-            var audio= document.createElement('AUDIO');
-               var source= document.createElement('source');
-             audioLink= '"'+ audioLink + '"'
-            $('source').attr('src', audioLink); //nothing found! source has not been appended to document
-            $('audio').attr('controls','controls');//nothing found! audiohas not been appended to document
-            $('source').attr('type', 'audio/mpeg');
-                */
-
-                /*
-                $.getJSON("getMP3Filelist.php", "dir=" + dirName, function (resultPlaylist) {
-                    console.log("after mp3 file call");
-                    playlist = resultPlaylist;
-                    loadPlaylist();
-                }).fail(function (jqXHR, textStatus, exception) {
-                    console.log("getJSON getMP3Filelist failed, textStatus = " + textStatus);
-                    console.log("Exception = " + exception);
-                });
-                */
             }
-                /*
-                    <audio id="AudioPlayer" controls src="">
-                                        Your browser does not support the audio element.
-                    </audio>
-                    <table id="AudioControlsContainer">
-                        <tr>
-                            <td><a id="AudioPrev" href="#" ><span class="glyphicon glyphicon-step-backward audioControlIcon"></span></a></td>
-                            <td><a id="AudioNext" href="#"><span class="glyphicon glyphicon-step-forward audioControlIcon"></span></a></td>
-                            <!--
-                            <td><a id="AudioRandom" href="#"><span class="glyphicon glyphicon-random audioControlIcon"></span></a></td>
-                            <td><a id="AudioRepeat" href="#"><span class="glyphicon glyphicon-retweet audioControlIcon"></span></a></td>
-                            -->
-                        </tr>
-                    </table>
-                    <table id="PlaylistDisplay" class="table table-condensed">
-                        <tbody></tbody>
-                    </table>
-            */
 
         }).fail(function (jqXHR, textStatus, exception) {
             console.log("getJSON getDirList failed, textStatus = " + textStatus);
             console.log("Exception = " + exception);
         });
 
-    } // function displayThumbnails(dirName,breadcrumbContainerName,folderContainerName,thumbnailContainerName) {
+    } 
 
      // linkClass
      function setBreadcrumbs(dirName) {
@@ -518,20 +440,6 @@ $('audio#pop')[0].play()
         audioPlayer.load();//suspends and restores all audio element
         //console.log("loaded audio, plIndex = "+plIndex);
         audioPlayer.oncanplaythrough = audioPlayer.play();
-
-        // display the current song
-
-        /*
-        var year = '';
-        if (playlist[plIndex].year != '') {
-            year = '(' + playlist[plIndex].year + ') ';
-        }
-        $('#currentArtistAlbum').html(playlist[plIndex].artist + " - " + year + playlist[plIndex].album);
-        //$('#currentAlbum').html("Album: "+playlist[plIndex].album);
-        var plNum = '' + (parseInt(plIndex) + 1);
-        $('#currentTitle').html(plNum + ' - ' + playlist[plIndex].title);
-        //audioPlayer.currentTime = 10.0;
-        */
     } // function loadSong(index) {
 
     function nextSong() {
