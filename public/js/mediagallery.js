@@ -24,6 +24,7 @@
  *                  (looking for the 2nd slash)
  * 2020-02-23 JJK   Re-working as a single collection of folders under the
  *                  parent Media directory
+ * 2020-02-29 JJK   Working on the audio player and playlist
  *============================================================================*/
 var mgallery = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -54,15 +55,11 @@ var mgallery = (function(){
     // Set the height to 150px
     elem.style.height = '150px';
 
-
 .addMusic { margin:0 10px 0 10px;}
 #PlayListContainer { padding: 0 10px 0 10px; margin: 5px 0 0 0; }
 tr.smalltext { font - size: 1em; }
 .audioControlIcon { font - size: 1.8em; margin: 8px 5px 5px 0; }
 */
-
-    // Get the audio player object
-    //var audioPlayer = $('#AudioPlayer')[0];
 
     //=================================================================================================================
     // Variables cached from the DOM
@@ -73,9 +70,6 @@ tr.smalltext { font - size: 1em; }
     var $folderContainer = $document.find("#MediaFolders");
     var $thumbnailContainer = $document.find("#MediaThumbnails");
     var $blueimpGallery = $document.find("#blueimp-gallery");
-    var $audioPlayer = $document.find("#AudioPlayer");
-    //var audioPlayer = $('#AudioPlayer')[0];
-
 
     //=================================================================================================================
     // Bind events
@@ -93,6 +87,23 @@ tr.smalltext { font - size: 1em; }
         displayThumbnails($this.attr('data-dir'));
     });	
 
+    // Add event listeners to the audio player
+    // When a song ends, see if there is a next one to play
+    audioPlayer.addEventListener("ended", function () {
+        nextSong();
+    }, true);
+    // Respond to clicking on songs in the playlist
+    $document.on("click", ".playlistSong", function () {
+        var $this = $(this);
+        loadSong($this.attr('data-plIndex'));
+    });
+    $document.on("click", "#AudioNext", function () {
+        nextSong();
+    });
+    $document.on("click", "#AudioPrev", function () {
+        prevSong();
+    });
+
     document.getElementById('MediaThumbnails').onclick = function (event) {
         event = event || window.event;
         var target = event.target || event.srcElement,
@@ -104,9 +115,9 @@ tr.smalltext { font - size: 1em; }
             blueimp.Gallery(links, options);
         }
     };
-
+    
     //=====================================================================================
-    // Default the controls to borderless fullscreen
+    // Default the blueimp gallery controls to borderless fullscreen
     //=====================================================================================
     $blueimpGallery.data('useBootstrapModal', false);
     $blueimpGallery.toggleClass('blueimp-gallery-controls', false);
@@ -142,25 +153,6 @@ tr.smalltext { font - size: 1em; }
         displayThumbnails(photosRoot, "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
     }
     */
-
-    // Add event listeners to the audio player
-    // When a song ends, see if there is a next one to play
-    audioPlayer.addEventListener("ended", function () {
-        nextSong();
-    }, true);
-
-    // Respond to clicking on songs in the playlist
-    $(document).on("click", ".playlistSong", function () {
-        var $this = $(this);
-        loadSong($this.attr('data-plIndex'));
-    });
-
-    $(document).on("click", "#AudioNext", function () {
-        nextSong();
-    });
-    $(document).on("click", "#AudioPrev", function () {
-        prevSong();
-    });
 
     //=================================================================================================================
     // Module methods
@@ -290,24 +282,6 @@ tr.smalltext { font - size: 1em; }
                             .prop('title', dir.filename)
                             .appendTo($thumbnailContainer);
 
-                    } else if (fileExt == "MP3") {
-                        //console.log("fileNameNoExt = " + fileNameNoExt+", url = "+filePath);
-                        audioFiles = true;
-                        plIndex++;
-                        playlist.push({ "title": fileNameNoExt, "url": filePath });
-
-                        // add the table rows for the playlist
-                        // build a table then append to the thumbnail container
-
-                        tr = $('<tr>').attr('class', "smalltext");
-                        tr.append($('<td>').append($('<a>')
-                            .attr('href', "#")
-                            .attr('class', "playlistSong")
-                            .attr('data-plIndex', plIndex)
-                            .html(fileNameNoExt)));
-
-                        tr.appendTo($playlistTbody);
-
                     } else if (fileExt == "PDF") {
 
                         $('<a/>')
@@ -348,6 +322,33 @@ tr.smalltext { font - size: 1em; }
                             });
 
                         });
+
+                    } else if (fileExt == "MP3") {
+                        //console.log("fileNameNoExt = " + fileNameNoExt+", url = "+filePath);
+                        audioFiles = true;
+                        plIndex++;
+                        playlist.push({ "title": fileNameNoExt, "url": filePath });
+
+                        // add the table rows for the playlist
+                        // build a table then append to the thumbnail container
+                        tr = $('<tr>').attr('class', "smalltext");
+                        tr.append($('<td>').append($('<a>')
+                            .attr('href', "#")
+                            .attr('class', "playlistSong")
+                            .attr('data-plIndex', plIndex)
+                            .html(fileNameNoExt)));
+
+                        tr.appendTo($playlistTbody);
+                        /*
+                        .playMusic {font-size: 2em;}
+                        #PlayListContainer,audio{background:#666;width:400px;padding:20px;}
+                        audio {border:none; padding:0 0 6px 0;}
+                        
+                        .addMusic {margin:0 10px 0 10px;}
+                        #PlayListContainer {padding:0 10px 0 10px; margin: 5px 0 0 0;}
+                        tr.smalltext {font-size:1em;}
+                        .audioControlIcon {font-size:1.8em; margin: 8px 5px 5px 0;}
+                        */
                     }
 
                 } else {
@@ -363,37 +364,63 @@ tr.smalltext { font - size: 1em; }
                             .attr('data-dir', dirName + '/' + dir.filename)
                             .appendTo($folderContainer);
                     }
-
                 }
                 //.prop('style','margin-right: 10px; margin-bottom: 10px; border:1px solid;')
             });
             
-            
             // if there were any MP3's, build a player with the playlist of MP3's
             if (audioFiles) {
-                // append the tbody to the table, adn the table to the thumbnail container
-
-                /*
-                var source = document.createElement('source');
-                //source.src = audioLink;
-                source.src = '';
-                audio.appendChild(source);
-                */
-
-
-                // *** this worked ***
+                $('<h5>').attr('id', 'SongTitle')
+                    .attr('style','font-weight: bold')
+                .appendTo($thumbnailContainer);
                 document.getElementById("MediaThumbnails").appendChild(audioPlayer);
-                //$audioPlayer.appendTo($thumbnailContainer);
 
-                // Load the first song in the playlist
-                loadSong(0);
+            /*
+.playMusic {font-size: 2em;}
+#PlayListContainer,audio{background:#666;width:400px;padding:20px;}
+audio {border:none; padding:0 0 6px 0;}
 
+.addMusic {margin:0 10px 0 10px;}
+#PlayListContainer {padding:0 10px 0 10px; margin: 5px 0 0 0;}
+tr.smalltext {font-size:1em;}
+.audioControlIcon {font-size:1.8em; margin: 8px 5px 5px 0;}
+*/
+
+                $('<table>')
+                    .attr('id', 'AudioControlsContainer')
+                    .prop('class', 'table table-condensed')
+
+                    .append(
+                        $('<tr>').append(
+                            $('<td>').append(
+                                $('<a>').attr('id', "AudioPrev")
+                                    .attr('href', "#").append(
+                                        $('<span>').prop('class', 'glyphicon glyphicon-step-backward audioControlIcon')
+                                    )
+                            )
+                        ).append(
+                            $('<td>').append(
+                                $('<a>').attr('id', "AudioNext")
+                                    .attr('href', "#").append(
+                                        $('<span>').prop('class', 'glyphicon glyphicon-step-forward audioControlIcon')
+                                    )
+                            )
+                        )
+                    )
+                    .appendTo($thumbnailContainer);
+
+                //                        .audioControlIcon {font-size:1.8em; margin: 8px 5px 5px 0;}
+
+
+                // append the tbody to the table, adn the table to the thumbnail container
                 var $playlistTable = $('<table>')
                     .attr('id', 'PlaylistDisplay')
                     .prop('class', 'table table-condensed');
                 $playlistTbody.appendTo($playlistTable);
-
                 $playlistTable.appendTo($thumbnailContainer);
+
+                // Load the first song in the playlist
+                loadSong(0);
 
                 /*
 
@@ -484,11 +511,15 @@ $('audio#pop')[0].play()
     function loadSong(index) {
         plIndex = index;
 
+        $("#SongTitle").text(playlist[plIndex].title);
+
         $("#AudioPlayer").attr("src", playlist[plIndex].url);
         audioPlayer.pause();
         audioPlayer.load();//suspends and restores all audio element
         //console.log("loaded audio, plIndex = "+plIndex);
         audioPlayer.oncanplaythrough = audioPlayer.play();
+
+        // display the current song
 
         /*
         var year = '';
