@@ -25,7 +25,9 @@
  *                  (looking for the 2nd slash)
  * 2020-02-23 JJK   Re-working as a single collection of folders under the
  *                  parent Media directory
- * 2020-02-29 JJK   Working on the audio player and playlist
+ * 2020-02-29 JJK   Working on the audio player and playlist, and moving
+ *                  files to a /mediagallery folder (to make a better library)
+ *                  Introduced a MediaRootDir
  *============================================================================*/
 var mgallery = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -44,6 +46,12 @@ var mgallery = (function(){
     audioPlayer.style.padding = '0 0 6px 0';
 
     // Get these from configuration at some point
+    // MediaRootDir is appended to the front of all URI paths (that limits the PHP work to files under Media as well)
+    // default is Media/
+    var MediaRootDir = "Media/";
+    // When executing from within PHP files, add this to the front of URI paths to get to the parent directory
+    var phpRootReset = "../"
+
     var MediaPageId = "MediaPage";
     var MediaHeaderId = "MediaHeader";
     var MediaMenuId = "MediaMenu";
@@ -80,7 +88,6 @@ var mgallery = (function(){
     });	
 
     // If there is a data-dir parameter, build and display the Photo page
-    /*
     var dataDirName = 'data-dir';
     var results = new RegExp('[\?&]' + dataDirName + '=([^&#]*)').exec(window.location.href);
     if (results != null) {
@@ -88,11 +95,9 @@ var mgallery = (function(){
         //console.log("dataDir = " + dataDir);
         displayThumbnails(decodeURIComponent(dataDir));
         $document.find('#navbar a[href="#' + MediaPageId + '"]').tab('show');
-
         //var $displayPage = $document.find('#navbar a[href="#' + MediaPageId + '"]');
         //$displayPage.tab('show');
     }
-    */
 
     // Add event listeners to the audio player
     // When a song ends, see if there is a next one to play
@@ -143,57 +148,74 @@ var mgallery = (function(){
     //=================================================================================================================
     // Module methods
 
-     // Create a collapsible menu from a directory structure
-     function createMenu(dirName, panelGroupId) {
-         console.log("createMenu, dir=" + dirName + ", panelGroupId = " + panelGroupId);
-         $menuHeader.text(panelGroupId);
+    // Create a collapsible menu from a directory structure
+    function createMenu(dirName) {
+        //console.log("createMenu, dir=" + dirName);
+        $menuContainer.empty();
+        $menuHeader.text(dirName);
 
-         //Pass in sort (0 for alpha photos and 1 for years) ???
-         $.getJSON("mediagallery/getDirList.php", "dir=.." + dirName, function (dirList) {
+        //Pass in sort (0 for alpha photos and 1 for years) ???
+        $.getJSON("mediagallery/getDirList.php", "dir=" + phpRootReset + MediaRootDir + dirName, function (dirList) {
             var htmlStr = '';
             var panelContent = '';
             var panelCollapseIn = "";
+            var panelGroup = $('<div>').attr('id', 'accordion').prop('class', 'panel-group');
 
             $.each(dirList, function (index, dir) {
                 // Skip any non-directory files at this level
                 if (dir.filename.indexOf(".") >= 0) {
                     return true;
                 }
+                // Make the 1st panel un-collapsed
                 if (index == 0) {
                     panelCollapseIn = " in";
                 } else {
                     panelCollapseIn = "";
                 }
 
-                htmlStr += '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">';
-                htmlStr += '<a data-toggle="collapse" data-parent="#' + panelGroupId + '" href="#collapse' + (index+1) + panelGroupId + '">' + dir.filename + '</a>';
-                htmlStr += '</h4></div>';
-                htmlStr += '<div id="collapse' + (index+1) + panelGroupId + '" class="panel-collapse collapse' + panelCollapseIn + '"><div class="panel-body">';
-                 //----------------------------------------------------------------------------------------------------------------------------------
-                 panelContent = '<ul class="' + panelGroupId + 'List">'
-                 $.each(dir.contents, function (index2, filename) {
-                     // Skip any non-directory files at this level
-                     //console.log("create menu, filename = "+filename);
+                var panel = $('<div>').prop('class', 'panel panel-default').append(
+                    $('<div>').prop('class', 'panel-heading').append(
+                        $('<h4>').prop('class', 'panel-title').append(
+                            $('<a>').attr('data-toggle', 'collapse').attr('data-parent', '#accordion').attr('href', "#collapse"+(index + 1))
+                                .text(dir.filename)
+                        )
+                    )
+                );
 
-                     if (filename.indexOf(".") >= 0) {
-                         if (index2 == 0) {
-                             panelContent += '<li><a data-dir="' + dirName + '/' + dir.filename + '" class="'+MediaFolderLinkClass+'" href="#">' + dir.filename + '</a></li>';
-                         }
-                         return true;
-                     }
-                     
-                     panelContent += '<li><a data-dir="' + dirName + '/' + dir.filename + '/' + filename + '" class="'+MediaFolderLinkClass+'" href="#">' + filename + '</a></li>';
+                var panelCollapse = $('<div>').attr('id', "collapse" + (index + 1)).prop('class', 'panel-collapse collapse' + panelCollapseIn);
+                var panelCollapseBody = $('<div>').prop('class', 'panel-body');
+                var panelCollapseBodyList = $('<ul>');
 
-                 });
-                 panelContent += '</ul>';
-                 //----------------------------------------------------------------------------------------------------------------------------------
-                 htmlStr += panelContent + '</div></div></div>';
-             });
+                $.each(dir.contents, function (index2, filename) {
+                    // Skip any non-directory files at this level
+                    //console.log("create menu, filename = "+filename);
+                    if (filename.indexOf(".") >= 0) {
+                        if (index2 == 0) {
+                            panelCollapseBodyList.append(
+                                $('<li>').append(
+                                    $('<a>').attr('data-dir', dirName + '/' + dir.filename).attr('href', "#").prop('class', MediaFolderLinkClass)
+                                    .text(dir.filename))
+                            );
+                        }
+                        return true;
+                    }
+                    panelCollapseBodyList.append(
+                        $('<li>').append(
+                            $('<a>').attr('data-dir', dirName + '/' + dir.filename+ '/' + filename).attr('href', "#").prop('class', MediaFolderLinkClass)
+                                .text(filename))
+                    );
+                });
 
-             $menuContainer.html(htmlStr);
-         });
+                panelCollapseBody.append(panelCollapseBodyList);
+                panelCollapse.append(panelCollapseBody);
+                panel.append(panelCollapse);
+                panelGroup.append(panel);
+            });
 
-     } // 
+            panelGroup.appendTo($menuContainer);
+        });
+
+    } // function createMenu(dirName) {
 
     // Create breadcrumbs, folder and entity links (for photos, audio, video, etc.)
     function displayThumbnails(dirName) {
@@ -201,36 +223,29 @@ var mgallery = (function(){
         $folderContainer.empty();
         $thumbnailContainer.empty();
 
-        // Assuming the media folder are under a parent media folder (look for 2nd slash to get sub-path)
+        // Assuming the media folder are under a parent media folder (look for 1st slash to get sub-path)
         var firstSlashPos = dirName.indexOf("/");
-        var secondSlashPos = dirName.indexOf("/",firstSlashPos+1);
         var rootDir = dirName;
-        var categoryName = "";
-        if (secondSlashPos >= 0) {
-            rootDir = dirName.substr(0,secondSlashPos);
+        if (firstSlashPos >= 0) {
+            rootDir = dirName.substr(0, firstSlashPos);
         } else {
-            // If no 2nd slash, assume top level of a type and build the menu for that type
-            categoryName = dirName.substr(firstSlashPos + 1);
-            createMenu(dirName, categoryName);
+            createMenu(dirName);
         }
 
-        // Assume a parent media dir and that the 2nd segment is the "name" to use for the DIV's
-
-        // Assume the subpath starts at the 2nd slash
+        // Assume the subpath starts at the 1st slash
         var subPath = "";
-        if (secondSlashPos >= 0) {
-            subPath = dirName.substr(secondSlashPos)
+        if (firstSlashPos >= 0) {
+            subPath = dirName.substr(firstSlashPos)
         }
-
-        //console.log("rootDir = "+rootDir+", subPath = "+subPath);
 
         var photosThumbsRoot = rootDir + "Thumbs";
         var photosSmallerRoot = rootDir + "Smaller";
         var photosThumbDir = photosThumbsRoot + subPath;
         var photosSmallerDir = photosSmallerRoot + subPath;
 
-        console.log("getDirList dirName = " + dirName);
-        $.getJSON("mediagallery/getDirList.php", "dir=.." + dirName, function (dirList) {
+        //console.log("getDirList dirName = " + phpRootReset + MediaRootDir + dirName);
+
+        $.getJSON("mediagallery/getDirList.php", "dir=" + phpRootReset + MediaRootDir + dirName, function (dirList) {
             // loop through the list and display thumbnails in a div
             var periodPos = 0;
             var fileExt = '';
@@ -245,7 +260,7 @@ var mgallery = (function(){
 
             //$.each(dirFileList, function (filename, subDirList) {
             $.each(dirList, function (index, dir) {
-                filePath = dirName + '/' + dir.filename;
+                filePath = MediaRootDir + dirName + '/' + dir.filename;
                 //console.log("file = " + dir.filename + ", filePath = " + filePath);
 
                 // Check if it is an image file or a directory (if period found assume file, if not directory)
@@ -259,11 +274,11 @@ var mgallery = (function(){
                         // If not a directory, add the photo to the gallery link list
                         // Just assume the thumbnail image will be there for now
                         
-                        filePath = photosSmallerDir + '/' + dir.filename;
-                        //console.log("photosThumbDir/filename = "+photosThumbDir+'/'+dir.filename);
+                        filePath = MediaRootDir + photosSmallerDir + '/' + dir.filename;
+                        // *** add code to create thumbnails or smaller if not there???
                         
                         $('<a/>')
-                            .append($('<img>').prop('src', photosThumbDir + '/' + dir.filename).prop('class', "img-thumbnail"))
+                            .append($('<img>').prop('src', MediaRootDir + photosThumbDir + '/' + dir.filename).prop('class', "img-thumbnail"))
                             .prop('href', filePath)
                             .prop('title', dir.filename)
                             .appendTo($thumbnailContainer);
@@ -279,7 +294,7 @@ var mgallery = (function(){
                     } else if (dir.filename == "youtube.txt") {
                         // Get the list of youtube ids
                         var cPos = 0;
-                        $.getJSON("mediagallery/getVideoList.php", "file=.." + filePath, function (videoList) {
+                        $.getJSON("mediagallery/getVideoList.php", "file=" + phpRootReset + filePath, function (videoList) {
                             var videoId = '';
                             var videoName = '';
                             $.each(videoList, function (index, videoStr) {
@@ -313,7 +328,7 @@ var mgallery = (function(){
                         //console.log("fileNameNoExt = " + fileNameNoExt+", url = "+filePath);
                         audioFiles = true;
                         plIndex++;
-                        playlist.push({ "title": fileNameNoExt, "url": filePath });
+                        playlist.push({ "title": fileNameNoExt, "url": MediaRootDir + filePath });
 
                         // add the table rows for the playlist
                         // build a table then append to the thumbnail container
@@ -341,7 +356,6 @@ var mgallery = (function(){
                             .appendTo($folderContainer);
                     }
                 }
-                //.prop('style','margin-right: 10px; margin-bottom: 10px; border:1px solid;')
             });
             
             // if there were any MP3's, build a player with the playlist of MP3's
@@ -385,37 +399,33 @@ var mgallery = (function(){
             console.log("getJSON getDirList failed, textStatus = " + textStatus);
             console.log("Exception = " + exception);
         });
+ 
+    } // function displayThumbnails(dirName) {
 
-    } 
+    function setBreadcrumbs(dirName) {
+        $breadcrumbContainer.empty();
 
-     // linkClass
-     function setBreadcrumbs(dirName) {
-         $breadcrumbContainer.empty();
-
-         var dirArray = dirName.split("/");
-         //console.log('setBreadcrumbs dirName = '+dirName);
-         var urlStr = '';
-         $.each(dirArray, function (index, dirName2) {
-             if (index == dirArray.length - 1) {
-                 $('<li>')
-                     .prop('class', 'active')
-                     .html(dirName2)
-                     .appendTo($breadcrumbContainer);
-             } else {
-                 if (index == 0) {
-                     urlStr += dirName2;
-                 } else {
-                     urlStr += '/' + dirName2;
-                 }
-                 $('<li>')
-                     .append($('<a>').prop('href', '#').html(dirName2).prop('class', MediaFolderLinkClass).attr('data-dir', urlStr))
-                     .appendTo($breadcrumbContainer);
-             }
-         });
-     }
+        var dirArray = dirName.split("/");
+        //console.log('setBreadcrumbs dirName = '+dirName);
+        var urlStr = '';
+        $.each(dirArray, function (index, dirName2) {
+            if (index == dirArray.length - 1) {
+                $('<li>').prop('class', 'active').html(dirName2).appendTo($breadcrumbContainer);
+            } else {
+                if (index == 0) {
+                    urlStr += dirName2;
+                } else {
+                    urlStr += '/' + dirName2;
+                }
+                $('<li>').append($('<a>').prop('href', '#').html(dirName2).prop('class', MediaFolderLinkClass)
+                    .attr('data-dir', urlStr))
+                    .appendTo($breadcrumbContainer);
+            }
+        });
+    } // function setBreadcrumbs(dirName) {
 
 
-     // Audio ========================================================================================
+    // Audio ========================================================================================
     function loadSong(index) {
         plIndex = index;
 
@@ -441,7 +451,42 @@ var mgallery = (function(){
         }
     }
 
-     
+/*
+1 = MEDIA_ERR_ABORTED - fetching process aborted by user
+2 = MEDIA_ERR_NETWORK - error occurred when downloading
+3 = MEDIA_ERR_DECODE - error occurred when decoding
+4 = MEDIA_ERR_SRC_NOT_SUPPORTED - audio/video not supported
+
+Found 5 errors/warnings with at least 1 critical issue.
+mediaelement-debug.js:1 URL has invalid characters. Remove any special characters and mutated vowels. priority level: 1 urlInValid
+mediaelement-debug.js:1 Content of media file is encoded with gzip/defalte. Make sure to not encode it. It's already encoded. priority level: 1 doubleEncoded
+mediaelement-debug.js:1 Content-Type header for media file is either empty or application/octet-stream. priority level: 2.5 noContentType
+mediaelement-debug.js:1 Content-Length header for media file does not send value. priority level: 3 noContentLength
+mediaelement-debug.js:1 Accept-Ranges header for media file does not send value. Make sure server supports Range requests in bytes priority level: 3 noRange
+
+$('audio').addEventListener('error', function failed(e) {
+   // audio playback failed - show a message saying why
+   // to get the source of the audio element use $(this).src
+   switch (e.target.error.code) {
+     case e.target.error.MEDIA_ERR_ABORTED:
+       alert('You aborted the video playback.');
+       break;
+     case e.target.error.MEDIA_ERR_NETWORK:
+       alert('A network error caused the audio download to fail.');
+       break;
+     case e.target.error.MEDIA_ERR_DECODE:
+       alert('The audio playback was aborted due to a corruption problem or because the video used features your browser did not support.');
+       break;
+     case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+       alert('The video audio not be loaded, either because the server or network failed or because the format is not supported.');
+       break;
+     default:
+       alert('An unknown error occurred.');
+       break;
+   }
+ }, true);
+*/
+
     //=================================================================================================================
     // This is what is exposed from this Module
     return {

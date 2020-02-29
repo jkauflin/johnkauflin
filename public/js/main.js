@@ -39,7 +39,15 @@ var main = (function () {
 	var $document = $(document);
 
 	//=================================================================================================================
-	// Bind events
+    // Bind events
+    
+    // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
+    $document.on('click', '.navbar-collapse.in', function (e) {
+        if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') {
+            $(this).collapse('hide');
+        }
+    });
+
 
 	//=================================================================================================================
 	// Module methods
