@@ -1,8 +1,9 @@
 /*==============================================================================
- * (C) Copyright 2018 John J Kauflin, All rights reserved.
+ * (C) Copyright 2018,2020 John J Kauflin, All rights reserved.
  *----------------------------------------------------------------------------
- * DESCRIPTION:
- * Gallery implementing blueimp - https://github.com/blueimp/Gallery
+ * DESCRIPTION:  A general media gallery that can organize and display photos,
+ *              auido (MP3s), video (YouTube links), and docs (PDF)
+ * Photo Gallery implementing blueimp - https://github.com/blueimp/Gallery
  *----------------------------------------------------------------------------
  * Modification History
  * 2016-03-12 JJK   Got bootstrap gallery version of blueimp working
@@ -31,53 +32,44 @@ var mgallery = (function(){
 
     //=================================================================================================================
     // Private variables for the Module
-    var plIndex = 0;
+    // Playlist array and index (for audio player/playlist diaplay)
     var playlist = [];
-
+    var plIndex = 0;
     // Create an HTML5 audio element in the DOM
     var audioPlayer = document.createElement('audio');
     audioPlayer.setAttribute('controls', true);
     audioPlayer.setAttribute('id', 'AudioPlayer');
-
     audioPlayer.style.border = '0';
     audioPlayer.style.outline = '0'
     audioPlayer.style.padding = '0 0 6px 0';
 
-    /*
-    var elem = document.querySelector('#some-element');
-
-    // Set color to purple
-    elem.style.color = 'purple';
-
-    // Set the background color to a light gray
-    elem.style.backgroundColor = '#e5e5e5';
-
-    // Set the height to 150px
-    elem.style.height = '150px';
-
-.addMusic { margin:0 10px 0 10px;}
-#PlayListContainer { padding: 0 10px 0 10px; margin: 5px 0 0 0; }
-tr.smalltext { font - size: 1em; }
-.audioControlIcon { font - size: 1.8em; margin: 8px 5px 5px 0; }
-*/
+    // Get these from configuration at some point
+    var MediaPageId = "MediaPage";
+    var MediaHeaderId = "MediaHeader";
+    var MediaMenuId = "MediaMenu";
+    var MediaBreadcrumbsId = "MediaBreadcrumbs";
+    var MediaFoldersId = "MediaFolders";
+    var MediaThumbnailsId = "MediaThumbnails";
+    var BlueimpGalleryId = "blueimp-gallery";
+    var MediaFolderLinkClass = "MediaFolderLink";
 
     //=================================================================================================================
     // Variables cached from the DOM
     var $document = $(document);
-    var $menuHeader = $document.find("#MediaHeader");
-    var $menuContainer = $document.find("#MediaMenu");
-    var $breadcrumbContainer = $document.find("#MediaBreadcrumbs");
-    var $folderContainer = $document.find("#MediaFolders");
-    var $thumbnailContainer = $document.find("#MediaThumbnails");
-    var $blueimpGallery = $document.find("#blueimp-gallery");
+    var $menuHeader = $document.find("#"+MediaHeaderId);
+    var $menuContainer = $document.find("#"+MediaMenuId);
+    var $breadcrumbContainer = $document.find("#"+MediaBreadcrumbsId);
+    var $folderContainer = $document.find("#"+MediaFoldersId);
+    var $thumbnailContainer = $document.find("#"+MediaThumbnailsId);
+    var $blueimpGallery = $document.find("#"+BlueimpGalleryId);
 
     //=================================================================================================================
     // Bind events
 
     // Respond to click on a media folder by dynamically building the thumbnail display
-    $document.on("click", ".MediaFolderLink", function () {
+    $document.on("click", "."+MediaFolderLinkClass, function () {
         var $this = $(this);
-        //console.log("Click on .MediaFolderLink, data-dir = " + $this.attr('data-dir'));
+        //console.log("Click on MediaFolderLink, data-dir = " + $this.attr('data-dir'));
         displayThumbnails($this.attr('data-dir'));
     });	
 
@@ -86,6 +78,21 @@ tr.smalltext { font - size: 1em; }
         var $this = $(this);
         displayThumbnails($this.attr('data-dir'));
     });	
+
+    // If there is a data-dir parameter, build and display the Photo page
+    /*
+    var dataDirName = 'data-dir';
+    var results = new RegExp('[\?&]' + dataDirName + '=([^&#]*)').exec(window.location.href);
+    if (results != null) {
+        var dataDir = results[1] || 0;
+        //console.log("dataDir = " + dataDir);
+        displayThumbnails(decodeURIComponent(dataDir));
+        $document.find('#navbar a[href="#' + MediaPageId + '"]').tab('show');
+
+        //var $displayPage = $document.find('#navbar a[href="#' + MediaPageId + '"]');
+        //$displayPage.tab('show');
+    }
+    */
 
     // Add event listeners to the audio player
     // When a song ends, see if there is a next one to play
@@ -133,37 +140,16 @@ tr.smalltext { font - size: 1em; }
         $('#blueimp-gallery').data('fullScreen', $(this).is(':checked'))
     })
 
-
-    // If there is a data-dir parameters, build and display the Photo page
-    //var dataDir = decodeURIComponent(util.urlParam('data-dir'));
-    // *** if coming in with a qualified link - look for the data-dir and display that one
-    //     ELSE just display the default Photos root
-    /*
-    var dataDir = util.urlParam('data-dir');
-    //console.log("dataDir = " + dataDir);
-    if (dataDir != null) {
-        var $this = $(this);
-        displayThumbnails(decodeURIComponent(dataDir), "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
-
-        var $document = $(document);
-        var $displayPage = $document.find('#navbar a[href="#PhotosPage"]');
-
-        $displayPage.tab('show');
-    } else {
-        displayThumbnails(photosRoot, "photoFolderLink", $("#PhotosBreadcrumbs"), $("#PhotosFolders"), $("#PhotosThumbnails"));
-    }
-    */
-
     //=================================================================================================================
     // Module methods
 
      // Create a collapsible menu from a directory structure
      function createMenu(dirName, panelGroupId) {
-         //console.log("createMenu, dir=" + dirName + ", panelGroupId = " + panelGroupId);
+         console.log("createMenu, dir=" + dirName + ", panelGroupId = " + panelGroupId);
          $menuHeader.text(panelGroupId);
 
          //Pass in sort (0 for alpha photos and 1 for years) ???
-         $.getJSON("getDirList.php", "dir=" + dirName, function (dirList) {
+         $.getJSON("mediagallery/getDirList.php", "dir=.." + dirName, function (dirList) {
             var htmlStr = '';
             var panelContent = '';
             var panelCollapseIn = "";
@@ -191,12 +177,12 @@ tr.smalltext { font - size: 1em; }
 
                      if (filename.indexOf(".") >= 0) {
                          if (index2 == 0) {
-                             panelContent += '<li><a data-dir="' + dirName + '/' + dir.filename + '" class="MediaFolderLink" href="#">' + dir.filename + '</a></li>';
+                             panelContent += '<li><a data-dir="' + dirName + '/' + dir.filename + '" class="'+MediaFolderLinkClass+'" href="#">' + dir.filename + '</a></li>';
                          }
                          return true;
                      }
                      
-                     panelContent += '<li><a data-dir="' + dirName + '/' + dir.filename + '/' + filename + '" class="MediaFolderLink" href="#">' + filename + '</a></li>';
+                     panelContent += '<li><a data-dir="' + dirName + '/' + dir.filename + '/' + filename + '" class="'+MediaFolderLinkClass+'" href="#">' + filename + '</a></li>';
 
                  });
                  panelContent += '</ul>';
@@ -243,8 +229,8 @@ tr.smalltext { font - size: 1em; }
         var photosThumbDir = photosThumbsRoot + subPath;
         var photosSmallerDir = photosSmallerRoot + subPath;
 
-        //console.log("getDirList dirName = " + dirName);
-        $.getJSON("getDirList.php", "dir=" + dirName, function (dirList) {
+        console.log("getDirList dirName = " + dirName);
+        $.getJSON("mediagallery/getDirList.php", "dir=.." + dirName, function (dirList) {
             // loop through the list and display thumbnails in a div
             var periodPos = 0;
             var fileExt = '';
@@ -293,7 +279,7 @@ tr.smalltext { font - size: 1em; }
                     } else if (dir.filename == "youtube.txt") {
                         // Get the list of youtube ids
                         var cPos = 0;
-                        $.getJSON("getVideoList.php", "file=" + filePath, function (videoList) {
+                        $.getJSON("mediagallery/getVideoList.php", "file=.." + filePath, function (videoList) {
                             var videoId = '';
                             var videoName = '';
                             $.each(videoList, function (index, videoStr) {
@@ -303,9 +289,9 @@ tr.smalltext { font - size: 1em; }
                                 cPos = videoStr.indexOf(":");
                                 if (cPos >= 0) {
                                     videoName = videoStr.substr(0, cPos);
-                                    videoId = util.cleanStr(videoStr.substr(cPos + 2));
+                                    videoId = videoStr.substr(cPos + 2);
                                 } else {
-                                    videoId = util.cleanStr(videoStr);
+                                    videoId = videoStr;
                                 }
 
                                 if (videoId != '') {
@@ -350,7 +336,7 @@ tr.smalltext { font - size: 1em; }
                         //console.log("Folder container, dir.filename = " + dir.filename);
                         $('<button>')
                             .append($('<span>').prop('class', "glyphicon glyphicon-folder-open").html(' ' + dir.filename))
-                            .prop('class', 'btn dirButton MediaFolderLink')
+                            .prop('class', 'btn dirButton '+MediaFolderLinkClass)
                             .attr('data-dir', dirName + '/' + dir.filename)
                             .appendTo($folderContainer);
                     }
@@ -422,7 +408,7 @@ tr.smalltext { font - size: 1em; }
                      urlStr += '/' + dirName2;
                  }
                  $('<li>')
-                     .append($('<a>').prop('href', '#').html(dirName2).prop('class', "MediaFolderLink").attr('data-dir', urlStr))
+                     .append($('<a>').prop('href', '#').html(dirName2).prop('class', MediaFolderLinkClass).attr('data-dir', urlStr))
                      .appendTo($breadcrumbContainer);
              }
          });
