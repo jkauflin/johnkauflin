@@ -328,7 +328,7 @@ var mgallery = (function(){
                         //console.log("fileNameNoExt = " + fileNameNoExt+", url = "+filePath);
                         audioFiles = true;
                         plIndex++;
-                        playlist.push({ "title": fileNameNoExt, "url": MediaRootDir + filePath });
+                        playlist.push({ "title": fileNameNoExt, "url": filePath });
 
                         // add the table rows for the playlist
                         // build a table then append to the thumbnail container
