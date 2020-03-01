@@ -81,22 +81,71 @@ var mgallery = (function(){
         displayThumbnails($this.attr('data-dir'));
     });	
 
+    /*
+    $document.on("mousedown", "." + MediaFolderLinkClass, function (event) {
+        if (event.which == 3) {
+            //navigator.clipboard.writeText(text)
+            var $this = $(this);
+            console.log("Right-Click on MediaFolderLink, data-dir = " + $this.attr('data-dir'));
+        }
+
+    });	
+    $document.on("mousedown", ".img-thumbnail", function (event) {
+        if (event.which == 3) {
+            //navigator.clipboard.writeText(text)
+            var $this = $(this);
+            console.log("Right-Click on img-thumbnail, href = " + $this.attr('href'));
+        }
+
+    });	
+    */
+
+    /*
+    $("#myId").mousedown(function (event) {
+        if (event.which == 3) {
+            navigator.clipboard.writeText(text)
+            alert("Right mouse button clicked on element with id myId");
+        }
+    });
+
+    window.oncontextmenu = function () {
+        alert('Right Click')
+    }
+    */
+
     // Respond to click on a bootstrap navigation tab
     $document.on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
         var $this = $(this);
-        displayThumbnails($this.attr('data-dir'));
+        var dirName = $this.attr('data-dir');
+        // When the user clicks on a menu tab, build and display the thumbnails
+        // if not coming from a mediaURL and has a defined media dirName
+        if (!mediaURI && dirName != undefined) {
+            displayThumbnails(dirName);
+        }
+        // Reset after responding to the media URI show
+        mediaURI = false;
     });	
 
     // If there is a data-dir parameter, build and display the Photo page
-    var dataDirName = 'data-dir';
+    var mediaURI = false;
+    var dataDirName = 'media-dir';
     var results = new RegExp('[\?&]' + dataDirName + '=([^&#]*)').exec(window.location.href);
     if (results != null) {
-        var dataDir = results[1] || 0;
-        //console.log("dataDir = " + dataDir);
-        displayThumbnails(decodeURIComponent(dataDir));
-        $document.find('#navbar a[href="#' + MediaPageId + '"]').tab('show');
-        //var $displayPage = $document.find('#navbar a[href="#' + MediaPageId + '"]');
-        //$displayPage.tab('show');
+        mediaURI = true;
+        var dirName = results[1] || 0;
+        //console.log("mediaURI dirName = " + dirName);
+
+        var firstSlashPos = dirName.indexOf("/");
+        var rootDir = dirName;
+        if (firstSlashPos >= 0) {
+            rootDir = dirName.substr(0, firstSlashPos);
+        }
+
+        // Create the root menu and thumbnials for the passed media URI
+        createMenu(rootDir);
+        displayThumbnails(decodeURIComponent(dirName));
+        // Display the correct media tab
+        $document.find('#navbar [data-dir="'+rootDir+'"]').tab('show');
     }
 
     // Add event listeners to the audio player
@@ -201,7 +250,9 @@ var mgallery = (function(){
                     }
                     panelCollapseBodyList.append(
                         $('<li>').append(
-                            $('<a>').attr('data-dir', dirName + '/' + dir.filename+ '/' + filename).attr('href', "#").prop('class', MediaFolderLinkClass)
+                            $('<a>').attr('data-dir', dirName + '/' + dir.filename + '/' + filename)
+                            .attr('href', "?media-dir=" + dirName + '/' + dir.filename + '/' + filename)
+                            .prop('class', MediaFolderLinkClass)
                                 .text(filename))
                     );
                 });
@@ -219,6 +270,7 @@ var mgallery = (function(){
 
     // Create breadcrumbs, folder and entity links (for photos, audio, video, etc.)
     function displayThumbnails(dirName) {
+        //console.log("displayThumbnails, dirName = " + dirName);
         setBreadcrumbs(dirName);
         $folderContainer.empty();
         $thumbnailContainer.empty();
@@ -354,6 +406,26 @@ var mgallery = (function(){
                             .prop('class', 'btn dirButton '+MediaFolderLinkClass)
                             .attr('data-dir', dirName + '/' + dir.filename)
                             .appendTo($folderContainer);
+
+                            /*
+                        <a href="" class="btn btn-info">link</a>
+.dirButton {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border:1px solid;
+    background-color: #d9d9d9;
+}
+                            */
+                            /*
+                        $('<a>').attr('data-dir', dirName + '/' + dir.filename + '/' + filename)
+                            .attr('href', "?media-dir=" + dirName + '/' + dir.filename + '/' + filename)
+                            .prop('class', MediaFolderLinkClass)
+                            */
+
+                            // look at doing as an href and get the link address to be copied
+                            //.attr('href', dirName + '/' + dir.filename)
+//                            .attr('href', "?media-dir=" + dirName + '/' + dir.filename + '/' + filename)
+
                     }
                 }
             });
@@ -404,7 +476,6 @@ var mgallery = (function(){
 
     function setBreadcrumbs(dirName) {
         $breadcrumbContainer.empty();
-
         var dirArray = dirName.split("/");
         //console.log('setBreadcrumbs dirName = '+dirName);
         var urlStr = '';
