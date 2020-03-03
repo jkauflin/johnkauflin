@@ -499,9 +499,7 @@ var mgallery = (function(){
     // Audio ========================================================================================
     function loadSong(index) {
         plIndex = index;
-
         $("#SongTitle").text(playlist[plIndex].title);
-
         $("#AudioPlayer").attr("src", playlist[plIndex].url);
         audioPlayer.pause();
         audioPlayer.load();//suspends and restores all audio element
