@@ -147,14 +147,15 @@ li {
     transform: none; /*translate(0px, 0px);*/
 }
   
-.dirButton {
-    margin-right: 10px; 
-    margin-bottom: 10px; 
-    border:1px solid;
-    background-color: #d9d9d9;
-}
   
 /*
+.dirButton {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid;
+    background-color: #d9d9d9;
+}
+
 .playMusic {font-size: 2em;}
 #PlayListContainer,audio{background:#666;width:400px;padding:20px;}
 audio {border:none; padding:0 0 6px 0;}

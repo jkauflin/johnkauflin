@@ -1,5 +1,5 @@
 /*==============================================================================
- * (C) Copyright 2018,2020 John J Kauflin, All rights reserved.
+ * (C) Copyright 2016,2018,2020 John J Kauflin, All rights reserved.
  *----------------------------------------------------------------------------
  * DESCRIPTION:  A general media gallery that can organize and display photos,
  *              auido (MP3s), video (YouTube links), and docs (PDF)
@@ -28,6 +28,7 @@
  * 2020-02-29 JJK   Working on the audio player and playlist, and moving
  *                  files to a /mediagallery folder (to make a better library)
  *                  Introduced a MediaRootDir
+ * 2020-03-05 JJK   Adding ability to copy URL for folders for links to share
  *============================================================================*/
 var mgallery = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -401,31 +402,12 @@ var mgallery = (function(){
                             // Ignore this folder
                     } else {
                         //console.log("Folder container, dir.filename = " + dir.filename);
-                        $('<button>')
+                        $('<a>').attr('data-dir', dirName + '/' + dir.filename)
+                            .attr('href', "?media-dir=" + dirName + '/' + dir.filename)
+                            .prop('class', 'btn ' + MediaFolderLinkClass)
+                            .attr('style', 'margin-right: 10px; margin-bottom: 10px; border:1px solid; background-color: #d9d9d9; color: black;')
                             .append($('<span>').prop('class', "glyphicon glyphicon-folder-open").html(' ' + dir.filename))
-                            .prop('class', 'btn dirButton '+MediaFolderLinkClass)
-                            .attr('data-dir', dirName + '/' + dir.filename)
                             .appendTo($folderContainer);
-
-                            /*
-                        <a href="" class="btn btn-info">link</a>
-.dirButton {
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border:1px solid;
-    background-color: #d9d9d9;
-}
-                            */
-                            /*
-                        $('<a>').attr('data-dir', dirName + '/' + dir.filename + '/' + filename)
-                            .attr('href', "?media-dir=" + dirName + '/' + dir.filename + '/' + filename)
-                            .prop('class', MediaFolderLinkClass)
-                            */
-
-                            // look at doing as an href and get the link address to be copied
-                            //.attr('href', dirName + '/' + dir.filename)
-//                            .attr('href', "?media-dir=" + dirName + '/' + dir.filename + '/' + filename)
-
                     }
                 }
             });
