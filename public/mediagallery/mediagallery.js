@@ -82,38 +82,6 @@ var mgallery = (function(){
         displayThumbnails($this.attr('data-dir'));
     });	
 
-    /*
-    $document.on("mousedown", "." + MediaFolderLinkClass, function (event) {
-        if (event.which == 3) {
-            //navigator.clipboard.writeText(text)
-            var $this = $(this);
-            console.log("Right-Click on MediaFolderLink, data-dir = " + $this.attr('data-dir'));
-        }
-
-    });	
-    $document.on("mousedown", ".img-thumbnail", function (event) {
-        if (event.which == 3) {
-            //navigator.clipboard.writeText(text)
-            var $this = $(this);
-            console.log("Right-Click on img-thumbnail, href = " + $this.attr('href'));
-        }
-
-    });	
-    */
-
-    /*
-    $("#myId").mousedown(function (event) {
-        if (event.which == 3) {
-            navigator.clipboard.writeText(text)
-            alert("Right mouse button clicked on element with id myId");
-        }
-    });
-
-    window.oncontextmenu = function () {
-        alert('Right Click')
-    }
-    */
-
     // Respond to click on a bootstrap navigation tab
     $document.on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
         var $this = $(this);
