@@ -20,6 +20,7 @@ ssl/
 package-lock.json
 public/Data
 public/Media
+public/MediaGallery
 public/dotenv.php
 public/jjkBands
 public/jjkMusic
