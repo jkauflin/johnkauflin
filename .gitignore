@@ -18,8 +18,6 @@ yarn-error.log*
 *.log
 ssl/
 package-lock.json
-Media
-MediaGallery
 dotenv.php
 .editorconfig
 emoncms
