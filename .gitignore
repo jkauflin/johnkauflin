@@ -20,11 +20,8 @@ ssl/
 package-lock.json
 dotenv.php
 .editorconfig
-emoncms
-googleAnalytics.js
+emoncms*
 images
 secrets.php
 Media
 MediaGallery
-home
-
