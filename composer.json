@@ -1,0 +1,7 @@
+{
+    "require": {
+        "firebase/php-jwt": ">=5.2.0",
+        "jkauflin/jjklogin": ">=1.0.0",
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}
