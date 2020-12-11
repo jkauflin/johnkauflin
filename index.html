@@ -29,16 +29,12 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/css/blueimp-gallery.min.css">
     <!--
-	<link rel="stylesheet" href="css/main.css?ver=3.006">
+    <link rel="stylesheet" href="css/main.css?ver=3.006">
     -->
 </head>
 
 <body>
-<!--[if lte IE 9]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-<![endif]-->
-
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" data-toggle="modal" href="#aboutModal">John J Kauflin</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -47,67 +43,42 @@
 
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
+        <ul class="nav navbar-nav ml-auto">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#HomePage"><i class="fa fa-home"></i> Home</a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" data-dir="Photos"><i class="fa fa-camera"></i> Photos</a></li>
-            <li class="nav-item"><a data-toggle="tab" href="#MediaPage" data-dir="Videos" ><i class="fa fa-video-camera"></i> Videos</a></li>
-            <li class="nav-item"><a data-toggle="tab" href="#MediaPage" data-dir="Music" ><i class="fa fa-music"></i> Music</a></li>
-                    <!--
-                                        <li><a href="#MediaPage" data-dir="Docs" data-toggle="tab"><i class="fa fa-file"></i> Docs</a></li>
-                                        <li><a href="/wiki"><i class="fa fa-wikipedia-w"></i> Wiki</a></li>
-                                        <li><a id="login" href="#" role="button">login</a></li>
-                                        <li><a id="logout" href="#" role="button">logout</a></li>
-                                        -->
-
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" data-dir="Videos" ><i class="fa fa-video-camera"></i> Videos</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" data-dir="Music" ><i class="fa fa-music"></i> Music</a></li>
+            <!--
+            <li><a href="#MediaPage" data-dir="Docs" data-toggle="tab"><i class="fa fa-file"></i> Docs</a></li>
+            <li><a href="/wiki"><i class="fa fa-wikipedia-w"></i> Wiki</a></li>
+            <li><a id="login" href="#" role="button">login</a></li>
+            <li><a id="logout" href="#" role="button">logout</a></li>
+            -->
         </ul>
     </div>
 </nav>
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" data-toggle="modal" href="#aboutModal">John J Kauflin</a>
-            </div> <!-- navbar-header -->
-            
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="#HomePage" data-toggle="tab"><i class="fa fa-home"></i> Home</a></li>
-					<li><a href="#MediaPage" data-dir="Photos" data-toggle="tab"><i class="fa fa-camera"></i> Photos</a></li>
-                    <li><a href="#MediaPage" data-dir="Videos" data-toggle="tab"><i class="fa fa-video-camera"></i> Videos</a></li>
-                    <li><a href="#MediaPage" data-dir="Music" data-toggle="tab"><i class="fa fa-music"></i> Music</a></li>
-                    <!--
-                    <li><a href="#MediaPage" data-dir="Docs" data-toggle="tab"><i class="fa fa-file"></i> Docs</a></li>
-                    <li><a href="/wiki"><i class="fa fa-wikipedia-w"></i> Wiki</a></li>
-                    <li><a id="login" href="#" role="button">login</a></li>
-                    <li><a id="logout" href="#" role="button">logout</a></li>
-                    -->
-				</ul>
-			</div> <!-- navbar-collapse (controlled by the collapse toggle button) -->
-</nav><!-- <nav class="navbar navbar-default navbar-fixed-top"> -->
 
 <div class="container-fluid">
 <div class="tab-content">
 
-
-	<div class="container tab-pane active" id="HomePage">
-		<div class="jumbotron">
-			<img src="Media/images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
-			<h1>Welcome!</h1>
-			<p>Welcome to the John J Kauflin personal website.</p>
-            <h5>(Click on the Menu at the top to see Photos, Videos, and Music)</h5>
-            
+	<div class="container tab-pane show active" id="HomePage">
+		<img src="Media/images/johnk-headshot.jpg" class="rounded-circle float-left m-3" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
+		<h1>Welcome!</h1>
+		<p>Welcome to the John J Kauflin personal website.</p>
             <!--
-            <iframe src="//www.youtube.com/embed/d9nBqqKexPo" frameborder="0" allowfullscreen></iframe>
-            --> 
-		</div>
+
+        <a class="btn btn-lg btn-info m-2 p-3" href="index.html?media-dir=Photos">
+            <i class="fa fa-camera fa-2x float-left"></i> Photos</a>
+
+
+        <a class="btn btn-lg btn-success link-tile" href="index.html?media-dir=Docs">
+                                <i class="fa fa-legal fa-2x pull-left"></i> Covenants <br>and By Laws</a>
+            -->
+
 	</div><!-- end of Home tab -->
 
-	<div class="tab-pane" id="MediaPage">
+	<div class="container tab-pane" id="MediaPage">
         <div class="row">
 			<div class="hidden-xs col-sm-5 col-md-3">
 				<h4 id=MediaHeader></h4>
@@ -320,8 +291,10 @@ in bands with a group of friends since High School and we have created a music c
     <script src="vendor/jkauflin/jjklogin/jjklogin.js?ver=1.000"></script>
     -->
     <script src="js/main.js?ver=3.006"></script>
+    <!--
     <script src="js/googleAnalytics.js?ver=1.001"></script>
     <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    -->
 
 </body>
 </html>
