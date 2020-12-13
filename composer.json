@@ -2,7 +2,7 @@
     "require": {
         "firebase/php-jwt": "^5.2.0",
         "jkauflin/jjklogin": "^1.0.0",
-        "jkauflin/jjkgallery": "^1.0.0",
+        "jkauflin/jjkgallery": "^1.0.4",
         "swiftmailer/swiftmailer": "^6.0"
     }
 }
