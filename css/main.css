@@ -24,6 +24,10 @@ a:active {
 	text-decoration:none; 
 }
 
+li {
+	list-style-type: none;
+}
+
 /* 2016-02-21 JJK */
 /*
 body {
@@ -31,9 +35,6 @@ body {
 	padding-bottom: 70px;
 }
 
-li {
-	list-style-type: none;
-}
 
 #currentTitle {
 	font-weight: bold;
