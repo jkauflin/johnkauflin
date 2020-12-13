@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b6050d6f7a366aa89ef61ffd42788b0",
+    "content-hash": "dd2c556430bab43b6d56059dc996ba1d",
     "packages": [
         {
             "name": "doctrine/lexer",
@@ -66,6 +66,10 @@
                 "parser",
                 "php"
             ],
+            "support": {
+                "issues": "https://github.com/doctrine/lexer/issues",
+                "source": "https://github.com/doctrine/lexer/tree/1.2.1"
+            },
             "funding": [
                 {
                     "url": "https://www.doctrine-project.org/sponsorship.html",
@@ -138,6 +142,10 @@
                 "validation",
                 "validator"
             ],
+            "support": {
+                "issues": "https://github.com/egulias/EmailValidator/issues",
+                "source": "https://github.com/egulias/EmailValidator/tree/2.1.24"
+            },
             "funding": [
                 {
                     "url": "https://github.com/egulias",
@@ -194,20 +202,61 @@
                 "jwt",
                 "php"
             ],
+            "support": {
+                "issues": "https://github.com/firebase/php-jwt/issues",
+                "source": "https://github.com/firebase/php-jwt/tree/master"
+            },
             "time": "2020-03-25T18:49:23+00:00"
         },
         {
-            "name": "jkauflin/jjklogin",
-            "version": "v1.0.0",
+            "name": "jkauflin/jjkgallery",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jkauflin/jjklogin.git",
-                "reference": "3c09b64a9b93917daa60ebc10f2123d00ccb1452"
+                "url": "https://github.com/jkauflin/MediaGallery.git",
+                "reference": "0103d944fc284fbcd68f5bcc0de950c7568a98c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/jjklogin/zipball/3c09b64a9b93917daa60ebc10f2123d00ccb1452",
-                "reference": "3c09b64a9b93917daa60ebc10f2123d00ccb1452",
+                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/0103d944fc284fbcd68f5bcc0de950c7568a98c7",
+                "reference": "0103d944fc284fbcd68f5bcc0de950c7568a98c7",
+                "shasum": ""
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "jkauflin\\jjkgallery\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John J Kauflin",
+                    "email": "johnkauflin@gmail.com"
+                }
+            ],
+            "description": "Web Media Gallery display for photos, videos, music, and docs",
+            "support": {
+                "issues": "https://github.com/jkauflin/MediaGallery/issues",
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.0.2"
+            },
+            "time": "2020-12-13T16:29:33+00:00"
+        },
+        {
+            "name": "jkauflin/jjklogin",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jkauflin/jjklogin.git",
+                "reference": "20f0f6ae7f2dd087370f33116ee35007b7b24602"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jkauflin/jjklogin/zipball/20f0f6ae7f2dd087370f33116ee35007b7b24602",
+                "reference": "20f0f6ae7f2dd087370f33116ee35007b7b24602",
                 "shasum": ""
             },
             "type": "project",
@@ -227,7 +276,11 @@
                 }
             ],
             "description": "JWT PHP based web authentication",
-            "time": "2020-12-09T00:45:39+00:00"
+            "support": {
+                "issues": "https://github.com/jkauflin/jjklogin/issues",
+                "source": "https://github.com/jkauflin/jjklogin/tree/v1.0.1"
+            },
+            "time": "2020-12-11T19:25:13+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -288,6 +341,10 @@
                 "mail",
                 "mailer"
             ],
+            "support": {
+                "issues": "https://github.com/swiftmailer/swiftmailer/issues",
+                "source": "https://github.com/swiftmailer/swiftmailer/tree/v6.2.4"
+            },
             "funding": [
                 {
                     "url": "https://github.com/fabpot",
@@ -361,6 +418,9 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-iconv/tree/v1.20.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -445,6 +505,9 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.20.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -526,6 +589,9 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.20.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -603,6 +669,9 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.20.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -676,6 +745,9 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php72/tree/v1.20.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -701,5 +773,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

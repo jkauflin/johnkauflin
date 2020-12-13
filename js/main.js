@@ -27,6 +27,7 @@
  * 2018-10-07 JJK	Moving menus code to jjk-content-menus library
  * 2018-12-26 JJK	Update to HTML5 boilerplate 6.1
  * 2018-12-26 JJK   Re-factored for modules
+ * 2020-12-12 JJK   Making updates for bootstrap 4
  *============================================================================*/
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
@@ -42,17 +43,9 @@ var main = (function () {
     // Bind events
     
     // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
-    /*
-    $document.on('click', '.navbar-collapse.in', function (e) {
-        if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') {
-            $(this).collapse('hide');
-        }
-    });
-    */
     $(".navbar-nav li a:not('.dropdown-toggle')").on('click', function () { 
         $('.navbar-collapse').collapse('hide'); 
     });
-
 
 
 	//=================================================================================================================
