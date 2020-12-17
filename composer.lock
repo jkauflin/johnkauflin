@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3197105778b760ba92f151e2ace00824",
+    "content-hash": "4a61c1bc0ff8adbe508fa862967a45e4",
     "packages": [
         {
             "name": "doctrine/lexer",
@@ -247,17 +247,22 @@
         },
         {
             "name": "jkauflin/jjklogin",
-            "version": "v1.0.1",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/jjklogin.git",
-                "reference": "20f0f6ae7f2dd087370f33116ee35007b7b24602"
+                "reference": "6ebdf2ce31a8938458b3cf348f1ecefd7cc23147"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/jjklogin/zipball/20f0f6ae7f2dd087370f33116ee35007b7b24602",
-                "reference": "20f0f6ae7f2dd087370f33116ee35007b7b24602",
+                "url": "https://api.github.com/repos/jkauflin/jjklogin/zipball/6ebdf2ce31a8938458b3cf348f1ecefd7cc23147",
+                "reference": "6ebdf2ce31a8938458b3cf348f1ecefd7cc23147",
                 "shasum": ""
+            },
+            "require": {
+                "firebase/php-jwt": "^5.2.0",
+                "php": ">=7.0.0",
+                "swiftmailer/swiftmailer": "^6.0"
             },
             "type": "project",
             "autoload": {
@@ -278,9 +283,9 @@
             "description": "JWT PHP based web authentication",
             "support": {
                 "issues": "https://github.com/jkauflin/jjklogin/issues",
-                "source": "https://github.com/jkauflin/jjklogin/tree/v1.0.1"
+                "source": "https://github.com/jkauflin/jjklogin/tree/v1.0.3"
             },
-            "time": "2020-12-11T19:25:13+00:00"
+            "time": "2020-12-17T15:25:21+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -771,7 +776,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=7.0.0"
+    },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
