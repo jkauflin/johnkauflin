@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38c21ff14d808e67ec17ea7f0751c96f",
+    "content-hash": "921b6490e831a0eccfb8c08b0e32970a",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -62,16 +62,16 @@
         },
         {
             "name": "jkauflin/jjkgallery",
-            "version": "v1.0.5",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/MediaGallery.git",
-                "reference": "8187a6d846af27ddad9eaa9aea5f574dc0693097"
+                "reference": "799c2d4beb809c14ca1255a51fd5d379746c7e16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/8187a6d846af27ddad9eaa9aea5f574dc0693097",
-                "reference": "8187a6d846af27ddad9eaa9aea5f574dc0693097",
+                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/799c2d4beb809c14ca1255a51fd5d379746c7e16",
+                "reference": "799c2d4beb809c14ca1255a51fd5d379746c7e16",
                 "shasum": ""
             },
             "type": "project",
@@ -93,9 +93,9 @@
             "description": "Web Media Gallery display for photos, videos, music, and docs",
             "support": {
                 "issues": "https://github.com/jkauflin/MediaGallery/issues",
-                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.0.5"
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.0"
             },
-            "time": "2020-12-19T00:34:24+00:00"
+            "time": "2020-12-19T19:29:20+00:00"
         },
         {
             "name": "jkauflin/jjklogin",
