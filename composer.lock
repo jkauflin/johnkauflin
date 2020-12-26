@@ -99,16 +99,16 @@
         },
         {
             "name": "jkauflin/jjklogin",
-            "version": "v1.1.3",
+            "version": "v1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/jjklogin.git",
-                "reference": "28b980f1386c9c5cabf9d0a54dcac4411a6dbffe"
+                "reference": "e03f14c4fb6ed49a1c04a9638c12a9ae29482d2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/jjklogin/zipball/28b980f1386c9c5cabf9d0a54dcac4411a6dbffe",
-                "reference": "28b980f1386c9c5cabf9d0a54dcac4411a6dbffe",
+                "url": "https://api.github.com/repos/jkauflin/jjklogin/zipball/e03f14c4fb6ed49a1c04a9638c12a9ae29482d2d",
+                "reference": "e03f14c4fb6ed49a1c04a9638c12a9ae29482d2d",
                 "shasum": ""
             },
             "require": {
@@ -134,9 +134,9 @@
             "description": "JWT PHP based web authentication",
             "support": {
                 "issues": "https://github.com/jkauflin/jjklogin/issues",
-                "source": "https://github.com/jkauflin/jjklogin/tree/v1.1.3"
+                "source": "https://github.com/jkauflin/jjklogin/tree/v1.1.4"
             },
-            "time": "2020-12-23T14:15:03+00:00"
+            "time": "2020-12-24T19:46:38+00:00"
         }
     ],
     "packages-dev": [],
