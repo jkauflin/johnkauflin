@@ -91,10 +91,6 @@
                 }
             ],
             "description": "Web Media Gallery display for photos, videos, music, and docs",
-            "support": {
-                "issues": "https://github.com/jkauflin/MediaGallery/issues",
-                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.2"
-            },
             "time": "2020-12-26T20:42:38+00:00"
         },
         {
@@ -132,10 +128,6 @@
                 }
             ],
             "description": "JWT PHP based web authentication",
-            "support": {
-                "issues": "https://github.com/jkauflin/jjklogin/issues",
-                "source": "https://github.com/jkauflin/jjklogin/tree/v1.1.4"
-            },
             "time": "2020-12-24T19:46:38+00:00"
         }
     ],
@@ -149,5 +141,5 @@
         "php": ">=7.0.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "1.1.0"
 }

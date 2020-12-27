@@ -18,8 +18,9 @@ var spotify = (function () {
     var $PlaylistNav = $document.find('#PlaylistNav');
 
     $jjkloginEventElement.on('userJJKLoginAuth', function (event) {
-        console.log('After login, username = ' + event.originalEvent.detail.userName);
+        //console.log('After login, username = ' + event.originalEvent.detail.userName);
         if (event.originalEvent.detail.userLevel > 5) {
+            // If the user has authorization, make the Playlist menu item visible
             $PlaylistNav.removeClass("d-none");
         }
     });
