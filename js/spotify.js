@@ -15,12 +15,11 @@ var spotify = (function () {
 	// Variables cached from the DOM
 	var $document = $(document);
     var $jjkloginEventElement = $document.find('#jjkloginEventElement')
-    var $PlaylistNav = $document.find('PlaylistNav');
+    var $PlaylistNav = $document.find('#PlaylistNav');
 
     $jjkloginEventElement.on('userJJKLoginAuth', function (event) {
         console.log('After login, username = ' + event.originalEvent.detail.userName);
         if (event.originalEvent.detail.userLevel > 5) {
-            console.log("user auth, remove d-none from PlaylistNav");
             $PlaylistNav.removeClass("d-none");
         }
     });
