@@ -46,12 +46,16 @@ var spotify = (function () {
     // Bind events
     if (access_token == null || access_token == undefined) {
         // No access token
+        /*
         window.onSpotifyWebPlaybackSDKReady = () => {
         };
+        */
     } else {
         spotifyApi.setAccessToken(access_token);
         $SpotifyIcon.attr("src", "Media/images/Spotify_Icon_RGB_Green.png");
+        console.log(">>> spotify api set with access token");
 
+        /*
         window.onSpotifyWebPlaybackSDKReady = () => {
             const token = access_token;
             player = new Spotify.Player({
@@ -106,6 +110,7 @@ var spotify = (function () {
             // Connect to the player!
             player.connect();
         };
+        */
     }
 
     function stop() {

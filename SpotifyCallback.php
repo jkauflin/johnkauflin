@@ -36,7 +36,7 @@ require_once $extIncludePath.'jjkSpotifySettings.php';
 
     // Send the user along and fetch some data!
     //header('Location: /bot/player.html?' . 'access_token=' . $accessToken);
-    header('Location: /?' . 'access_token=' . $accessToken);
+    header('Location: /jjk?' . 'access_token=' . $accessToken);
     die();
 
 ?>

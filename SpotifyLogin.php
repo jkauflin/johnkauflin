@@ -34,7 +34,6 @@ require_once $extIncludePath.'jjkSpotifySettings.php';
     $options = [
         'scope' => [
             'streaming',
-            'user-read-birthdate',
             'user-read-email',
             'user-read-private',
             'user-read-playback-state',

@@ -91,14 +91,17 @@
 
     <div class="tab-pane" id="PlaylistPage">
         <div class="row">
-			<div class="col-sm-5 col-md-3 d-none d-sm-block">
+			<div class="col-sm-5 col-md-3">
                 <h5>Playlist</h5>
 			</div>
 			<div class="col-sm-7 col-md-9">
-
+                <!--
+                <button id="SpotifyLogin" type="button" class="btn btn-success">Spotify Login</button>
+<img id="SpotifyIcon" class="border float-right" alt="spotify icon" src="Media/images/Spotify_Icon_RGB_White.png">                -->
                 <!-- Need to do the login as a regular request, not an AJAX call from the javascript -->
-                <a id="SpotifyLogin" href="SpotifyLogin.php"><img id="SpotifyIcon" class="header-image2 right" alt="spotify icon"
-                    src="Media/images/Spotify_Icon_RGB_White.png"></a>
+                <a id="SpotifyLogin" type="button" class="btn btn-success float-right m-2" href="SpotifyLogin.php">
+                    
+                    Spotify Login</a>
 
 
             </div>
@@ -165,8 +168,10 @@ in bands with a group of friends since High School and we have created a music c
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/js/blueimp-gallery.min.js"></script>
 
     <script src="https://unpkg.com/rivescript@latest/dist/rivescript.min.js" type="text/javascript"></script>
-    
+
+    <!--
     <script src="https://sdk.scdn.co/spotify-player.js" type="text/javascript"></script>
+    -->
     <script src="https://cdn.jsdelivr.net/npm/spotify-web-api-js@1.4.0/src/spotify-web-api.min.js"
         type="text/javascript"></script>
 
