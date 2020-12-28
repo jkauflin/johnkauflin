@@ -5,6 +5,7 @@
  *----------------------------------------------------------------------------
  * Modification History
  * 2020-12-17 JJK 	Initial version
+ * 2020-12-28 JJK   Adding function to read user library and playlists
  *============================================================================*/
 var spotify = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
@@ -42,6 +43,63 @@ var spotify = (function () {
         }
     });
 
+    function testList() {
+        spotifyApi.getUserPlaylists()
+          .then(function(data) {
+            console.log('User playlists', data);
+          }, function(err) {
+            console.error(err);
+          });
+    }
+
+    function testList2() {
+        spotifyApi.getUserPlaylists()
+          .then(function(data) {
+            console.log('User playlists', data);
+          }, function(err) {
+            console.error(err);
+          });
+
+        // documentation https://jmperezperez.com/spotify-web-api-js/
+        // https://developer.spotify.com/documentation/web-api/reference-beta/#category-library
+
+        spotifyApi.getMySavedTracks(
+            {  }
+            , function (err, response) {
+                if (err) console.error(err);
+                else {
+                    console.log('Search response = ' + JSON.stringify(response));
+                    /*
+                    console.log('Search response = ' + JSON.stringify(response));
+                    console.log('Search response.artists = ' + response.artists);
+                    console.log('Search response.albums = ' + response.albums);
+                    console.log('Search response.playlist = ' + response.playlist);
+                    console.log('Search response.tracks = ' + response.tracks);
+                    */
+
+                    /*
+                    var contextUri;
+                    var uris;
+
+                    if (response.tracks != undefined) {
+                        uris = [response.tracks.items[0].uri];
+                    }
+                    else if (response.artists != undefined) {
+                        contextUri = [response.artists.items[0].uri];
+                        //  "uri": "spotify:artist:08td7MxkoHQkXnWAYD8d6Q"
+                    }
+                    else if (response.albums != undefined) {
+                        contextUri = [response.albums.items[0].uri];
+                    }
+                    else if (response.playlist != undefined) {
+                        contextUri = [response.playlist.items[0].uri];
+                    }
+                    */
+                }
+            });
+
+    }
+
 	//=================================================================================================================
     // Bind events
     if (access_token == null || access_token == undefined) {
@@ -53,11 +111,13 @@ var spotify = (function () {
     } else {
         spotifyApi.setAccessToken(access_token);
         $SpotifyIcon.attr("src", "Media/images/Spotify_Icon_RGB_Green.png");
-        console.log(">>> spotify api set with access token");
+        //console.log(">>> spotify api set with access token");
 
         $(".nav-link.active").removeClass("active");
         $('.navbar-nav a[href="#PlaylistPage"]').tab('show')
         $('.navbar-nav a[href="#PlaylistPage"]').addClass('active');
+
+        testList();
 
         /*
         window.onSpotifyWebPlaybackSDKReady = () => {
@@ -254,26 +314,6 @@ x += myObj.cars[i];
                 if (err) console.error(err);
                 else console.log('Playing song');
             });
-
-
-        /*
-        // passing a callback - get Elvis' albums in range [20...29]
-        spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {
-            limit: 10,
-            offset: 20
-        }, function (err, data) {
-            if (err) console.error(err);
-            else console.log('Artist albums', data);
-        });
-
-            if (response.length > 0) {
-                for (var current in response) {
-                    //console.log("question = " + response[current].question);
-                } // loop through JSON list
-            }
-
-        */
-
     }
 
     function urlParam(name) {
@@ -285,13 +325,6 @@ x += myObj.cars[i];
             return results[1] || 0;
         }
     }
-    /*
-example.com?param1=name&param2=&id=6
-    urlParam('param1');     // name
-    urlParam('id');         // 6
-    rlParam('param2');      // null
-*/
-
 
 	//=================================================================================================================
 	// Module methods

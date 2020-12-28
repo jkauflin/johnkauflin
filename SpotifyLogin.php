@@ -10,6 +10,8 @@
 * 2020-05-10 JJK  Updated to latest version of the library and ran:
 *   composer require jwilsson/spotify-web-api-php
 * 2020-12-27 JJK  Updated for new include logic
+* 2020-12-28 JJK  Added scope to read user library, and check of user
+*                 authentication and permission
 *============================================================================*/
 // Define a super global constant for the log file (this will be in scope for all functions)
 define("LOG_FILE", "./php.log");
@@ -52,9 +54,11 @@ require_once $extIncludePath.'jjkSpotifySettings.php';
 
     $options = [
         'scope' => [
-            'streaming',
-            'user-read-currently-playing',
-            'user-modify-playback-state'
+            'user-library-read',
+            'playlist-modify-public',
+            'playlist-modify-private',
+            'playlist-read-private',
+            'playlist-read-collaborative'
         ],
     ];
 
