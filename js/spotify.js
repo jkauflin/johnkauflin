@@ -1,7 +1,16 @@
 /*==============================================================================
  * (C) Copyright 2020 John J Kauflin, All rights reserved. 
  *----------------------------------------------------------------------------
- * DESCRIPTION: 
+ * DESCRIPTION: Spotify functions for the website.  It uses the following
+ *  API wrapper to call the Spotify RESTful services:
+ *      https://github.com/JMPerez/spotify-web-api-js
+ *      https://jmperezperez.com/spotify-web-api-js/
+ *      https://developer.spotify.com/documentation/web-api/reference-beta/#category-library
+ * 
+ * Documentation for the PHP API wrapper:
+ * https://github.com/jwilsson/spotify-web-api-php/tree/master/docs
+ * https://github.com/jwilsson/spotify-web-api-php
+ * 
  *----------------------------------------------------------------------------
  * Modification History
  * 2020-12-17 JJK 	Initial version
@@ -29,12 +38,13 @@ var spotify = (function () {
 	//=================================================================================================================
 	// Variables cached from the DOM
 	var $document = $(document);
+    var $PlaylistPage = $('#PlaylistPage');
     var $jjkloginEventElement = $document.find('#jjkloginEventElement')
     var $PlaylistNav = $document.find('#PlaylistNav');
-
     var $SpotifyIcon = $document.find("#SpotifyIcon");
 
-
+	//=================================================================================================================
+    // Bind events
     $jjkloginEventElement.on('userJJKLoginAuth', function (event) {
         //console.log('After login, username = ' + event.originalEvent.detail.userName);
         if (event.originalEvent.detail.userLevel > 5) {
@@ -43,65 +53,8 @@ var spotify = (function () {
         }
     });
 
-    function testList() {
-        spotifyApi.getUserPlaylists()
-          .then(function(data) {
-            console.log('User playlists', data);
-          }, function(err) {
-            console.error(err);
-          });
-    }
+    $PlaylistPage.on("click", "#CreatePlaylist", _createPlaylist);
 
-    function testList2() {
-        spotifyApi.getUserPlaylists()
-          .then(function(data) {
-            console.log('User playlists', data);
-          }, function(err) {
-            console.error(err);
-          });
-
-        // documentation https://jmperezperez.com/spotify-web-api-js/
-        // https://developer.spotify.com/documentation/web-api/reference-beta/#category-library
-
-        spotifyApi.getMySavedTracks(
-            {  }
-            , function (err, response) {
-                if (err) console.error(err);
-                else {
-                    console.log('Search response = ' + JSON.stringify(response));
-                    /*
-                    console.log('Search response = ' + JSON.stringify(response));
-                    console.log('Search response.artists = ' + response.artists);
-                    console.log('Search response.albums = ' + response.albums);
-                    console.log('Search response.playlist = ' + response.playlist);
-                    console.log('Search response.tracks = ' + response.tracks);
-                    */
-
-                    /*
-                    var contextUri;
-                    var uris;
-
-                    if (response.tracks != undefined) {
-                        uris = [response.tracks.items[0].uri];
-                    }
-                    else if (response.artists != undefined) {
-                        contextUri = [response.artists.items[0].uri];
-                        //  "uri": "spotify:artist:08td7MxkoHQkXnWAYD8d6Q"
-                    }
-                    else if (response.albums != undefined) {
-                        contextUri = [response.albums.items[0].uri];
-                    }
-                    else if (response.playlist != undefined) {
-                        contextUri = [response.playlist.items[0].uri];
-                    }
-                    */
-                }
-            });
-
-    }
-
-	//=================================================================================================================
-    // Bind events
     if (access_token == null || access_token == undefined) {
         // No access token
         /*
@@ -109,15 +62,14 @@ var spotify = (function () {
         };
         */
     } else {
+        // If an access token is included on the URL, set into the API, replace
+        // the black logo with the green logo, and activate the playlist tab
         spotifyApi.setAccessToken(access_token);
         $SpotifyIcon.attr("src", "Media/images/Spotify_Icon_RGB_Green.png");
-        //console.log(">>> spotify api set with access token");
 
         $(".nav-link.active").removeClass("active");
         $('.navbar-nav a[href="#PlaylistPage"]').tab('show')
         $('.navbar-nav a[href="#PlaylistPage"]').addClass('active');
-
-        testList();
 
         /*
         window.onSpotifyWebPlaybackSDKReady = () => {
@@ -176,6 +128,38 @@ var spotify = (function () {
         };
         */
     }
+
+    function _createPlaylist() {
+
+        var totalItems = 0;
+        var queryLimit = 10;
+        var queryOffset = 0;
+        var itemsRead = 0;
+
+            spotifyApi.getMySavedTracks({ limit: queryLimit, offset: queryOffset })
+                .then(function (response) {
+                    console.log(response);
+                    console.log("items.length = " + response.items.length);
+                    console.log("total = " + response.total);
+                    totalTracks = response.total;
+                    $.each(response.items, function (index, item) {
+                        console.log(index + " item.track.name = " + item.track.name);
+                        //return spotifyApi.getTrack(item.track.id);
+                    });
+
+                })
+                /*
+                .then(function (response) {
+                    console.log(response);
+                })
+                */
+                .catch(function (err) {
+                    console.error("Error in Spotify call, err = " + err);
+                });
+
+
+    } // function _createPlaylist() {
+
 
     function stop() {
         if (player != null) {
