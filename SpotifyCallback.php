@@ -21,11 +21,10 @@ $webRootDirOffset = substr_count(strstr(dirname(__FILE__),"public_html"),DIRECTO
 $extIncludePath = dirname(__FILE__, $webRootDirOffset+1).DIRECTORY_SEPARATOR.'external_includes'.DIRECTORY_SEPARATOR;
 require_once $extIncludePath.'jjkSpotifySettings.php';
 
-
     $session = new SpotifyWebAPI\Session(
         $SPOTIFY_CLIENT_ID_JJK,
         $SPOTIFY_CLIENT_SECRET_JJK,
-        $SPOTIFY_REDIRECT_URI_JJK
+        $SPOTIFY_CALLBACK_URI_JJK
     );
 
     // Request a access token using the code from Spotify
@@ -36,7 +35,7 @@ require_once $extIncludePath.'jjkSpotifySettings.php';
 
     // Send the user along and fetch some data!
     //header('Location: /bot/player.html?' . 'access_token=' . $accessToken);
-    header('Location: /jjk?' . 'access_token=' . $accessToken);
+    header('Location: ' . $SPOTIFY_REDIRECT_URI_JJK . '?access_token=' . $accessToken);
     die();
 
 ?>

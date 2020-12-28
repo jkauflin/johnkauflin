@@ -55,6 +55,10 @@ var spotify = (function () {
         $SpotifyIcon.attr("src", "Media/images/Spotify_Icon_RGB_Green.png");
         console.log(">>> spotify api set with access token");
 
+        $(".nav-link.active").removeClass("active");
+        $('.navbar-nav a[href="#PlaylistPage"]').tab('show')
+        $('.navbar-nav a[href="#PlaylistPage"]').addClass('active');
+
         /*
         window.onSpotifyWebPlaybackSDKReady = () => {
             const token = access_token;
