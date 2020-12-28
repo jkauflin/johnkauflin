@@ -38,13 +38,6 @@ var main = (function () {
 	//=================================================================================================================
 	// Variables cached from the DOM
 	var $document = $(document);
-    var $jjkloginEventElement = $document.find('#jjkloginEventElement')
-
-    /*
-    $jjkloginEventElement.on('userJJKLoginAuth', function (event) {
-        console.log('After login, username = ' + event.originalEvent.detail.userName);
-    });
-    */
 
 	//=================================================================================================================
     // Bind events
