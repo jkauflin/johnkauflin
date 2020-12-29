@@ -135,28 +135,26 @@ var spotify = (function () {
         var queryLimit = 10;
         var queryOffset = 0;
         var itemsRead = 0;
-
+        /*
+        do {
             spotifyApi.getMySavedTracks({ limit: queryLimit, offset: queryOffset })
                 .then(function (response) {
                     console.log(response);
                     console.log("items.length = " + response.items.length);
                     console.log("total = " + response.total);
-                    totalTracks = response.total;
+                    totalItems = response.total;
+                    //itemRead = itemsRead + response.items.length;
                     $.each(response.items, function (index, item) {
                         console.log(index + " item.track.name = " + item.track.name);
-                        //return spotifyApi.getTrack(item.track.id);
                     });
-
                 })
-                /*
-                .then(function (response) {
-                    console.log(response);
-                })
-                */
                 .catch(function (err) {
-                    console.error("Error in Spotify call, err = " + err);
+                    console.error(err);
                 });
-
+            util.sleep(3000);
+        }
+        while (itemsRead < totalItems);
+        */
 
     } // function _createPlaylist() {
 

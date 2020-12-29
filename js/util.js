@@ -18,9 +18,10 @@
  *                  an Id and check for checkbox "checked"
  * 2018-12-19 JJK   Added functions to abstract screen activities such as
  *                  display, search, edit, and update
- * 2019-09-28 JJK   Modified the JSON inputs method to accept DEV object
+ * 2019-09-28 JJK   Modified the JSON inputs method to accept DIV object
  *                  or name string.  Modified the AJAX calls to use new
  *                  promises to check result
+ * 2020-12-28 JJK   Modified for bootstrap 4
  *============================================================================*/
  var util = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -30,9 +31,6 @@
     //=================================================================================================================
     // Variables cached from the DOM
     var $document = $(document);
-    var $ajaxError = $document.find(".ajaxError");
-    var $wildcard = $('*');
-    var $resetval = $document.find(".resetval");
     //var $Date = $document.find(".Date");
 
     //=================================================================================================================
@@ -48,16 +46,6 @@
         $ajaxError.html("An Error has occurred (see console log)");
     });
     */
-
-    // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
-    $document.on('click', '.navbar-collapse.in', function (e) {
-        if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') {
-            $(this).collapse('hide');
-        }
-    });
-
-    // Using addClear plug-in function to add a clear button on input text fields
-    //$resetval.addClear();
 
      // Initialize Date picker library
      /*
@@ -398,8 +386,6 @@
         csvFilter:          csvFilter,
         formatMoney:        formatMoney,
         formatDate:         formatDate,
-        waitCursor:         waitCursor,
-        defaultCursor:      defaultCursor,
         setBoolText:        setBoolText,
         setCheckbox:        setCheckbox,
         setCheckboxEdit:    setCheckboxEdit,
