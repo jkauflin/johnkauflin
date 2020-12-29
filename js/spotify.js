@@ -8,8 +8,8 @@
  *      https://developer.spotify.com/documentation/web-api/reference-beta/#category-library
  * 
  * Documentation for the PHP API wrapper:
- * https://github.com/jwilsson/spotify-web-api-php/tree/master/docs
- * https://github.com/jwilsson/spotify-web-api-php
+ *      https://github.com/jwilsson/spotify-web-api-php/tree/master/docs
+ *      https://github.com/jwilsson/spotify-web-api-php
  * 
  *----------------------------------------------------------------------------
  * Modification History
