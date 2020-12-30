@@ -3,7 +3,7 @@
         "php": ">=7.0.0",
         "firebase/php-jwt": "^5.2.0",
         "jkauflin/jjklogin": "^1.1.4",
-        "jkauflin/jjkgallery": "^1.1.3",
+        "jkauflin/jjkgallery": "^1.1.4",
         "jwilsson/spotify-web-api-php": "^4.1"
     }
 }
