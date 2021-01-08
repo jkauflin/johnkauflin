@@ -24,6 +24,6 @@ images
 secrets.php
 Media
 MediaGallery
-emoncms
+emoncms*
 vendor
 spotify-web-api.js
