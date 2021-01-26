@@ -22,6 +22,7 @@
  *                  or name string.  Modified the AJAX calls to use new
  *                  promises to check result
  * 2020-12-28 JJK   Modified for bootstrap 4
+ * 2021-01-26 JJK   Added displayTabPage
  *============================================================================*/
  var util = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -57,6 +58,16 @@
 
     //=================================================================================================================
     // Module methods
+    function displayTabPage(targetTab) {
+        var targetTabPage = targetTab + 'Page';
+        // Remove the active class on the current active tab
+        $(".nav-link.active").removeClass("active");
+        // Show the target tab page
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
+        // Make the target tab page active
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
+    }
+
     function sleep(milliseconds) {
         var start = new Date().getTime();
         for (var i = 0; i < 1e7; i++) {
@@ -380,6 +391,7 @@
     //=================================================================================================================
     // This is what is exposed from this Module
     return {
+        displayTabPage,
         sleep:              sleep,
         urlParam:           urlParam,
         cleanStr:           cleanStr,

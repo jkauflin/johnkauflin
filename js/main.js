@@ -47,6 +47,13 @@ var main = (function () {
         $('.navbar-collapse').collapse('hide'); 
     });
 
+    // Click on a link-tile will remove the active from the current tab, show the new tab and make it active
+    $document.on("click", ".link-tile-tab", function (event) {
+        var $this = $(this);
+        event.preventDefault();
+        var targetTab = $this.attr('data-dir');
+        util.displayTabPage(targetTab);
+    });
 
 	//=================================================================================================================
 	// Module methods

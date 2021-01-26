@@ -5,6 +5,9 @@
 .link-tile-sm {
     width: 130px;
 }
+.link-tile-tab {
+    width: 150px;
+}
 
 /* Turn off the outline on clicks to brand anchors */
 li {
