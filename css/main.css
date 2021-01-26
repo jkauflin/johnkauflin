@@ -10,12 +10,12 @@
 li {
 	list-style-type: none;
 }
-a:link {
+
+a {
 	outline: 0;
 	text-decoration:none; 
-}
-/*
-a {
+	}
+a:link {
 	outline: 0;
 	text-decoration:none; 
 }
@@ -31,5 +31,14 @@ a:active {
 	outline: 0;
 	text-decoration:none; 
 }
-*/
 
+.border-2 {
+    border-width:2px !important;
+}
+.border-3 {
+    border-width:3px !important;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
