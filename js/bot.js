@@ -38,6 +38,9 @@ var bot = (function () {
     var userName = '';
     var getUserName = false;
     var confirmName = false;
+    var speaking = false;
+    var botImgEyesOFF = "Media/images/bot.JPG";
+    var botImgEyesON = "Media/images/botEyesRed.JPG";
 
     // Create our RiveScript interpreter.
     var brain = new RiveScript();
@@ -54,6 +57,8 @@ var bot = (function () {
     var $SearchButton = $document.find("#SearchButton");
     var $SearchInput = $document.find("#SearchInput");
     var $searchStr = $document.find("#searchStr");
+
+    var $BotImage = $document.find("#BotImage");
 
     //=================================================================================================================
     // Bind events
@@ -119,7 +124,6 @@ var bot = (function () {
         */
     }
 
-
     function _startInteraction() {
         //getUserName = true;
         sayAndAnimate("Hello, I am the Joke bought.  What is your name?");
@@ -130,6 +134,8 @@ var bot = (function () {
         //sendCommand('{"stop":1}');
         //music.stop();
         speech.stopAll();
+        //_doneSpeaking();
+        // figure out a way to stop the eyes from strobing
     }
 
     function _restart() {
@@ -149,7 +155,7 @@ var bot = (function () {
 
     // Respond to string recognized by speech to text (or from search input text box)
     function handleTextFromSpeech(speechText) {
-        console.log(" in handleTextFromSpeech, speechText = " + speechText);
+        //console.log(" in handleTextFromSpeech, speechText = " + speechText);
         /*
         for (var i = 0; i < 50; i++) {
             main.sayAndAnimate("nose");
@@ -299,15 +305,83 @@ var bot = (function () {
     }
     */
 
+    var eyesON = false;
     function sayAndAnimate(textToSpeak) {
         // Ask the speech module to say the response text
         $("#VerbalRepsonse").html(textToSpeak);
         speech.speakText(textToSpeak);
 
+        //_animateSpeech(textToSpeak);
+        // Cancel any running animations before starting a new one
+        //_doneSpeaking();
+        // How?
+
+        // Calculate a milliseconds time from the textToSpeak and set a _doneSpeaking function call
+        // (just calculate using the word count for now)
+        var wordList = textToSpeak.split(" ");
+        //for (var i = 0; i < wordList.length; i++) {
+        //wordList[i]
+        //}
+        var speakingDuration = wordList.length * 310;
+        //setTimeout(_doneSpeaking, speakingDuration);
+
+        //speaking = true;
+        // Start strobing the eye leds
+        //eyes.strobe(150);
+        _strobeEyes(speakingDuration, 0);
+
         // Send text to robot to animate speech (if connected)
-        sendCommand('{"textToSpeak" : "' + textToSpeak + '"}');
+        //sendCommand('{"textToSpeak" : "' + textToSpeak + '"}');
         //lastTextToSpeak = textToSpeak;
     }
+
+    function _strobeEyes(duration, tempDuration) {
+        if (eyesON) {
+            $BotImage.attr("src", botImgEyesOFF);
+            eyesON = false;
+        } else {
+            $BotImage.attr("src", botImgEyesON);
+            eyesON = true;
+        }
+        // future - get smarter and make 150 the length of each word
+        tempDuration += 150;
+        if (tempDuration < duration) {
+            setTimeout(_strobeEyes, 150, duration, tempDuration)
+        } else {
+            $BotImage.attr("src", botImgEyesOFF);
+            eyesON = false;
+        }
+    }
+
+
+    function _doneSpeaking() {
+        //eyes.stop().off();
+        $BotImage.attr("src", botImgEyesOFF);
+        eyesON = false;
+        speaking = false;
+        clearTimeout(_doneSpeaking);
+        clearTimeout(_strobeEyes);
+    }
+
+    function _animateSpeech(textToSpeak) {
+        // Cancel any running animations before starting a new one
+        _doneSpeaking();
+
+        // Calculate a milliseconds time from the textToSpeak and set a _doneSpeaking function call
+        // (just calculate using the word count for now)
+        var wordList = textToSpeak.split(" ");
+        //for (var i = 0; i < wordList.length; i++) {
+        //wordList[i]
+        //}
+        var speakingDuration = wordList.length * 310;
+        setTimeout(_doneSpeaking, speakingDuration);
+
+        speaking = true;
+        // Start strobing the eye leds
+        //eyes.strobe(150);
+        _strobeEyes(speakingDuration,0);
+    }
+
 
     // Main activity loop
     /*
