@@ -39,8 +39,8 @@ var bot = (function () {
     var getUserName = false;
     var confirmName = false;
     var speaking = false;
-    var botImgEyesOFF = "Media/images/bot.JPG";
-    var botImgEyesON = "Media/images/botEyesRed.JPG";
+    var botImgEyesOFF = "Media/images/botImage.jpg";
+    var botImgEyesON = "Media/images/botEyesRed.jpg";
 
     // Create our RiveScript interpreter.
     var brain = new RiveScript();
