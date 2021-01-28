@@ -68,6 +68,19 @@
         $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
     }
 
+    function currTime() {
+        const options = {
+            //timeZone: "Africa/Accra",
+            //hour12: true,
+            //hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        };
+
+        var tempDate = new Date();
+        return tempDate.toLocaleTimeString("en-US", options);
+    }
+
     function sleep(milliseconds) {
         var start = new Date().getTime();
         for (var i = 0; i < 1e7; i++) {
@@ -392,6 +405,7 @@
     // This is what is exposed from this Module
     return {
         displayTabPage,
+        currTime,
         sleep:              sleep,
         urlParam:           urlParam,
         cleanStr:           cleanStr,

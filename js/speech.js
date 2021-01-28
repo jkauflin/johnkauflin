@@ -131,7 +131,7 @@ var speech = (function () {
 
 
     function speakText(textToSpeak) {
-        //console.log("in speech.speakText, text = "+textToSpeak);
+        console.log(util.currTime()+", speech.speakText, text = "+textToSpeak);
 
         // Turn off the speech recognition first before text to speech
         if (recognizing) {
@@ -160,7 +160,7 @@ var speech = (function () {
 
         // something that says when utterance is done?
         utterance.onend = function (event) {
-            //console.log('Utterance has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
+            console.log(util.currTime()+', Utterance has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
             speaking = false;
             // Make sure the recognition is restarted (if continuous)
             if ($ContinuousListening.prop('checked')) {

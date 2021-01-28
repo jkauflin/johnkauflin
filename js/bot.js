@@ -305,6 +305,39 @@ var bot = (function () {
     }
     */
 
+    /*
+    var nonAlphaCharsStr = "[\x00-\x60\x7B-\x7F]";
+    // "g" global so it does more than 1 substitution
+    var regexNonAlphaChars = new RegExp(nonAlphaCharsStr, "g");
+    function alphaOnly(inStr) {
+        return inStr.replace(regexNonAlphaChars, '');
+    }
+
+    function syllableCount(word) {
+        word = word.toLowerCase();
+        word = alphaOnly(word);
+        //console.log(util.currTime() + ", word = " + word);
+        var t_some = 0;
+        if (word.length > 3) {
+            if (word.substring(0, 4) == "some") {
+                word = word.replace("some", "");
+                t_some++;
+            }
+        }
+        word = word.replace(/(?:[^laeiouy]|ed|[^laeiouy]e)$/, '');
+        word = word.replace(/^y/, '');
+        //return word.match(/[aeiouy]{1,2}/g).length;   
+        var syl = word.match(/[aeiouy]{1,2}/g);
+        //console.log(syl);
+        if (syl) {
+            //console.log(syl);
+            return syl.length + t_some;
+        } else {
+            return 1;
+        }
+    }
+    */
+
     var eyesON = false;
     function sayAndAnimate(textToSpeak) {
         // Ask the speech module to say the response text
@@ -319,20 +352,52 @@ var bot = (function () {
         // Calculate a milliseconds time from the textToSpeak and set a _doneSpeaking function call
         // (just calculate using the word count for now)
         var wordList = textToSpeak.split(" ");
-        //for (var i = 0; i < wordList.length; i++) {
-        //wordList[i]
-        //}
-        var speakingDuration = wordList.length * 310;
+        //var tempWord = '';
+        /*
+        var totalSegments = 0;
+        for (var i = 0; i < wordList.length; i++) {
+            console.log(util.currTime() + ", "+wordList[i] + ", cnt = " + syllableCount(wordList[i]));
+            totalSegments += syllableCount(wordList[i]);
+        }
+        */
+        //var speakingDuration = wordList.length * 310;
         //setTimeout(_doneSpeaking, speakingDuration);
+
+        // figure out the number of flash segments
+        // one for every syllable
 
         //speaking = true;
         // Start strobing the eye leds
         //eyes.strobe(150);
-        _strobeEyes(speakingDuration, 0);
+        //console.log(util.currTime() + ", speakingDuration = " + speakingDuration);
+        //console.log(util.currTime() + ", totalSegments = " + totalSegments);
+        //totalSegments += 10;
+        //console.log(util.currTime() + ", totalSegments = " + totalSegments);
+        //_flashEyes(totalSegments * 2, 0);
+        _flashEyes((wordList.length * 2), 0);
+        //_flashEyes(wordList,0)
+        //_strobeEyes(speakingDuration, 0);
+    }
 
-        // Send text to robot to animate speech (if connected)
-        //sendCommand('{"textToSpeak" : "' + textToSpeak + '"}');
-        //lastTextToSpeak = textToSpeak;
+    function _flashEyes(totalSegments, i) {
+        //var sCnt = syllableCount(wordList[i]);
+        //console.log(util.currTime() + ", word[" + i + "] = " + wordList[i]+", sCnt = "+sCnt);
+        //console.log(util.currTime() + ", segment = "+i);
+        if (eyesON) {
+            $BotImage.attr("src", botImgEyesOFF);
+            eyesON = false;
+        } else {
+            $BotImage.attr("src", botImgEyesON);
+            eyesON = true;
+        }
+        // future - get smarter and make 150 the length of each word
+        if (i < totalSegments-1) {
+            setTimeout(_flashEyes, 150, totalSegments, i + 1)
+            //setTimeout(_flashEyes, tempDuration, wordList, i + 1)
+        } else {
+            $BotImage.attr("src", botImgEyesOFF);
+            eyesON = false;
+        }
     }
 
     function _strobeEyes(duration, tempDuration) {
