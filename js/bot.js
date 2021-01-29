@@ -134,7 +134,7 @@ var bot = (function () {
         //sendCommand('{"stop":1}');
         //music.stop();
         speech.stopAll();
-        //_doneSpeaking();
+        _doneSpeaking();
         // figure out a way to stop the eyes from strobing
     }
 
@@ -346,7 +346,7 @@ var bot = (function () {
 
         //_animateSpeech(textToSpeak);
         // Cancel any running animations before starting a new one
-        //_doneSpeaking();
+        _doneSpeaking();
         // How?
 
         // Calculate a milliseconds time from the textToSpeak and set a _doneSpeaking function call
@@ -376,7 +376,6 @@ var bot = (function () {
         //_flashEyes(totalSegments * 2, 0);
         _flashEyes((wordList.length * 2), 0);
         //_flashEyes(wordList,0)
-        //_strobeEyes(speakingDuration, 0);
     }
 
     function _flashEyes(totalSegments, i) {
@@ -400,74 +399,14 @@ var bot = (function () {
         }
     }
 
-    function _strobeEyes(duration, tempDuration) {
-        if (eyesON) {
-            $BotImage.attr("src", botImgEyesOFF);
-            eyesON = false;
-        } else {
-            $BotImage.attr("src", botImgEyesON);
-            eyesON = true;
-        }
-        // future - get smarter and make 150 the length of each word
-        tempDuration += 150;
-        if (tempDuration < duration) {
-            setTimeout(_strobeEyes, 150, duration, tempDuration)
-        } else {
-            $BotImage.attr("src", botImgEyesOFF);
-            eyesON = false;
-        }
-    }
-
-
     function _doneSpeaking() {
         //eyes.stop().off();
         $BotImage.attr("src", botImgEyesOFF);
         eyesON = false;
         speaking = false;
         clearTimeout(_doneSpeaking);
-        clearTimeout(_strobeEyes);
+        clearTimeout(_flashEyes);
     }
-
-    function _animateSpeech(textToSpeak) {
-        // Cancel any running animations before starting a new one
-        _doneSpeaking();
-
-        // Calculate a milliseconds time from the textToSpeak and set a _doneSpeaking function call
-        // (just calculate using the word count for now)
-        var wordList = textToSpeak.split(" ");
-        //for (var i = 0; i < wordList.length; i++) {
-        //wordList[i]
-        //}
-        var speakingDuration = wordList.length * 310;
-        setTimeout(_doneSpeaking, speakingDuration);
-
-        speaking = true;
-        // Start strobing the eye leds
-        //eyes.strobe(150);
-        _strobeEyes(speakingDuration,0);
-    }
-
-
-    // Main activity loop
-    /*
-    var loopStart = true;
-    const activityLoop = setInterval(function () {
-        //console.log("In the activityLoop, now = "+Date.now());
-        if (loopStart) {
-            //sayAndAnimate("Hello, I am the John bought.");
-            loopStart = false;
-        }
-
-        // put stuff for the state loop in here
-
-        // Track the amount of time that recognizing is off
-        //if (elapsedTime > X) {
-        //	speech.startRecognition();
-        //	sayAndAnimate("Hello, "+userName+".  Are you still there?");
-        //}
-
-    }, 1000);
-    */
 
     //=================================================================================================================
     // This is what is exposed from this Module
