@@ -57,14 +57,8 @@ var main = (function () {
 
 	//=================================================================================================================
 	// Module methods
-
-
-//                    <iframe src="emoncms/dashboard/view?id=3&apikey=38618b096c7f94b4bf7ce190af925037" 
-// https://johnkauflin.com/home/emoncms/feed/value.json?id=4
-
-        //$UpdateDisplay.empty();
+    /*
         fetch('emoncms/feed/value.json?id=4').then(function (response) {
-            //console.log("response.text() = "+response.text());
             if (response.ok) {
                 //return response.json();
                 return response.text();
@@ -73,8 +67,9 @@ var main = (function () {
             }
         }).then(function (response) {
             console.log("feed response = "+response);
+            //feed response = 78.59881393332
         })
-
+    */
 
 	//<img src="images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
 	function createHeadshotDisplay() {
