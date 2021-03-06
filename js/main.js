@@ -64,7 +64,7 @@ var main = (function () {
 
         //$UpdateDisplay.empty();
         fetch('emoncms/feed/value.json?id=4').then(function (response) {
-            console.log("response.text() = "+response.text());
+            //console.log("response.text() = "+response.text());
             if (response.ok) {
                 //return response.json();
                 return response.text();
