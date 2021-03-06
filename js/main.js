@@ -67,7 +67,7 @@ var main = (function () {
             console.log("response.text() = "+response.text());
             if (response.ok) {
                 //return response.json();
-                return response;
+                return response.text();
             } else {
                 throw new Error('Error in response or JSON from server, code = '+response.status);
             }
