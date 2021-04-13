@@ -1,16 +1,28 @@
 // (C) Copyright 2019 John J Kauflin, All rights reserved. 
 // Bot brain replies (include some robot commands at the end of some replies)
 
-//+ what is my name
-//* <get name> == undefined => You never told me your name.
-//- Your name is <get name>, silly!
-
 //* conditional
 
 //The input and reply tags are used for showing previous messages sent by the user and the bot, respectively. 
 //The previous 9 messages and responses are stored, so you can use the tags <input1> through <input9>,
 // or <reply1> through <reply9> to get a particular message or reply. <input> is an alias for <input1>,
 //  and <reply> is an alias for <reply1>.
+
++ my name is *
+- <set username=<formal>>I will remember to call you <get username>
++ my name is my name is *
+- <set username=<formal>>I will remember to call you <get username>
++ my name is i am *
+- <set username=<formal>>I will remember to call you <get username>
++ my name is call me *
+- <set username=<formal>>I will remember to call you <get username>
++ my name is you can call me *
+- <set username=<formal>>I will remember to call you <get username>
+
++ (what is|do you know) my name
+* <get username> != undefined => Yes, your name is <get username>
+- I don't know your name
+
 
 // Default replies (used unless overridden by more specific logic below)
 + *
@@ -27,6 +39,7 @@
 - I think you should get beaned
 - That's not very cash money
 - Are you a pog champ
+- Are you having a bad day
 
 // Essential robot commands
 + stop [*]
@@ -94,8 +107,8 @@
 + (what [*] (said|say)|[*] say [*] again|[*] repeat (that|[*] said))
 - I said <reply>
 
-+ Excuse me
-- I said <reply>
++ excuse me
+- <reply>
 
 // If the user repeats the bot's previous message
 + <reply>
@@ -116,7 +129,7 @@
 - It is the name God gave me
 
 + (hey|oh|attention) john [*]
-- yes botcommand wakeup
+- yes how can i help you botcommand wakeup
 
 + [*] clever [*] 
 - How's that working out for you <set punchline=Patio furniture>{topic=clever}

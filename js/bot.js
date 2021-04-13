@@ -125,7 +125,7 @@ var bot = (function () {
     }
 
     function _startInteraction() {
-        //getUserName = true;
+        getUserName = true;
         sayAndAnimate("Hello, I am the Joke bought.  What is your name?");
         //sendCommand('{"walk":1}');
     }
@@ -163,9 +163,20 @@ var bot = (function () {
         }
         */
 
+        if (getUserName) {
+            getUserName = false;
+            userName = speechText;
+            // strip out any - my name is, I am, they call me
+            //sayAndAnimate("Did you say your name was " + userName);
+            //confirmName = true;
+            speechText = "my name is " + userName;
+        }
+
         // Call the RiveScript interpreter to get a reply
         brain.reply("username", speechText, this).then(function (reply) {
             console.log("brain reply = " + reply);
+            userName = reply.replace("I will remember to call you ","");
+            console.log("NEW userName = "+userName);
 
             // if (checking replies)
             // sleep / wake up / doing something else logic
@@ -173,7 +184,7 @@ var bot = (function () {
             var commandFound = reply.search("botcommand");
             if (commandFound >= 0) {
                 //_executeBotCommands(reply.substr(commandFound + 11));
-                
+
                 // Let's assume if it's a bot command, we don't want to speak as well
                 //var textToSpeak = reply.substr(0,commandFound-1);
                 // 2019-04-19 JJK - Let's trying doing the speaking part too
@@ -187,6 +198,7 @@ var bot = (function () {
         }).catch(function (e) {
             console.log(e);
         });
+
 
         /*
         // Check the speech text for other actions, or query response
