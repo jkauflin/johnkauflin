@@ -57,6 +57,19 @@ var main = (function () {
 
 	//=================================================================================================================
 	// Module methods
+    /*
+        fetch('emoncms/feed/value.json?id=4').then(function (response) {
+            if (response.ok) {
+                //return response.json();
+                return response.text();
+            } else {
+                throw new Error('Error in response or JSON from server, code = '+response.status);
+            }
+        }).then(function (response) {
+            console.log("feed response = "+response);
+            //feed response = 78.59881393332
+        })
+    */
 
 	//<img src="images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
 	function createHeadshotDisplay() {
