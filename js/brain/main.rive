@@ -94,6 +94,9 @@
 + (what [*] (said|say)|[*] say [*] again|[*] repeat (that|[*] said))
 - I said <reply>
 
++ Excuse me
+- I said <reply>
+
 // If the user repeats the bot's previous message
 + <reply>
 - Did I stutter?
