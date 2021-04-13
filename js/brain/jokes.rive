@@ -34,6 +34,9 @@
 - Did you hear about the Mathematician who was afraid of negative numbers <set punchline=He would stop at nothing to avoid them>{topic=joke}
 - Did you hear about the four foot tall fortune teller who escaped from prison <set punchline=He was a small medium at large>{topic=joke}
 - When my kleptomania gets really bad <set punchline=I take something for it>{topic=joke}
+- Where do they send the chinese soup terrorists <set punchline=They are sent to wan tahnamo bay>{topic=joke}
+- What is sis boom bah <set punchline=The sound a sheep makes when it explodes>{topic=joke}
+
 
 + [*] tell [*] [joke|one] [*] wine [joke]
 - What is a horse's favorite wine <set punchline=Chardonnay>{topic=joke}
@@ -95,12 +98,24 @@
 - Did you hear about the four foot tall fortune teller who escaped from prison <set punchline=He was a small medium at large>{topic=joke}
 + [*] tell [*] [joke|one] [*] kleptomania [joke] 
 - When my kleptomania gets really bad <set punchline=I take something for it>{topic=joke}
-
++ [*] tell [*] [joke|one] [*] (soup|terrorists) [joke] 
+- Where do they send the chinese soup terrorists <set punchline=They are sent to wan tahnamo bay>{topic=joke}
++ [*] tell [*] [joke|one] [*] sheep [joke] 
+- What is sis boom bah <set punchline=The sound a sheep makes when it explodes>{topic=joke}
 
 > topic joke
 // On any response say the punchline and return to non-topic replies
 + [*]
 - <get punchline>{topic=random}
+< topic
+
++ [*] (got|have) (any more|some more|another) [*] 
+- What kind of joke would you like to hear?{topic=wishful}
+
+> topic wishful
+// On any response say the line and return to non-topic replies
++ [*]
+- wouldn't we all{topic=random}
 < topic
 
 + [*] (that|thats) [*] (funny|good) [joke]

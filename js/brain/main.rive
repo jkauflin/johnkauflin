@@ -1,18 +1,16 @@
 // (C) Copyright 2019 John J Kauflin, All rights reserved. 
 // Bot brain replies (include some robot commands at the end of some replies)
 
-/*
-+ what is my name
-* <get name> == undefined => You never told me your name.
-- Your name is <get name>, silly!
+//+ what is my name
+//* <get name> == undefined => You never told me your name.
+//- Your name is <get name>, silly!
 
-* conditional
+//* conditional
 
-The input and reply tags are used for showing previous messages sent by the user and the bot, respectively. 
-The previous 9 messages and responses are stored, so you can use the tags <input1> through <input9>,
- or <reply1> through <reply9> to get a particular message or reply. <input> is an alias for <input1>,
-  and <reply> is an alias for <reply1>.
-*/
+//The input and reply tags are used for showing previous messages sent by the user and the bot, respectively. 
+//The previous 9 messages and responses are stored, so you can use the tags <input1> through <input9>,
+// or <reply1> through <reply9> to get a particular message or reply. <input> is an alias for <input1>,
+//  and <reply> is an alias for <reply1>.
 
 // Default replies (used unless overridden by more specific logic below)
 + *
@@ -28,6 +26,7 @@ The previous 9 messages and responses are stored, so you can use the tags <input
 - Let's talk about something else
 - I think you should get beaned
 - That's not very cash money
+- Are you a pog champ
 
 // Essential robot commands
 + stop [*]
@@ -79,7 +78,7 @@ The previous 9 messages and responses are stored, so you can use the tags <input
 - <star>
 < topic
 
-+ [*] (sorry|apologize|apology) [*]
++ [*] (sorry|apologize|apology|my bad) [*]
 - No worries bro
 - No worries bra
 - Do not trouble yourself.  It's ok.
@@ -192,4 +191,4 @@ The previous 9 messages and responses are stored, so you can use the tags <input
 - Do you kiss your mother with that mouth?
 - Do you kiss porn stars with that mouth?
 - oh my, such language
-
+- Have you been hanging around sailors
