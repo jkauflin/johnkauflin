@@ -25,6 +25,7 @@
  * 2020-05-10 JJK   Checking music functions
  * 2020-05-25 JJK   Working on brain and responses
  * 2021-01-25 JJK   Implementing JokeBot
+ * 2021-04-13 JJK   Added logic to get userName from brain reply
  *============================================================================*/
 var bot = (function () {
     'use strict'; // Force declaration of variables before use (among other things)
@@ -156,30 +157,22 @@ var bot = (function () {
     // Respond to string recognized by speech to text (or from search input text box)
     function handleTextFromSpeech(speechText) {
         //console.log(" in handleTextFromSpeech, speechText = " + speechText);
-        /*
-        for (var i = 0; i < 50; i++) {
-            main.sayAndAnimate("nose");
-            util.sleep(70);
-        }
-        */
 
         if (getUserName) {
             getUserName = false;
             userName = speechText;
-            // strip out any - my name is, I am, they call me
-            //sayAndAnimate("Did you say your name was " + userName);
-            //confirmName = true;
+            // Add the phrase and send it into bot brain to check reply
             speechText = "my name is " + userName;
         }
 
         // Call the RiveScript interpreter to get a reply
         brain.reply("username", speechText, this).then(function (reply) {
             console.log("brain reply = " + reply);
-            userName = reply.replace("I will remember to call you ","");
-            console.log("NEW userName = "+userName);
-
-            // if (checking replies)
-            // sleep / wake up / doing something else logic
+            
+            if (reply.search("I will remember to call you ")) {
+                userName = reply.replace("I will remember to call you ","");
+                console.log(">>> userName = "+userName);
+            }
 
             var commandFound = reply.search("botcommand");
             if (commandFound >= 0) {
@@ -198,60 +191,6 @@ var bot = (function () {
         }).catch(function (e) {
             console.log(e);
         });
-
-
-        /*
-        // Check the speech text for other actions, or query response
-        if (speechText == "what" || speechText.search("repeat that") >= 0 || speechText.search("say that again") >= 0 ||
-            speechText.search("what was that") >= 0 || speechText.search("you say") >= 0) {
-            sayAndAnimate(lastTextToSpeak);
-        } else if (confirmName) {
-            confirmName = false;
-            if (speechText.search("yes") >= 0) {
-                sayAndAnimate("Hello, " + userName + ".  It is nice to meet you.");
-                // *** save the user name at this point ***
-            } else {
-                getUserName = true;
-                sayAndAnimate("I'm sorry, what was your name?");
-            }
-        } else if (getUserName) {
-            getUserName = false;
-            userName = speechText;
-            // strip out any - my name is, I am, they call me
-            sayAndAnimate("Did you say your name was " + userName);
-            confirmName = true;
-        } else if (speechText.search("tell") >= 0 && speechText.search("joke") >= 0) {
-            currJoke = _getRandomInt(0, jokeQuestions.length);
-            if (currJoke == prevJoke) {
-                currJoke = _getRandomInt(0, jokeQuestions.length);
-            }
-            sayAndAnimate(jokeQuestions[currJoke]);
-            jokeStarted = true;
-        } else if (jokeStarted) {
-            sayAndAnimate(jokeAnswers[currJoke]);
-            jokeStarted = false;
-        } else {
-
-            $.getJSON(env.BOT_WEB_URL + "getBotResponsesProxy.php", "searchStr=" + util.replaceQuotes(speechText) + "&UID=" + env.UID, function (response) {
-                //console.log("response.length = " + response.length);
-                //console.log("response = " + JSON.stringify(response));
-
-                // 2019-01-25 Remove the default - if you don't find a response, don't say anything
-                //var textToSpeak = "I am not programmed to respond in this area.";
-                if (response.length > 0) {
-                    if (response[0].score > 1) {
-                        sayAndAnimate(response[0].verbalResponse);
-                        if (response[0].robotCommand != null && response[0].robotCommand != '') {
-                            _executeBotCommands(response[0].robotCommand);
-                        }
-                    }
-                }
-            }).catch(function (error) {
-                console.log("Error in getBotResponses getJSON, err = " + error);
-            });
-        }
-        */
-
 
     } // function handleTextFromSpeech(speechText) {
 
@@ -295,61 +234,6 @@ var bot = (function () {
         }
     } // function _executeBotCommands(cmdStr) {
 
-    // Respond to string recognized by speech to text (or from search input text box)
-    /*
-    function _cacheJokes() {
-        // Get the joke data and cache in an array
-        $.getJSON(env.BOT_WEB_URL + "getBotDataProxy.php", "table=jokes" + "&UID=" + env.UID, function (response) {
-            //console.log("Number of Jokes = " + response.length);
-            //console.log("response = " + JSON.stringify(response));
-
-            if (response.length > 0) {
-                for (var current in response) {
-                    //console.log("question = " + response[current].question);
-                    //console.log("answer = " + response[current].answer);
-                    jokeQuestions.push(response[current].question);
-                    jokeAnswers.push(response[current].answer);
-                } // loop through JSON list
-            }
-        }).catch(function (error) {
-            console.log("Error in getJSON for Jokes, err = " + error);
-        });
-    }
-    */
-
-    /*
-    var nonAlphaCharsStr = "[\x00-\x60\x7B-\x7F]";
-    // "g" global so it does more than 1 substitution
-    var regexNonAlphaChars = new RegExp(nonAlphaCharsStr, "g");
-    function alphaOnly(inStr) {
-        return inStr.replace(regexNonAlphaChars, '');
-    }
-
-    function syllableCount(word) {
-        word = word.toLowerCase();
-        word = alphaOnly(word);
-        //console.log(util.currTime() + ", word = " + word);
-        var t_some = 0;
-        if (word.length > 3) {
-            if (word.substring(0, 4) == "some") {
-                word = word.replace("some", "");
-                t_some++;
-            }
-        }
-        word = word.replace(/(?:[^laeiouy]|ed|[^laeiouy]e)$/, '');
-        word = word.replace(/^y/, '');
-        //return word.match(/[aeiouy]{1,2}/g).length;   
-        var syl = word.match(/[aeiouy]{1,2}/g);
-        //console.log(syl);
-        if (syl) {
-            //console.log(syl);
-            return syl.length + t_some;
-        } else {
-            return 1;
-        }
-    }
-    */
-
     var eyesON = false;
     function sayAndAnimate(textToSpeak) {
         // Ask the speech module to say the response text
@@ -361,39 +245,12 @@ var bot = (function () {
         _doneSpeaking();
         // How?
 
-        // Calculate a milliseconds time from the textToSpeak and set a _doneSpeaking function call
         // (just calculate using the word count for now)
         var wordList = textToSpeak.split(" ");
-        //var tempWord = '';
-        /*
-        var totalSegments = 0;
-        for (var i = 0; i < wordList.length; i++) {
-            console.log(util.currTime() + ", "+wordList[i] + ", cnt = " + syllableCount(wordList[i]));
-            totalSegments += syllableCount(wordList[i]);
-        }
-        */
-        //var speakingDuration = wordList.length * 310;
-        //setTimeout(_doneSpeaking, speakingDuration);
-
-        // figure out the number of flash segments
-        // one for every syllable
-
-        //speaking = true;
-        // Start strobing the eye leds
-        //eyes.strobe(150);
-        //console.log(util.currTime() + ", speakingDuration = " + speakingDuration);
-        //console.log(util.currTime() + ", totalSegments = " + totalSegments);
-        //totalSegments += 10;
-        //console.log(util.currTime() + ", totalSegments = " + totalSegments);
-        //_flashEyes(totalSegments * 2, 0);
         _flashEyes((wordList.length * 2), 0);
-        //_flashEyes(wordList,0)
     }
 
     function _flashEyes(totalSegments, i) {
-        //var sCnt = syllableCount(wordList[i]);
-        //console.log(util.currTime() + ", word[" + i + "] = " + wordList[i]+", sCnt = "+sCnt);
-        //console.log(util.currTime() + ", segment = "+i);
         if (eyesON) {
             $BotImage.attr("src", botImgEyesOFF);
             eyesON = false;
@@ -404,7 +261,6 @@ var bot = (function () {
         // future - get smarter and make 150 the length of each word
         if (i < totalSegments-1) {
             setTimeout(_flashEyes, 150, totalSegments, i + 1)
-            //setTimeout(_flashEyes, tempDuration, wordList, i + 1)
         } else {
             $BotImage.attr("src", botImgEyesOFF);
             eyesON = false;
@@ -412,7 +268,6 @@ var bot = (function () {
     }
 
     function _doneSpeaking() {
-        //eyes.stop().off();
         $BotImage.attr("src", botImgEyesOFF);
         eyesON = false;
         speaking = false;
