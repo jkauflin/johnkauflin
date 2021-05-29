@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "firebase/php-jwt",
-            "version": "v5.2.0",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb"
+                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/feb0e820b8436873675fd3aca04f3728eb2185cb",
-                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
+                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
                 "shasum": ""
             },
             "require": {
@@ -56,22 +56,22 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/master"
+                "source": "https://github.com/firebase/php-jwt/tree/v5.2.1"
             },
-            "time": "2020-03-25T18:49:23+00:00"
+            "time": "2021-02-12T00:02:00+00:00"
         },
         {
             "name": "jkauflin/jjkgallery",
-            "version": "v1.1.4",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/MediaGallery.git",
-                "reference": "d73712ee3cdf4268d7a4bf956628b5d4d645e181"
+                "reference": "d78270bdabb727ea244a0aa1201186773c6e93e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/d73712ee3cdf4268d7a4bf956628b5d4d645e181",
-                "reference": "d73712ee3cdf4268d7a4bf956628b5d4d645e181",
+                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/d78270bdabb727ea244a0aa1201186773c6e93e6",
+                "reference": "d78270bdabb727ea244a0aa1201186773c6e93e6",
                 "shasum": ""
             },
             "type": "project",
@@ -93,9 +93,9 @@
             "description": "Web Media Gallery display for photos, videos, music, and docs",
             "support": {
                 "issues": "https://github.com/jkauflin/MediaGallery/issues",
-                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.4"
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.5"
             },
-            "time": "2020-12-30T19:18:55+00:00"
+            "time": "2021-05-29T18:20:26+00:00"
         },
         {
             "name": "jkauflin/jjklogin",
@@ -140,16 +140,16 @@
         },
         {
             "name": "jwilsson/spotify-web-api-php",
-            "version": "4.1.1",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jwilsson/spotify-web-api-php.git",
-                "reference": "aba1fbd0bb92072a37f50051cf2cd849196c07f8"
+                "reference": "adcea818d7a850dc42202def000f818c0207b512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jwilsson/spotify-web-api-php/zipball/aba1fbd0bb92072a37f50051cf2cd849196c07f8",
-                "reference": "aba1fbd0bb92072a37f50051cf2cd849196c07f8",
+                "url": "https://api.github.com/repos/jwilsson/spotify-web-api-php/zipball/adcea818d7a850dc42202def000f818c0207b512",
+                "reference": "adcea818d7a850dc42202def000f818c0207b512",
                 "shasum": ""
             },
             "require": {
@@ -184,9 +184,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jwilsson/spotify-web-api-php/issues",
-                "source": "https://github.com/jwilsson/spotify-web-api-php/tree/4.1.1"
+                "source": "https://github.com/jwilsson/spotify-web-api-php/tree/4.3.0"
             },
-            "time": "2020-12-11T16:09:30+00:00"
+            "time": "2021-03-28T12:27:47+00:00"
         }
     ],
     "packages-dev": [],
