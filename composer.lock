@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f26fce6ba3c0104933228087b326b8ec",
+    "content-hash": "81678bf3bcbae6d2f5595200e6eb8cbd",
     "packages": [
         {
             "name": "firebase/php-jwt",
-            "version": "v5.2.1",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23"
+                "reference": "3c2d70f2e64e2922345e89f2ceae47d2463faae1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
-                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/3c2d70f2e64e2922345e89f2ceae47d2463faae1",
+                "reference": "3c2d70f2e64e2922345e89f2ceae47d2463faae1",
                 "shasum": ""
             },
             "require": {
@@ -56,22 +56,22 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.2.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v5.3.0"
             },
-            "time": "2021-02-12T00:02:00+00:00"
+            "time": "2021-05-20T17:37:02+00:00"
         },
         {
             "name": "jkauflin/jjkgallery",
-            "version": "v1.1.5",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/MediaGallery.git",
-                "reference": "d78270bdabb727ea244a0aa1201186773c6e93e6"
+                "reference": "e4267780c44f52035abab9d52e6bb21e30075ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/d78270bdabb727ea244a0aa1201186773c6e93e6",
-                "reference": "d78270bdabb727ea244a0aa1201186773c6e93e6",
+                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/e4267780c44f52035abab9d52e6bb21e30075ece",
+                "reference": "e4267780c44f52035abab9d52e6bb21e30075ece",
                 "shasum": ""
             },
             "type": "project",
@@ -93,9 +93,9 @@
             "description": "Web Media Gallery display for photos, videos, music, and docs",
             "support": {
                 "issues": "https://github.com/jkauflin/MediaGallery/issues",
-                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.5"
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.6"
             },
-            "time": "2021-05-29T18:20:26+00:00"
+            "time": "2021-05-31T17:53:52+00:00"
         },
         {
             "name": "jkauflin/jjklogin",
