@@ -1,5 +1,5 @@
 /*==============================================================================
- * (C) Copyright 2015,2016,2017 John J Kauflin, All rights reserved. 
+ * (C) Copyright 2015,2016,2017,2022 John J Kauflin, All rights reserved. 
  *----------------------------------------------------------------------------
  * DESCRIPTION: 
  *----------------------------------------------------------------------------
@@ -28,6 +28,7 @@
  * 2018-12-26 JJK	Update to HTML5 boilerplate 6.1
  * 2018-12-26 JJK   Re-factored for modules
  * 2020-12-12 JJK   Making updates for bootstrap 4
+ * 2022-04-27 JJK	Making updates for bootstrap 5
  *============================================================================*/
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
