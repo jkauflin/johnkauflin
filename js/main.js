@@ -44,33 +44,35 @@ var main = (function () {
     // Bind events
     
     // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
+	/*
     $(".navbar-nav li a:not('.dropdown-toggle')").on('click', function () { 
         $('.navbar-collapse').collapse('hide'); 
     });
+	*/
+
+	$('.navbar-collapse a').click(function(){
+		$(".navbar-collapse").collapse('hide');
+	});
 
     // Click on a link-tile will remove the active from the current tab, show the new tab and make it active
     $document.on("click", ".link-tile-tab", function (event) {
         var $this = $(this);
         event.preventDefault();
         var targetTab = $this.attr('data-dir');
-        util.displayTabPage(targetTab);
+        displayTabPage(targetTab);
     });
 
 	//=================================================================================================================
 	// Module methods
-    /*
-        fetch('emoncms/feed/value.json?id=4').then(function (response) {
-            if (response.ok) {
-                //return response.json();
-                return response.text();
-            } else {
-                throw new Error('Error in response or JSON from server, code = '+response.status);
-            }
-        }).then(function (response) {
-            console.log("feed response = "+response);
-            //feed response = 78.59881393332
-        })
-    */
+	function displayTabPage(targetTab) {
+        var targetTabPage = targetTab + 'Page';
+        // Remove the active class on the current active tab
+        $(".nav-link.active").removeClass("active");
+        // Show the target tab page
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
+        // Make the target tab page active
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
+    }
 
 	//<img src="images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
 	function createHeadshotDisplay() {
