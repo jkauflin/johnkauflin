@@ -29,53 +29,15 @@
  * 2018-12-26 JJK   Re-factored for modules
  * 2020-12-12 JJK   Making updates for bootstrap 4
  * 2022-04-27 JJK	Making updates for bootstrap 5
+ * 2022-06-02 JJK	Moving nav/tab stuff to navtab.js
  *============================================================================*/
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
-	//=================================================================================================================
-	// Private variables for the Module
-	var headshotRoot = "images/headshots";
-
-	//=================================================================================================================
-	// Variables cached from the DOM
-	var $document = $(document);
-
-	//=================================================================================================================
-    // Bind events
-    
-    // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
-	/*
-    $(".navbar-nav li a:not('.dropdown-toggle')").on('click', function () { 
-        $('.navbar-collapse').collapse('hide'); 
-    });
-	*/
-
-	$('.navbar-collapse a').click(function(){
-		$(".navbar-collapse").collapse('hide');
-	});
-
-    // Click on a link-tile will remove the active from the current tab, show the new tab and make it active
-    $document.on("click", ".link-tile-tab", function (event) {
-        var $this = $(this);
-        event.preventDefault();
-        var targetTab = $this.attr('data-dir');
-        displayTabPage(targetTab);
-    });
-
-	//=================================================================================================================
-	// Module methods
-	function displayTabPage(targetTab) {
-        var targetTabPage = targetTab + 'Page';
-        // Remove the active class on the current active tab
-        $(".nav-link.active").removeClass("active");
-        // Show the target tab page
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
-        // Make the target tab page active
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
-    }
 
 	//<img src="images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
 	function createHeadshotDisplay() {
+		/*
+		let headshotRoot = "images/headshots";
 		$.getJSON("getDirList.php", "dir=" + headshotRoot + "&sort=1", function (dirList) {
 			var htmlStr = '';
 			var panelContent = '';
@@ -101,6 +63,7 @@ var main = (function () {
 
 			$('#HeadshotsDisplay').html(htmlStr);
 		});
+		*/
 
 	} // 
 
