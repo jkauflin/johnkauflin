@@ -34,38 +34,6 @@
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
 
-	//<img src="images/johnk-headshot.jpg" class="img-circle pull-left" alt="John Kauflin photo" width="22%" display="inline" style="margin:0 10px 10px 0;" > 
-	function createHeadshotDisplay() {
-		/*
-		let headshotRoot = "images/headshots";
-		$.getJSON("getDirList.php", "dir=" + headshotRoot + "&sort=1", function (dirList) {
-			var htmlStr = '';
-			var panelContent = '';
-			var panelCollapseIn = "";
-
-			$.each(dirList, function (index, dir) {
-				//console.log("file = "+dir.filename);
-				filePath = headshotRoot + '/' + dir.filename;
-
-				// Check if it is an image file or a directory (if period found assume file, if not directory)
-				periodPos = dir.filename.indexOf(".");
-				if (periodPos >= 0) {
-					//filename.length
-					//filename.substring(periodPos,dir.filename.length)
-					fileExt = dir.filename.substr(periodPos + 1).toUpperCase();
-
-					// Process if the file is an image
-					if (fileExt == "JPG" || fileExt == "JPEG" || fileExt == "GIF") {
-						htmlStr += '<img src="' + filePath + '" class="img-rounded" alt="John Kauflin photo" width="130px" display="inline" style="margin:0 10px 10px 0;" >';
-					}
-				}
-			});
-
-			$('#HeadshotsDisplay').html(htmlStr);
-		});
-		*/
-
-	} // 
 
 	//=================================================================================================================
 	// This is what is exposed from this Module
