@@ -121,16 +121,14 @@
                 </div>
 			</div>
 			<div class="col-sm-7 col-md-9">
-                <div id="MediaConfig" class="float-right m-2"></div>
+                <button id="MediaSearchButton" type="button" 
+                    class="btn btn-default shadow-none float-end m-2" data-bs-toggle="modal" data-bs-target="#MediaSearchModal">
+                    <i class="fa fa-search"></i>
+                </button>
+
+                <div id="MediaConfig" class="float-end m-2"></div>
 				<ol id="MediaBreadcrumbs" class="breadcrumb mt-2 p-1"></ol>
 				<div id="MediaFolders"></div>
-
-                <div id="MediaSearchInput">
-                    <form id="MediaInputValues" class="input-group input-group-sm my-2" action="#">
-                        <input id="MediaSearchStr" type="text" class="form-control" placeholder="Search string" aria-label="Search string" aria-describedby="button-addon2">
-                        <button id="MediaSearchButton" class="btn btn-outline-secondary" type="button" >Search</button>
-                    </form>
-                </div>
 
                 <div id="MediaThumbnails"></div>
             </div>
@@ -243,6 +241,33 @@ and being part of a wonderful music community
 		<ol class="indicator"></ol>
 	</div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="MediaSearchModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Media Search
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div id="MediaSearchInput">
+                        <form id="MediaInputValues" class="input-group input-group-sm my-2" action="#">
+                            <input id="MediaSearchStr" type="text" class="form-control" placeholder="Search string" aria-label="Search string" aria-describedby="button-addon2">
+                            <button id="MediaSearchInputButton" class="btn btn-outline-secondary" type="button" >Search</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap core JavaScript ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -260,7 +285,7 @@ and being part of a wonderful music community
     <script src="vendor/jkauflin/jjklogin/jjklogin.js?ver=1.006"></script>
     -->
 
-    <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=2.008"></script>
+    <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=2.009"></script>
 
     <script src="js/util.js?ver=3.018"></script>
     <script src="js/navtab.js?ver=3.018"></script>
