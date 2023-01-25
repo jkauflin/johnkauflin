@@ -40,7 +40,8 @@ var navtab = (function () {
         linkTileTabList[i].addEventListener("click", function (event) {
             event.preventDefault();
             // Display the tab specified in the data-dir attribute
-            displayTabPage(event.target.getAttribute("data-dir"));
+            //displayTabPage(event.target.getAttribute("data-dir"));
+            displayTabPage("Photos");
         })
     }
     
