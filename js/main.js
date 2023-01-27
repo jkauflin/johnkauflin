@@ -30,10 +30,32 @@
  * 2020-12-12 JJK   Making updates for bootstrap 4
  * 2022-04-27 JJK	Making updates for bootstrap 5
  * 2022-06-02 JJK	Moving nav/tab stuff to navtab.js
+ * 2023-01-27 JJK	Moving the "auto collapse" back here.  Updated for new
+ * 					Bootstrap v5.2 tab logic (which handles the setting of
+ * 					active tab better) - moved the auto collapse here and 
+ * 					the link-tile-tab show to media gallery, and got rid of
+ * 					the seperate navtab.js just to avoid confusion
  *============================================================================*/
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
 
+    // Keep track of the state of the navbar collapse (shown or hidden)
+    var navbarCollapseShown = false;
+    var collapsibleNavbar = document.getElementsByClassName("navbar-collapse")[0];
+    collapsibleNavbar.addEventListener('hidden.bs.collapse', function () {
+        navbarCollapseShown = false;
+    })
+    collapsibleNavbar.addEventListener('shown.bs.collapse', function () {
+        navbarCollapseShown = true;
+    })
+
+    // Listen for nav-link clicks
+    document.querySelectorAll("a.nav-link").forEach(el => el.addEventListener("click", function (event) {
+        // Automatically hide the navbar collapse when an item link is clicked (and the collapse is currently shown)
+        if (navbarCollapseShown) {
+            new bootstrap.Collapse(document.getElementsByClassName("navbar-collapse")[0]).hide();
+        }
+    }));
 
 	//=================================================================================================================
 	// This is what is exposed from this Module

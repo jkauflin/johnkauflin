@@ -33,7 +33,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark" role="navigation">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.html">John J Kauflin</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Navbar links -->
@@ -85,11 +85,11 @@
 
                 <div class="row ml-1 mb-1">
                     <div class="container-fluid ">
-                        <button class="btn btn-success mt-2 mr-2 link-tile media-page" data-MediaType="1" type="button" role="button">
+                        <button class="btn btn-success mt-2 mr-2 link-tile-tab media-page" data-MediaType="1" type="button" role="button">
                             <i class="fa fa-camera fa-2x float-start"></i> Photos</button>
-                        <button class="btn btn-success mt-2 mr-2 link-tile media-page" data-MediaType="2" type="button" role="button">
+                        <button class="btn btn-success mt-2 mr-2 link-tile-tab media-page" data-MediaType="2" type="button" role="button">
                             <i class="fa fa-video-camera fa-2x float-start"></i> Videos</button>
-                        <button class="btn btn-success mt-2 mr-2 link-tile media-page" data-MediaType="3" type="button" role="button">
+                        <button class="btn btn-success mt-2 mr-2 link-tile-tab media-page" data-MediaType="3" type="button" role="button">
                             <i class="fa fa-music fa-2x float-start"></i> Music</button>
                             <!--
                         <button class="btn btn-success mt-2 mr-2 link-tile-tab" data-dir="Bot" type="button" role="button">
@@ -113,42 +113,73 @@
 
 	</div><!-- end of Home tab -->
 
+ 
+      <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <div id="MediaMenu"></div>
+
+        </div>
+      </div>
+
 	<div class="tab-pane" id="MediaPage">
         <div class="row">
-			<div class="col-sm-5 col-md-3 d-none d-sm-block">
+            <!--
+            d-block d-sm-none
+            -->
+			
+            <div class="col-sm-5 col-md-3 d-none d-sm-block">
                 <h5 id=MediaHeader></h5>
-                <div id="MediaMenu">
-                </div>
 			</div>
+
 			<div class="col-sm-7 col-md-9">
                 <div id="MediaFilterInputValues" class="container m-2">
-                        <div class="row">
-                            <input id="MediaFilterMediaType" type="hidden" class="form-control form-select-sm" value="1">
-                            <input id="MediaFilterMenuItem" type="hidden" class="form-control form-select-sm" value="">
-                            <input id="MediaFilterAlbumTag" type="hidden" class="form-control form-select-sm" value="">
-                            <div class="col">
-                                <select id="MediaFilterCategory" class="form-select form-select-sm shadow-none ">
-                                    <option value="0">ALL</option>
-                                    <option selected value="1 John J Kauflin">1 John J Kauflin</option>
-                                    <option value="2 John E Kauflin">2 John E Kauflin</option>
-                                    <option value="3 Baker Family">3 Baker Family</option>
-                                    <option value="4 Mann Family">4 Mann Family</option>
-                                    <option value="5 Bands">5 Bands</option>
-                                    <option value="Mementos">Mementos</option>
-                                    <option value="Misc">Misc</option>
-                                    <option value="Albums">Albums</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <input id="MediaFilterStartDate" type="date" class="form-control form-select-sm shadow-none" value="2023-01-01">
-                            </div>
-                            <div class="col">
-                                <input id="MediaFilterSearchStr" type="text" class="form-control form-select-sm shadow-none" placeholder="Search string">
-                            </div>
-                            <div class="col-2">
-                                <button id="MediaFilterButton" type="button" class="btn btn-success btn-sm shadow-none">Filter</button>
-                            </div>
+                    <div class="row">
+                        <input id="MediaFilterMediaType" type="hidden" class="form-control " value="1">
+                        <input id="MediaFilterMenuItem" type="hidden" class="form-control form-select-sm" value="">
+                        <input id="MediaFilterAlbumTag" type="hidden" class="form-control form-select-sm" value="">
+
+                        <div class="col-3" >
+                            <button class="btn btn-primary float-start" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">
+                                <i class="fa fa-chevron-right" ></i> Menu
+                            </button>
                         </div>
+
+                        <div class="col">
+                            <select id="MediaFilterCategory" class="form-select shadow-none ">
+                                <option value="0">ALL</option>
+                                <option selected value="1 John J Kauflin">1 John J Kauflin</option>
+                                <option value="2 John E Kauflin">2 John E Kauflin</option>
+                                <option value="3 Baker Family">3 Baker Family</option>
+                                <option value="4 Mann Family">4 Mann Family</option>
+                                <option value="5 Bands">5 Bands</option>
+                                <option value="Mementos">Mementos</option>
+                                <option value="Misc">Misc</option>
+                                <option value="Albums">Albums</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <button id="MediaFilterButton" type="button" class="btn btn-success shadow-none">Filter</button>
+                            <!--
+                                btn-sm
+                                form-select-sm
+                            -->
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col">
+                            <input id="MediaFilterStartDate" type="date" class="form-control form-select shadow-none" value="2023-01-01">
+                        </div>
+                        <div class="col">
+                            <input id="MediaFilterSearchStr" type="text" class="form-control form-select shadow-none" placeholder="Search string">
+                        </div>
+                    </div>
+
                 </div>
 
                 <div id="MediaFolders">
@@ -307,10 +338,9 @@ and being part of a wonderful music community
     <script src="vendor/jkauflin/jjklogin/jjklogin.js?ver=1.006"></script>
     -->
 
-    <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=2.020"></script>
+    <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=2.022"></script>
 
     <script src="js/util.js?ver=3.018"></script>
-    <script src="js/navtab.js?ver=3.019"></script>
     <script src="js/main.js?ver=3.018"></script>
     <!--
     <script src="js/spotify.js?ver=3.011"></script>
