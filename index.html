@@ -114,9 +114,9 @@
 	</div><!-- end of Home tab -->
 
  
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="MediaMenuCanvas" aria-labelledby="MediaMenuCanvasLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <h5 class="offcanvas-title" id="MediaMenuCanvasLabel">Offcanvas</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -139,18 +139,18 @@
 			<div class="col-sm-7 col-md-9">
                 <div id="MediaFilterInputValues" class="container m-2">
                     <div class="row">
-                        <input id="MediaFilterMediaType" type="hidden" class="form-control " value="1">
-                        <input id="MediaFilterMenuItem" type="hidden" class="form-control form-select-sm" value="">
-                        <input id="MediaFilterAlbumTag" type="hidden" class="form-control form-select-sm" value="">
+                        <input id="MediaFilterMediaType" type="hidden" class="form-control" value="1">
+                        <input id="MediaFilterMenuItem" type="hidden" class="form-control" value="">
+                        <input id="MediaFilterAlbumTag" type="hidden" class="form-control" value="">
 
                         <div class="col-3" >
-                            <button class="btn btn-primary float-start" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">
+                            <button class="btn btn-primary float-start" type="button" data-bs-toggle="offcanvas" data-bs-target="#MediaMenuCanvas">
                                 <i class="fa fa-chevron-right" ></i> Menu
                             </button>
                         </div>
 
-                        <div class="col">
-                            <select id="MediaFilterCategory" class="form-select shadow-none ">
+                        <div class="col-6">
+                            <select id="MediaFilterCategory" class="form-select shadow-none">
                                 <option value="0">ALL</option>
                                 <option selected value="1 John J Kauflin">1 John J Kauflin</option>
                                 <option value="2 John E Kauflin">2 John E Kauflin</option>
@@ -164,10 +164,6 @@
                         </div>
                         <div class="col-2">
                             <button id="MediaFilterButton" type="button" class="btn btn-success shadow-none">Filter</button>
-                            <!--
-                                btn-sm
-                                form-select-sm
-                            -->
                         </div>
                     </div>
 
