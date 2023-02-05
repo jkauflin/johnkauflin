@@ -47,6 +47,8 @@
  *                  main callback function after the fetch).
  *                  Moved display functions back to the main callback function
  * 2022-06-26 JJK   Added empty function to remove all children from nodes
+ * 2023-02-05 JJK   Removed the Inputs to JSON functions (getting ride of
+ *                  this util.js)
  *============================================================================*/
  var util = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -213,122 +215,6 @@
         return tempStr;
     }
 
-
-
-    //=============================================================================================
-    // Function to get all input objects within a DIV, and extra entries from a map
-    // and construct output string with names and values (in JSON or param string)
-    // 2018-08-31 JJK - Modified to check for input DIV name string or object
-    // 2022-05-25 JJK - Added option for JSON or url param string
-    // Parameters:
-    //   formName - Form name which includes input fields to include in query
-    //   paramMap - Structure holding extra parameters to include
-    //   jsonOutput - true or false (false means url param string starting with ?)
-    //=============================================================================================
-    function getParamDatafromInputs(formName, paramMap=null, jsonOutput=true) {
-        let first = true;
-        let paramData = '';
-        let paramSeperator = '';
-        if (jsonOutput) {
-            paramSeperator = ',';
-        } else {
-            paramSeperator = ';';
-        }
-
-        // Check if the input form is specified
-        if (typeof formName !== "undefined" && formName !== null) {
-            // Get all the input objects within the Form
-            const inputForm = document.getElementById(formName);
-            if (inputForm !== null) {
-                // document.getElementsByClassName("form-control") - could use form-control class???
-                paramData = addParamDataForTag(inputForm, paramData, paramSeperator, first, jsonOutput, 'input');
-                paramData = addParamDataForTag(inputForm, paramData, paramSeperator, first, jsonOutput, 'textarea');
-                paramData = addParamDataForTag(inputForm, paramData, paramSeperator, first, jsonOutput, 'select');
-            }
-        }
-
-        if (paramMap !== null) {
-            paramMap.forEach(function (value, key) {
-                if (first) {
-                    first = false;
-                    if (jsonOutput) {
-                        paramData = '{';
-                    } else {
-                        paramData = '?';
-                    }
-                } else {
-                    paramData += paramSeperator;
-                }
-                if (jsonOutput) {
-                    paramData += '"' + key + '" : "' + value + '"';
-                } else {
-                    paramData += key + '=' + value;
-                }
-            });
-        }
-
-        if (jsonOutput) {
-            paramData += '}';
-        }
-
-        return paramData;
-    }
-
-    function addParamDataForTag(inputForm, paramData, paramSeperator, first, jsonOutput, tagName) {
-        let inputElementList = inputForm.getElementsByTagName(tagName);
-        for (let i=0; i < inputElementList.length; i++) {
-            // Only include elements that have an id
-            if (inputElementList[i].id === null) {
-                continue;
-            }
-
-            if (first) {
-                first = false;
-                if (jsonOutput) {
-                    paramData = '{';
-                } else {
-                    paramData = '?';
-                }
-            } else {
-                paramData += paramSeperator;
-            }
-
-            //console.log(`id = ${inputElementList[i].id}, type = ${inputElementList[i].type}, value = ${inputElementList[i].value}, checked = ${inputElementList[i].checked}`)
-            if (inputElementList[i].type === "checkbox") {
-                if (inputElementList[i].checked) {
-                    if (jsonOutput) {
-                        paramData += '"' + inputElementList[i].id + '" : 1';
-                    } else {
-                        paramData += inputElementList[i].id + '=1';
-                    }
-            
-                } else {
-                    if (jsonOutput) {
-                        paramData += '"' + inputElementList[i].id + '" : 0';
-                    } else {
-                        paramData += inputElementList[i].id + '=0';
-                    }
-                }
-            } else {
-                if (jsonOutput) {
-                    paramData += '"' + inputElementList[i].id + '" : "' + cleanStr(inputElementList[i].value) + '"';
-                } else {
-                    paramData += inputElementList[i].id + '=' + cleanStr(inputElementList[i].value);
-                }
-            }
-        }
-
-        return paramData;
-    }
-
-    //=============================================================================================
-    // 2022-05-25 JJK   Modified the original function to call the new function with the default
-    //                  of JSON = true
-    // *** Get rid of this when everything has been re-factored to call the new function ***
-    //=============================================================================================
-    function getJSONfromInputs(formName, paramMap) {
-        return getParamDatafromInputs(formName, paramMap);
-    }
 
     // Remove all child nodes from an element
     function empty(node) {
