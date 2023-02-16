@@ -57,6 +57,18 @@ var main = (function () {
         }
     }));
 
+    
+    var userName = ""
+    var userLevel = 0
+    var jjkloginEventElement = document.getElementById("jjkloginEventElement")
+    jjkloginEventElement.innerHTML = 'User not logged in'
+
+    jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
+        userName = event.detail.userName
+        userLevel = event.detail.userLevel
+        jjkloginEventElement.innerHTML = 'Logged in as ' + userName
+    });
+
 	//=================================================================================================================
 	// This is what is exposed from this Module
 	return {
