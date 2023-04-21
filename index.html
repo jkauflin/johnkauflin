@@ -127,27 +127,20 @@
             <!--
             d-block d-sm-none
             -->
-			
-            <div class="col-sm-5 col-md-3 d-none d-sm-block">
-                <h5 id=MediaHeader></h5>
-                <div id="MediaMenu"></div>
-			</div>
-
-			<div class="col-sm-7 col-md-9">
-                <div id="MediaFilterInputValues" class="container my-2">
+			<div class="col">
+                <div id="MediaFilterInputValues" class="container-fluid my-2">
                     <div class="row">
                         <input id="MediaFilterMediaType" type="hidden" class="form-control" value="1">
                         <input id="MediaFilterMenuItem" type="hidden" class="form-control" value="">
                         <input id="MediaFilterAlbumTag" type="hidden" class="form-control" value="">
 
-                        <div class="col-4" >
+                        <div class="col-3" >
                             <button class="btn btn-primary float-start" type="button" data-bs-toggle="offcanvas" data-bs-target="#MediaMenuCanvas">
                                 <i class="fa fa-chevron-right" ></i> Menu
                             </button>
                         </div>
-
                         <div class="col">
-                            <select id="MediaFilterCategory" class="form-select float-start shadow-none">
+                            <select id="MediaFilterCategory" class="form-select float-end shadow-none">
                                 <option value="0">ALL</option>
                                 <option selected value="1 John J Kauflin">1 John J Kauflin</option>
                                 <option value="2 John E Kauflin">2 John E Kauflin</option>
@@ -160,22 +153,35 @@
                             </select>
                         </div>
                         <div class="col-2">
-                            <button id="MediaFilterButton" type="button" class="btn btn-success float-start shadow-none">Filter</button>
+                            <button id="MediaFilterButton" type="button" class="btn btn-success float-end shadow-none" disabled>
+                                <i class="fa fa-pencil" ></i>
+                            </button>
                         </div>
                     </div>
 
                     <div class="row mt-2">
-                        <div class="col">
-                            <input id="MediaFilterStartDate" type="date" class="form-control shadow-none" value="2023-01-01">
+                        <div class="col-3 d-none d-sm-block">
+                            <h5 id=MediaHeader></h5>
                         </div>
                         <div class="col">
-                            <input id="MediaFilterSearchStr" type="text" class="form-control shadow-none" placeholder="Search string">
+                            <div class="row">
+                                <div class="col-5">
+                                    <input id="MediaFilterStartDate" type="date" class="form-control shadow-none" value="2023-01-01">
+                                </div>
+                                <div class="col-7">
+                                    <input id="MediaFilterSearchStr" type="text" class="form-control shadow-none" placeholder="Search string">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 d-none d-sm-block">
+                            <!--
+                            <h6 class="float-end">(Edit Mode)</h6>
+                            -->
                         </div>
                     </div>
-
                 </div>
 
-                <div id="MediaFolders">
+                <div id="MediaFilterRequests">
                 </div>
                 <div id="MediaThumbnails">
                 </div>
@@ -289,33 +295,6 @@ and being part of a wonderful music community
 		<ol class="indicator"></ol>
 	</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="MediaSearchModal" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        Media Search
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div id="MediaSearchInput">
-                        <form id="MediaInputValues" class="input-group input-group-sm my-2" action="#">
-                            <input id="MediaSearchStr" type="text" class="form-control" placeholder="Search string" aria-label="Search string" aria-describedby="button-addon2">
-                            <button id="MediaSearchInputButton" class="btn btn-outline-secondary" type="button" >Search</button>
-                        </form>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <!-- Bootstrap core JavaScript ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -330,7 +309,7 @@ and being part of a wonderful music community
     <script src="https://cdn.jsdelivr.net/npm/spotify-web-api-js@1.4.0/src/spotify-web-api.min.js" type="text/javascript"></script>
     -->
     <script src="vendor/jkauflin/jjklogin/jjklogin.js?ver=1.019"></script>
-    <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=3.061"></script>
+    <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=3.073"></script>
     <script src="js/main.js?ver=3.022"></script>
     <!--
     <script src="js/util.js?ver=3.018"></script>
