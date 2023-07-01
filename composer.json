@@ -3,7 +3,7 @@
         "php": ">=8.0.0",
         "symfony/mailer": "^6.2.5",
         "firebase/php-jwt": "^6.4.0",
-        "jkauflin/jjkgallery": "^3.1.0",
+        "jkauflin/jjkgallery": "^3.1.1",
         "jkauflin/jjklogin": "^1.2.3",
         "jwilsson/spotify-web-api-php": "^4.1"
     }
