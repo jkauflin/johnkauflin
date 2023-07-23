@@ -1,5 +1,5 @@
 /*==============================================================================
- * (C) Copyright 2015,2016,2017,2022 John J Kauflin, All rights reserved. 
+ * (C) Copyright 2015,2016,2017,2022,2023 John J Kauflin, All rights reserved. 
  *----------------------------------------------------------------------------
  * DESCRIPTION: 
  *----------------------------------------------------------------------------
@@ -35,43 +35,36 @@
  * 					active tab better) - moved the auto collapse here and 
  * 					the link-tile-tab show to media gallery, and got rid of
  * 					the seperate navtab.js just to avoid confusion
+ * 2023-07-23 JJK   Modified to conform to ES6 module standard
  *============================================================================*/
-var main = (function () {
-	'use strict';  // Force declaration of variables before use (among other things)
 
-    // Keep track of the state of the navbar collapse (shown or hidden)
-    var navbarCollapseShown = false;
-    var collapsibleNavbar = document.getElementsByClassName("navbar-collapse")[0];
-    collapsibleNavbar.addEventListener('hidden.bs.collapse', function () {
-        navbarCollapseShown = false;
-    })
-    collapsibleNavbar.addEventListener('shown.bs.collapse', function () {
-        navbarCollapseShown = true;
-    })
-
-    // Listen for nav-link clicks
-    document.querySelectorAll("a.nav-link").forEach(el => el.addEventListener("click", function (event) {
-        // Automatically hide the navbar collapse when an item link is clicked (and the collapse is currently shown)
-        if (navbarCollapseShown) {
-            new bootstrap.Collapse(document.getElementsByClassName("navbar-collapse")[0]).hide();
-        }
-    }));
-
-    
-    var userName = ""
-    var userLevel = 0
-    var jjkloginEventElement = document.getElementById("jjkloginEventElement")
-    jjkloginEventElement.innerHTML = 'User not logged in'
-
-    jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
-        userName = event.detail.userName
-        userLevel = event.detail.userLevel
-        jjkloginEventElement.innerHTML = 'Logged in as ' + userName
-    });
-
-	//=================================================================================================================
-	// This is what is exposed from this Module
-	return {
-	};
-
-})(); // var main = (function(){
+     // Keep track of the state of the navbar collapse (shown or hidden)
+     var navbarCollapseShown = false;
+     var collapsibleNavbar = document.getElementsByClassName("navbar-collapse")[0];
+     collapsibleNavbar.addEventListener('hidden.bs.collapse', function () {
+         navbarCollapseShown = false;
+     })
+     collapsibleNavbar.addEventListener('shown.bs.collapse', function () {
+         navbarCollapseShown = true;
+     })
+ 
+     // Listen for nav-link clicks
+     document.querySelectorAll("a.nav-link").forEach(el => el.addEventListener("click", function (event) {
+         // Automatically hide the navbar collapse when an item link is clicked (and the collapse is currently shown)
+         if (navbarCollapseShown) {
+             new bootstrap.Collapse(document.getElementsByClassName("navbar-collapse")[0]).hide();
+         }
+     }));
+ 
+     
+     var userName = ""
+     var userLevel = 0
+     var jjkloginEventElement = document.getElementById("jjkloginEventElement")
+     jjkloginEventElement.innerHTML = 'User not logged in'
+ 
+     jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
+         userName = event.detail.userName
+         userLevel = event.detail.userLevel
+         jjkloginEventElement.innerHTML = 'Logged in as ' + userName
+     });
+ 
