@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fe5c2a64ffb74f61fc9663a8c739734",
+    "content-hash": "6a4ebab946a681dfb4dfae60da3aeed5",
     "packages": [
         {
             "name": "doctrine/lexer",
@@ -215,16 +215,16 @@
         },
         {
             "name": "jkauflin/jjkgallery",
-            "version": "v3.3.1",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/MediaGallery.git",
-                "reference": "cff968c82fdb664a29185214ed7d12ae6a8e2623"
+                "reference": "29f273beaec8dd373cd6cda27757cd5b9688377c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/cff968c82fdb664a29185214ed7d12ae6a8e2623",
-                "reference": "cff968c82fdb664a29185214ed7d12ae6a8e2623",
+                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/29f273beaec8dd373cd6cda27757cd5b9688377c",
+                "reference": "29f273beaec8dd373cd6cda27757cd5b9688377c",
                 "shasum": ""
             },
             "type": "project",
@@ -246,9 +246,9 @@
             "description": "Web Media Gallery display for photos, videos, music, and docs",
             "support": {
                 "issues": "https://github.com/jkauflin/MediaGallery/issues",
-                "source": "https://github.com/jkauflin/MediaGallery/tree/v3.3.1"
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v3.3.2"
             },
-            "time": "2023-09-13T11:39:21+00:00"
+            "time": "2023-09-13T15:13:54+00:00"
         },
         {
             "name": "jkauflin/jjklogin",
