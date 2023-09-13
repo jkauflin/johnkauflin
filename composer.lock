@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a892751223e85580de2d5cdf02b050e8",
+    "content-hash": "4f11d0bf81877f4fe98cd9a11d40fbdc",
     "packages": [
         {
             "name": "doctrine/lexer",
@@ -215,7 +215,7 @@
         },
         {
             "name": "jkauflin/jjkgallery",
-            "version": "v3.2.8",
+            "version": "v3.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/MediaGallery.git",
@@ -246,7 +246,7 @@
             "description": "Web Media Gallery display for photos, videos, music, and docs",
             "support": {
                 "issues": "https://github.com/jkauflin/MediaGallery/issues",
-                "source": "https://github.com/jkauflin/MediaGallery/tree/v3.2.8"
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v3.2.9"
             },
             "time": "2023-09-01T16:00:34+00:00"
         },
