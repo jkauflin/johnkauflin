@@ -38,33 +38,26 @@
  * 2023-07-23 JJK   Modified to conform to ES6 module standard
  *============================================================================*/
 
-     // Keep track of the state of the navbar collapse (shown or hidden)
-     var navbarCollapseShown = false;
-     var collapsibleNavbar = document.getElementsByClassName("navbar-collapse")[0];
-     collapsibleNavbar.addEventListener('hidden.bs.collapse', function () {
-         navbarCollapseShown = false;
-     })
-     collapsibleNavbar.addEventListener('shown.bs.collapse', function () {
-         navbarCollapseShown = true;
-     })
+// Keep track of the state of the navbar collapse (shown or hidden)
+var navbarCollapseShown = false;
+var collapsibleNavbar = document.getElementsByClassName("navbar-collapse")[0];
+collapsibleNavbar.addEventListener('hidden.bs.collapse', function () {
+    navbarCollapseShown = false;
+})
+collapsibleNavbar.addEventListener('shown.bs.collapse', function () {
+    navbarCollapseShown = true;
+})
  
-     // Listen for nav-link clicks
-     document.querySelectorAll("a.nav-link").forEach(el => el.addEventListener("click", function (event) {
-         // Automatically hide the navbar collapse when an item link is clicked (and the collapse is currently shown)
-         if (navbarCollapseShown) {
-             new bootstrap.Collapse(document.getElementsByClassName("navbar-collapse")[0]).hide();
-         }
-     }));
+// Listen for nav-link clicks
+document.querySelectorAll("a.nav-link").forEach(el => el.addEventListener("click", function (event) {
+    // Automatically hide the navbar collapse when an item link is clicked (and the collapse is currently shown)
+    if (navbarCollapseShown) {
+        new bootstrap.Collapse(document.getElementsByClassName("navbar-collapse")[0]).hide()
+    }
+}))
  
-     
-     var userName = ""
-     var userLevel = 0
-     var jjkloginEventElement = document.getElementById("jjkloginEventElement")
-     jjkloginEventElement.innerHTML = 'User not logged in'
- 
-     jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
-         userName = event.detail.userName
-         userLevel = event.detail.userLevel
-         jjkloginEventElement.innerHTML = 'Logged in as ' + userName
-     });
- 
+var jjkloginEventElement = document.getElementById("jjkloginEventElement")
+jjkloginEventElement.innerHTML = ""
+jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
+    jjkloginEventElement.innerHTML = 'Logged in as ' + event.detail.userName
+})

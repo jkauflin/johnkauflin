@@ -48,6 +48,7 @@
                     <i class="fa fa-music"></i> Music</a></li>
                 <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#InfoPage">
                     <i class="fa fa-info-circle"></i> About</a></li>
+                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#GenvPage">Genv</a></li>
                 <li class="nav-item"><a class="nav-link" id="login" href="#" role="button">login</a></li>
                     <!--
                 <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#BotPage">
@@ -262,6 +263,131 @@ and being part of a wonderful music community
 	</div><!-- end of Info -->
 
 
+    <div class="tab-pane" id="GenvPage">
+        <form id="InputValues" action="#">
+            <div class="row">
+                <div class="col p-0">
+                    <div class="form-floating m-1">
+                        <input id="targetTemperature" type="number" class="form-control">
+                        <label for="targetTemperature">Target Temp</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="currTemperature" type="number" class="form-control">
+                        <label for="currTemperature">Curr Temp</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="lightDuration" type="number" class="form-control">
+                        <label for="lightDuration">Light duration</label>
+                    </div>
+                    <!--
+                    <div class="form-floating m-1">
+                        <input id="airInterval" type="number" class="form-control">
+                        <label for="airInterval">Air interval</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="airDuration" type="number" class="form-control">
+                        <label for="airDuration">Air duration</label>                        
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="heatDurationMin" type="number" class="form-control">
+                        <label for="heatDurationMin">Heat dur Min</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="heatDurationMax" type="number" class="form-control">
+                        <label for="heatDurationMax">Watr int hrs</label>
+                    </div>
+                    -->
+                    <button id="GetDataButton" type="button" class="btn btn-success m-2 float-end" disabled>Get Data</button>
+                </div>
+
+                <div class="col p-0">
+                    <div class="form-floating m-1">
+                        <input id="heatInterval" type="number" class="form-control">
+                        <label for="heatInterval">Heat interval</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="heatDuration" type="number" class="form-control">
+                        <label for="heatDuration">Heat duration</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="configCheckInterval" type="number" class="form-control">
+                        <label for="configCheckInterval">Check Interval</label>
+                    </div>
+                    <button id="UpdateButton" type="button" class="btn btn-primary m-2" disabled>Update</button>
+                </div>
+
+                <div class="col p-0">
+                    <div class="form-floating m-1">
+                        <input id="waterInterval" type="number" class="form-control">
+                        <label for="waterInterval">Watr int hrs</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="waterDuration" type="number" class="form-control">
+                        <label for="waterDuration">Water dur</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="waterSeconds" type="number" class="form-control">
+                        <label for="waterSeconds">Water secs</label>
+                    </div>
+                    <button id="WaterButton" type="button" class="btn btn-warning m-2" disabled>Water</button>
+                </div>
+            </div><!-- end of row -->
+
+            <div class="row">
+                <div class="col p-0">
+                    <div class="form-floating m-1">
+                        <input id="configDesc" type="text" class="form-control">
+                        <label for="configDesc">Description</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="germinationStart" type="date" class="form-control">
+                        <label for="germinationStart">Germination start</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="plantingDate" type="date" class="form-control">
+                        <label for="plantingDate">Planting date</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="harvestDate" type="date" class="form-control" disabled>
+                        <label for="harvestDate">Harvest start</label>
+                    </div>
+                </div>
+                <div class="col p-0">
+                    <div class="form-floating m-1">
+                        <input id="daysToBloom" type="number" class="form-control">
+                        <label for="daysToBloom">Days to bloom</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="daysToGerm" type="text" class="form-control">
+                        <label for="daysToGerm">Days to germinate</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="cureDate" type="date" class="form-control" disabled>
+                        <label for="cureDate">Cure start</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="productionDate" type="date" class="form-control" disabled>
+                        <label for="productionDate">Production date</label>
+                    </div>
+                </div>
+            </div><!-- end of row -->
+        </form>
+
+        <!--
+        <div class="row m-2">
+            <h6>Log messages:</h6>
+            <table id="LogMessageDisplay" class="table table-condensed table-striped">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        -->
+
+        <div id="UpdateDisplay" class="m-2"></div>
+
+    </div><!-- end of Genv tab -->
+
+
 </div><!-- end of main tab content -->
 </div><!-- end of main container -->
 
@@ -279,6 +405,7 @@ and being part of a wonderful music community
     <script src="vendor/jkauflin/jjklogin/jjklogin.js?ver=1.020"></script>
     <script src="vendor/jkauflin/jjkgallery/mediagallery.js" type="module"></script>
     <script src="js/main.js" type="module"></script>
+    <script src="js/genv.js" type="module"></script>
 
     <!--
     <script src="js/spotify.js?ver=3.011"></script>
