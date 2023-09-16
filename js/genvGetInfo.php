@@ -50,7 +50,7 @@ try {
 	//-----------------------------------------------------------------------------------
 	// Album
 	//-----------------------------------------------------------------------------------
-	$sql = "SELECT * FROM genvMonitorConfig";
+	$sql = "SELECT * FROM genvMonitorConfig WHERE ConfigId = 1";
 	$stmt = $conn->prepare($sql)  or die($mysqli->error);
 	$stmt->execute();
 	$result = $stmt->get_result();

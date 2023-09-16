@@ -54,18 +54,32 @@ try {
 	//error_log(date('[Y-m-d H:i] '). '$sql = ' . $sql . PHP_EOL, 3, LOG_FILE);
 	$conn = getConn($dbHost, $dbUser, $dbPassword, $dbName);
 
-	$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,GerminationStart=?,PlantingDate=?,TargetTemperature=?," .
-				"HeatInterval=?,HeatDuration=?,LightDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?," . 
+	$returnMsg = "";
+	if ($param->requestCommand != "") {
+		if ($param->requestCommand == "WaterOn") {
+			$sql = "UPDATE genvMonitorConfig SET RequestCommand=?,RequestValue=?," .
 				"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
-	$stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssssss",$param->configDesc,$param->daysToBloom,$param->germinationStart,$param->plantingDate,
+			$stmt = $conn->prepare($sql);
+			$stmt->bind_param("ss",$param->requestCommand,$param->requestValue);
+			$stmt->execute();
+			$stmt->close();
+			$returnMsg = $param->requestCommand . " Request updated " . date("h:i:sa");
+		}
+
+	} else {
+		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,GerminationStart=?,PlantingDate=?,TargetTemperature=?," .
+			"HeatInterval=?,HeatDuration=?,LightDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?,ReturnMessage=''," . 
+			"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("sssssssssss",$param->configDesc,$param->daysToBloom,$param->germinationStart,$param->plantingDate,
 			$param->targetTemperature,$param->heatInterval,$param->heatDuration,$param->lightDuration,
 			$param->waterDuration,$param->waterInterval,$param->configCheckInterval);
-    $stmt->execute();
-	$stmt->close();
+		$stmt->execute();
+		$stmt->close();
+		$returnMsg = date("h:i:sa");
+	}
 
 	$conn->close();
-	$returnMsg = date("h:i:sa");
 }
 catch (Exception $e) {
 	$listInfo->returnMsg = "Error in Update";

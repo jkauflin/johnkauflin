@@ -1,27 +1,30 @@
 /*==============================================================================
- * (C) Copyright 2023 John J Kauflin, All rights reserved. 
- *----------------------------------------------------------------------------
- * DESCRIPTION:  Genv UI to interact with the server database
- *----------------------------------------------------------------------------
- * Modification History
- * 2023-09-14 JJK 	Initial version 
+ (C) Copyright 2023 John J Kauflin, All rights reserved. 
+ ----------------------------------------------------------------------------
+ DESCRIPTION:  Genv UI to interact with the server database
+ ----------------------------------------------------------------------------
+ Modification History
+ 2023-09-14 JJK  Initial version 
+ 2023-09-16 JJK  Added WaterOn request 
  *============================================================================*/
 
 var getDataButton = document.getElementById("GetDataButton")
 var updateButton = document.getElementById("UpdateButton")
+var waterButton = document.getElementById("WaterButton")
 
     //=================================================================================================================
     // Bind events
     //document.getElementById("ClearLogButton").addEventListener("click", _clearLog);
     getDataButton.addEventListener("click", _lookup);
     updateButton.addEventListener("click", _update);
-    //document.getElementById("WaterButton").addEventListener("click", _water);
+    waterButton.addEventListener("click", _water);
 
     var jjkloginEventElement = document.getElementById("jjkloginEventElement")
     jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
         if (event.detail.userLevel >= 9) {
             getDataButton.disabled = false
             updateButton.disabled = false
+            waterButton.disabled = false
         }
     })
 
@@ -60,7 +63,8 @@ var updateButton = document.getElementById("UpdateButton")
             lightDuration: document.getElementById("lightDuration").value,
             waterDuration: document.getElementById("waterDuration").value,
             waterInterval: document.getElementById("waterInterval").value,
-            configCheckInterval: document.getElementById("configCheckInterval").value
+            configCheckInterval: document.getElementById("configCheckInterval").value,
+            requestCommand: ""
         }
         fetch(url, {
             method: 'POST',
@@ -83,15 +87,44 @@ var updateButton = document.getElementById("UpdateButton")
         });
     }
 
-    /*
-    function _clearLog(event) {
-        let url = 'ClearLog';
+
+/*
+function _addDays(inDate, days) {
+    var td = new Date(inDate)
+    td.setDate(td.getDate() + days)
+    let tempMonth = td.getMonth() + 1
+    let tempDay = td.getDate()
+    let outDate = td.getFullYear() + '-' + paddy(tempMonth,2) + '-' + paddy(tempDay,2)
+    return outDate;
+}
+
+function updateConfig(inStoreRec) {
+    let prevPlantingDate = sr.plantingDate
+    sr = inStoreRec
+
+    // If the planting date changes, update the other dates based on the new date
+    if (sr.plantingDate != prevPlantingDate) {
+        sr.harvestDate = _addDays(sr.plantingDate,75)
+        sr.cureDate = _addDays(sr.harvestDate,14)
+        sr.productionDate = _addDays(sr.cureDate,14)
     }
 
+    //log("updateConfig, targetTemperature = " + sr.targetTemperature)
+    TEMPATURE_MAX = sr.targetTemperature + 1.0
+    TEMPATURE_MIN = sr.targetTemperature - 1.0
+    _saveStoreRec()
+}
+
+*/
+
+
+//RequestCommand "WaterOn"
+
     function _water(event) {
-        let url = 'Water';
+        let url = 'js/genvUpdateInfo.php';
         let paramData = {
-            waterSeconds: document.getElementById("waterSeconds").value}
+            requestCommand: "WaterOn",
+            requestValue: document.getElementById("waterSeconds").value}
         fetch(url, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -111,7 +144,6 @@ var updateButton = document.getElementById("UpdateButton")
             document.getElementById("UpdateDisplay").innerHTML = "Fetch data FAILED - check log";
         });
     }
-    */
 
     function _renderConfig(storeRec) {
         if (storeRec != null) {
@@ -135,6 +167,7 @@ var updateButton = document.getElementById("UpdateButton")
             document.getElementById("waterInterval").value = storeRec.WaterInterval;
             document.getElementById("waterDuration").value = storeRec.WaterDuration;
             document.getElementById("configCheckInterval").value = storeRec.ConfigCheckInterval;
+            document.getElementById("returnMessage").value = storeRec.ReturnMessage;
         }
 
     }
