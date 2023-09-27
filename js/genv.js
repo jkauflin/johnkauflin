@@ -11,6 +11,7 @@
 var getDataButton = document.getElementById("GetDataButton")
 var updateButton = document.getElementById("UpdateButton")
 var waterButton = document.getElementById("WaterButton")
+var selfieButton = document.getElementById("SelfieButton")
 
     //=================================================================================================================
     // Bind events
@@ -18,6 +19,7 @@ var waterButton = document.getElementById("WaterButton")
     getDataButton.addEventListener("click", _lookup);
     updateButton.addEventListener("click", _update);
     waterButton.addEventListener("click", _water);
+    selfieButton.addEventListener("click", _selfie);
 
     var jjkloginEventElement = document.getElementById("jjkloginEventElement")
     jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
@@ -25,6 +27,7 @@ var waterButton = document.getElementById("WaterButton")
             getDataButton.disabled = false
             updateButton.disabled = false
             waterButton.disabled = false
+            selfieButton.disabled = false
         }
     })
 
@@ -49,6 +52,26 @@ var waterButton = document.getElementById("WaterButton")
             document.getElementById("UpdateDisplay").innerHTML = "Fetch data FAILED - check log";
         });
     }
+
+    /*
+
+Body type Blob
+https://developer.mozilla.org/en-US/docs/Web/API/Blob
+
+    const myImage = document.querySelector("img");
+
+const myRequest = new Request("flowers.jpg");
+
+fetch(myRequest)
+  .then((response) => {
+    console.log("response.type =", response.type); // response.type = 'basic'
+    return response.blob();
+  })
+  .then((myBlob) => {
+    const objectURL = URL.createObjectURL(myBlob);
+    myImage.src = objectURL;
+  });
+    */
 
     function _update(event) {
         let url = 'js/genvUpdateInfo.php';
@@ -145,6 +168,31 @@ function updateConfig(inStoreRec) {
         });
     }
 
+    function _selfie(event) {
+        let url = 'js/genvUpdateInfo.php';
+        let paramData = {
+            requestCommand: "Selfie",
+            requestValue: ""}
+        fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(paramData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Response was not OK');
+            }
+            return response.text();
+        })
+        .then(message => {
+            document.getElementById("UpdateDisplay").innerHTML = message;
+        })
+        .catch((err) => {
+            console.error(`Error in Fetch to ${url}, ${err}`);
+            document.getElementById("UpdateDisplay").innerHTML = "Fetch data FAILED - check log";
+        });
+    }
+
     function _renderConfig(storeRec) {
         if (storeRec != null) {
             document.getElementById("configDesc").value = storeRec.ConfigDesc;
@@ -168,6 +216,20 @@ function updateConfig(inStoreRec) {
             document.getElementById("waterDuration").value = storeRec.WaterDuration;
             document.getElementById("configCheckInterval").value = storeRec.ConfigCheckInterval;
             document.getElementById("returnMessage").value = storeRec.ReturnMessage;
+
+            var tempImg = document.getElementById("SelfieImg")
+            tempImg.src = storeRec.TempImg
+
+            if (window.innerHeight > window.innerWidth) {
+                // Portrait
+                let tempWidth = window.innerWidth - 100
+                tempImg.style.maxWidth = tempWidth + "px"
+            } else {
+                // Landscape
+                let tempHeight = window.innerHeight - 100
+                tempImg.style.maxHeight = tempHeight + "px"
+            }
+        
         }
 
     }

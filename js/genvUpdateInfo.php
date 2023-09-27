@@ -56,15 +56,13 @@ try {
 
 	$returnMsg = "";
 	if ($param->requestCommand != "") {
-		if ($param->requestCommand == "WaterOn") {
-			$sql = "UPDATE genvMonitorConfig SET RequestCommand=?,RequestValue=?," .
+		$sql = "UPDATE genvMonitorConfig SET RequestCommand=?,RequestValue=?," .
 				"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
-			$stmt = $conn->prepare($sql);
-			$stmt->bind_param("ss",$param->requestCommand,$param->requestValue);
-			$stmt->execute();
-			$stmt->close();
-			$returnMsg = $param->requestCommand . " Request updated " . date("h:i:sa");
-		}
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("ss",$param->requestCommand,$param->requestValue);
+		$stmt->execute();
+		$stmt->close();
+		$returnMsg = $param->requestCommand . " Request updated " . date("h:i:sa");
 
 	} else {
 		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,GerminationStart=?,PlantingDate=?,TargetTemperature=?," .
