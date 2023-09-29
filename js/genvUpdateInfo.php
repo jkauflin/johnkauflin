@@ -6,6 +6,7 @@
  *----------------------------------------------------------------------------
  * Modification History
  * 2023-09-15 JJK 	Initial version
+ * 2023-09-29 JJK	Added update of other dates
  *============================================================================*/
 // Define a super global constant for the log file (this will be in scope for all functions)
 define("LOG_FILE", "./php.log");
@@ -65,11 +66,13 @@ try {
 		$returnMsg = $param->requestCommand . " Request updated " . date("h:i:sa");
 
 	} else {
-		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,GerminationStart=?,PlantingDate=?,TargetTemperature=?," .
+		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,GerminationStart=?,PlantingDate=?," .
+			"HarvestDate=?,CureDate=?,ProductionDate=?,TargetTemperature=?," . 
 			"HeatInterval=?,HeatDuration=?,LightDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?,ReturnMessage=''," . 
 			"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
 		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("sssssssssss",$param->configDesc,$param->daysToBloom,$param->germinationStart,$param->plantingDate,
+		$stmt->bind_param("ssssssssssssss",$param->configDesc,$param->daysToBloom,$param->germinationStart,$param->plantingDate,
+			$param->harvestDate,$param->cureDate,$param->productionDate,
 			$param->targetTemperature,$param->heatInterval,$param->heatDuration,$param->lightDuration,
 			$param->waterDuration,$param->waterInterval,$param->configCheckInterval);
 		$stmt->execute();
