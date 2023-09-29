@@ -219,7 +219,7 @@ function updateConfig(inStoreRec) {
 
             var tempImg = document.getElementById("SelfieImg")
             tempImg.src = storeRec.TempImg
-
+            /*            
             if (window.innerHeight > window.innerWidth) {
                 // Portrait
                 let tempWidth = window.innerWidth - 100
@@ -229,7 +229,7 @@ function updateConfig(inStoreRec) {
                 let tempHeight = window.innerHeight - 100
                 tempImg.style.maxHeight = tempHeight + "px"
             }
-        
+            */
         }
 
     }
