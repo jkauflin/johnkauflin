@@ -61,3 +61,16 @@ jjkloginEventElement.innerHTML = ""
 jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
     jjkloginEventElement.innerHTML = 'Logged in as ' + event.detail.userName
 })
+
+var solarTile = document.getElementById("SolarTile")
+solarTile.addEventListener("click", function (event) {
+    /*
+    let targetTabElement = document.querySelector(`.navbar-nav a[href="#SolarPage"]`);
+    // If the target tab element is found, create a Tab object and call the show() method
+    if (typeof targetTabElement !== "undefined" && targetTabElement !== null) {
+        bootstrap.Tab.getOrCreateInstance(targetTabElement).show();
+    }
+    */
+    window.open("https://johnkauflin.com/home/emoncms/dashboard/view?id=3&apikey=38618b096c7f94b4bf7ce190af925037", '_blank').focus()
+})
+
