@@ -74,3 +74,8 @@ solarTile.addEventListener("click", function (event) {
     window.open("https://johnkauflin.com/home/emoncms/dashboard/view?id=3&apikey=38618b096c7f94b4bf7ce190af925037", '_blank').focus()
 })
 
+
+// Clear the parameters from the url
+//window.history.replaceState({}, document.title, "/home/");
+
+
