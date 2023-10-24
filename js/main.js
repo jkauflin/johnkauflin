@@ -71,8 +71,9 @@ solarTile.addEventListener("click", function (event) {
         bootstrap.Tab.getOrCreateInstance(targetTabElement).show();
     }
     */
-    //window.open("https://johnkauflin.com/home/emoncms/dashboard/view?id=3&apikey=38618b096c7f94b4bf7ce190af925037", '_blank').focus()
+    window.open("https://johnkauflin.com/home/emoncms/dashboard/view?id=3&apikey=38618b096c7f94b4bf7ce190af925037", '_blank').focus()
 
+    /*
     let paramData = {
         testParam: "Led Zeppelin"}
 
@@ -86,7 +87,8 @@ solarTile.addEventListener("click", function (event) {
     .then(returnStr => {
         console.log("ret = "+returnStr)
     })
-    
+    */
+   
 })
 
 
