@@ -88,7 +88,6 @@ async function sendCommand(botCommands) {
     console.log("in sendCommand ")
 
     try {
-        //let url = "https://192.168.1.169:3035/test"
         //let url = "http://localhost:3035/botcmd"
         let url = "https://192.168.1.169:3035/botcmd"
         await fetch(url, {
