@@ -84,17 +84,45 @@ botStopButton.addEventListener("click", function (event) {
 })
 
 // General function to send the botMessageStr to the server if Websocket is connected
-function sendCommand(botMessageStr) {
-    //console.log("in sendCommand, botMessageStr = "+botMessageStr)
+async function sendCommand(botCommands) {
+    console.log("in sendCommand ")
 
-    //let url = "https://192.168.1.169:3035/test"
-    //let url = "https://localhost:3035/botCommands"
-    let url = "http://192.168.1.169:3035/botCommands"
-    fetch(url, {
+    try {
+        //let url = "https://192.168.1.169:3035/test"
+        let url = "http://localhost:3035/botcmd"
+        //let url = "http://192.168.1.169:3035/botcmd"
+        await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(botCommands)
+        })
+        /*
+        const response = await fetch("https://example.com/profile", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        console.log("Success:", result);
+        */
+    } catch (error) {
+        console.error("Error in fetch:", error);
+    }
+
+    /*
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "192.168.1.169,localhost"
+    Header set Access-Control-Allow-Methods "GET, POST"
+</IfModule>
+
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(botMessageStr)
-    })
+
+    */
     //mode: 'no-cors',
     //cache: 'no-cache',
 }
@@ -165,7 +193,7 @@ function handleTextFromSpeech(speechText) {
             textResults.innerHTML = reply
 
             let botCommands = {
-                say: reply}
+                "say": "test"}
 
             sendCommand(botCommands);
         }
