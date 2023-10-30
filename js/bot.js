@@ -89,8 +89,8 @@ async function sendCommand(botCommands) {
 
     try {
         //let url = "https://192.168.1.169:3035/test"
-        let url = "http://localhost:3035/botcmd"
-        //let url = "http://192.168.1.169:3035/botcmd"
+        //let url = "http://localhost:3035/botcmd"
+        let url = "http://192.168.1.169:3035/botcmd"
         await fetch(url, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
