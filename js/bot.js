@@ -30,12 +30,21 @@
  * 2023-10-28 JJK   Re-starting JohnBot development.
  *============================================================================*/
 
+import {speakText,stopSpeaking,stopAll,startRecognizing} from './speech.js'
+
 var searchButton = document.getElementById("SearchButton")
 var searchStr = document.getElementById("SearchStr")
 var speechToTextButton = document.getElementById("SpeechToTextButton")
 var botStopButton = document.getElementById("BotStopButton")
-var textResults = document.getElementById("STTResultsSpan")
+//var textResults = document.getElementById("STTResultsSpan")
 var userName
+
+var verbalRepsonse = document.getElementById("VerbalRepsonse")
+var botImage = document.getElementById("BotImage")
+
+var botImgEyesON = "Media/images/botEyesRed.jpg"
+var botImgEyesOFF = "Media/images/botImage.jpg"
+
 
 // Create our RiveScript interpreter.
 var brain = new RiveScript();
@@ -78,14 +87,16 @@ searchStr.addEventListener("keypress", function(event) {
     }
 })
 
+/*
 botStopButton.addEventListener("click", function (event) {
     _stop()
 })
+*/
 
 // General function to send the botMessageStr to the server if Websocket is connected
 async function sendCommand(botCommands) {
     console.log("in sendCommand ")
-
+    /*
     try {
         //let url = "http://localhost:3035/botcmd"
         let url = "https://192.168.1.169:3035/botcmd"
@@ -94,43 +105,18 @@ async function sendCommand(botCommands) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(botCommands)
         })
-        /*
-        const response = await fetch("https://example.com/profile", {
-          method: "POST", // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const result = await response.json();
-        console.log("Success:", result);
-        */
     } catch (error) {
         console.error("Error in fetch:", error);
     }
-
-    /*
-
-<IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "192.168.1.169,localhost"
-    Header set Access-Control-Allow-Methods "GET, POST"
-</IfModule>
-
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(botMessageStr)
-
     */
-    //mode: 'no-cors',
-    //cache: 'no-cache',
 }
+
 /*
 function _startInteraction() {
     getUserName = true;
     sayAndAnimate("Hello, I am the Joke bought.  What is your name?");
     //sendCommand('{"walk":1}');
 }
-*/
 function _stop() {
     sendCommand('{"stop":1}')
     //music.stop()
@@ -142,6 +128,7 @@ function _stop() {
 function _restart() {
     //sendCommand('{"restart":1}');
 }
+*/
 
 function _searchResponses() {
     //console.log("searchStr = " + searchStr.value)
@@ -151,8 +138,8 @@ function _searchResponses() {
 }
 
 // Respond to string recognized by speech to text (or from search input text box)
-function handleTextFromSpeech(speechText) {
-    //console.log(" in handleTextFromSpeech, speechText = " + speechText);
+export function handleTextFromSpeech(speechText) {
+    console.log(" in handleTextFromSpeech, speechText = " + speechText);
 
     /*
     if (getUserName) {
@@ -165,7 +152,7 @@ function handleTextFromSpeech(speechText) {
 
     // Call the RiveScript interpreter to get a reply
     brain.reply("username", speechText, this).then(function (reply) {
-        //console.log("brain reply = " + reply);
+        console.log("brain reply = " + reply);
         
         /*
         if (reply.search("I will remember to call you ")) {
@@ -179,21 +166,22 @@ function handleTextFromSpeech(speechText) {
             //_executeBotCommands(reply.substr(commandFound + 11));
 
             // Let's assume if it's a bot command, we don't want to speak as well
-            //var textToSpeak = reply.substr(0,commandFound-1);
+            var textToSpeak = reply.substr(0,commandFound-1);
             // 2019-04-19 JJK - Let's trying doing the speaking part too
             // (if there is something to say)
-            //if (textToSpeak)
-            //sayAndAnimate(reply.substr(0, commandFound - 1));
+            if (textToSpeak) {
+                sayAndAnimate(textToSpeak)
+            }
             
             //speech.startRecognizing();
         } else {
-            //sayAndAnimate(reply);
-            textResults.innerHTML = reply
+            sayAndAnimate(reply)
+            //textResults.innerHTML = reply
 
             let botCommands = {
                 "say": "test"}
 
-            sendCommand(botCommands);
+            sendCommand(botCommands)
         }
     }).catch(function (e) {
         console.log(e)
@@ -201,22 +189,20 @@ function handleTextFromSpeech(speechText) {
 
 } // function handleTextFromSpeech(speechText) {
 
-/*
 function sayAndAnimate(textToSpeak) {
     // Ask the speech module to say the response text
-    $("#VerbalRepsonse").html(textToSpeak);
-    speech.speakText(textToSpeak);
+    verbalRepsonse.innerHTML = textToSpeak
+    speakText(textToSpeak)
 
     //_animateSpeech(textToSpeak);
     // Cancel any running animations before starting a new one
-    _doneSpeaking();
+    _doneSpeaking()
     // How?
 
     // (just calculate using the word count for now)
-    var wordList = textToSpeak.split(" ");
-    _flashEyes((wordList.length * 2), 0);
+    var wordList = textToSpeak.split(" ")
+    _flashEyes((wordList.length * 2), 0)
 }
-*/
 
 /*
 function _executeBotCommands(cmdStr) {
@@ -260,30 +246,28 @@ function _executeBotCommands(cmdStr) {
 } // function _executeBotCommands(cmdStr) {
 */
 
-/*
 var eyesON = false;
 function _flashEyes(totalSegments, i) {
     if (eyesON) {
-        $BotImage.attr("src", botImgEyesOFF);
+        botImage.src = botImgEyesOFF
         eyesON = false;
     } else {
-        $BotImage.attr("src", botImgEyesON);
+        botImage.src = botImgEyesON
         eyesON = true;
     }
     // future - get smarter and make 150 the length of each word
     if (i < totalSegments-1) {
         setTimeout(_flashEyes, 150, totalSegments, i + 1)
     } else {
-        $BotImage.attr("src", botImgEyesOFF);
+        botImage.src = botImgEyesOFF
         eyesON = false;
     }
 }
 
 function _doneSpeaking() {
-    $BotImage.attr("src", botImgEyesOFF);
-    eyesON = false;
-    speaking = false;
-    clearTimeout(_doneSpeaking);
-    clearTimeout(_flashEyes);
+    botImage.src =  botImgEyesOFF
+    eyesON = false
+    speaking = false
+    clearTimeout(_doneSpeaking)
+    clearTimeout(_flashEyes)
 }
-*/

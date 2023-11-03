@@ -17,54 +17,57 @@
  *                  (when still on it seems to disrupt the speech at the
  *                  beginning - they seem to interfere with each other)
  * 2021-01-25 JJK   Implementing JokeBot
+ * 2023-11-04 JJK   Converting to ESM and getting rid of JQuery
  *============================================================================*/
-var speech = (function () {
-    'use strict';  // Force declaration of variables before use (among other things)
-    //=================================================================================================================
-    // Private variables for the Module
-    var speechSynth = window.speechSynthesis;
-    var recognition = new webkitSpeechRecognition();
-    if (!('webkitSpeechRecognition' in window)) {
-        console.log("webkitSpeechRecognition not supported in this browser");
-    }
-    //if (window.hasOwnProperty('webkitSpeechRecognition')) {
-    const two_line = /\n\n/g;
-    const one_line = /\n/g;
-    const first_char = /\S/;
-    var recognizing = false;
-    var ignore_onend;
-    var speaking = false;
 
-    //=================================================================================================================
-    // Variables cached from the DOM
-    var $document = $(document);
-    var $SpeechToTextButton = $document.find("#SpeechToTextButton");
-    var $ContinuousListening = $document.find("#ContinuousListening");
-    var $STTResultsSpan = $document.find("#STTResultsSpan");
+import {handleTextFromSpeech} from './bot.js'
 
-    //=================================================================================================================
-    // Bind events
-    $SpeechToTextButton.click(_ToggleSpeechToText);
+//=================================================================================================================
+// Private variables for the Module
+var speechSynth = window.speechSynthesis;
+var recognition = new webkitSpeechRecognition();
+if (!('webkitSpeechRecognition' in window)) {
+    console.log("webkitSpeechRecognition not supported in this browser");
+}
+//if (window.hasOwnProperty('webkitSpeechRecognition')) {
+const two_line = /\n\n/g;
+const one_line = /\n/g;
+const first_char = /\S/;
+var recognizing = false;
+var ignore_onend;
+var speaking = false;
 
-    recognition.lang = 'en-US';
-    //recognition.continuous = true;
-    recognition.continuous = false;
-    //recognition.interimResults = true;
-    recognition.interimResults = false;
+//=================================================================================================================
+// Variables cached from the DOM
+
+var continuousListening = document.getElementById("ContinuousListening")
+//sTTResultsSpan = document.getElementById("STTResultsSpan")
+var sTTButtonImage = document.getElementById("STTButtonImage")
+
+document.getElementById("SpeechToTextButton").addEventListener("click", function (event) {
+    _ToggleSpeechToText()
+})
+
+
+    recognition.lang = 'en-US'
+    //recognition.continuous = true
+    recognition.continuous = false
+    //recognition.interimResults = true
+    recognition.interimResults = false
 
     recognition.onstart = function () {
         recognizing = true;
-        STTButtonImage.src = 'Media/images/mic-animate.gif';
-    };
+        sTTButtonImage.src = 'Media/images/mic-animate.gif';
+    }
 
     recognition.onerror = function (event) {
         if (event.error == 'no-speech') {
-            STTButtonImage.src = 'Media/images/mic.gif';
+            sTTButtonImage.src = 'Media/images/mic.gif';
             //console.log("recognition error = no-speech");
             ignore_onend = true;
         }
         if (event.error == 'audio-capture') {
-            STTButtonImage.src = 'Media/images/mic.gif';
+            sTTButtonImage.src = 'Media/images/mic.gif';
             console.log("recognition error = audio-capture no-microphone");
             ignore_onend = true;
         }
@@ -77,7 +80,7 @@ var speech = (function () {
     recognition.onend = function () {
         recognizing = false;
         // Check to restart recognizer if in continuous mode
-        if ($ContinuousListening.prop('checked') && !speaking) {
+        if (continuousListening.checked && !speaking) {
             ignore_onend = false;
             recognition.start();
             //console.log("*** recognition Re-start ***");
@@ -85,7 +88,7 @@ var speech = (function () {
         if (ignore_onend) {
             return;
         }
-        STTButtonImage.src = 'Media/images/mic.gif';
+        sTTButtonImage.src = 'Media/images/mic.gif';
     };
 
     recognition.onresult = function (event) {
@@ -103,13 +106,13 @@ var speech = (function () {
         }
         */
 
-        $STTResultsSpan.html(linebreak(final_transcript));
+        //sTTResultsSpan.innerHTML = linebreak(final_transcript)
         //if (final_transcript || interim_transcript) {
             if (final_transcript) {
                 //console.log(">>> onresult, final_transcript = " + final_transcript);
                 // *** tightly coupled to a function in main right now, but could implement
                 // *** a publish/subscribe framework to send the event
-                bot.handleTextFromSpeech(final_transcript);
+                handleTextFromSpeech(final_transcript);
             }
         //}
 
@@ -126,11 +129,11 @@ var speech = (function () {
         }
         recognition.start();
         ignore_onend = false;
-        STTButtonImage.src = 'Media/images/mic-slash.gif';
+        sTTButtonImage.src = 'Media/images/mic-slash.gif';
     }
 
 
-    function speakText(textToSpeak) {
+    export function speakText(textToSpeak) {
         //console.log(util.currTime()+", speech.speakText, text = "+textToSpeak);
 
         // Turn off the speech recognition first before text to speech
@@ -163,7 +166,7 @@ var speech = (function () {
             //console.log(util.currTime()+', Utterance has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
             speaking = false;
             // Make sure the recognition is restarted (if continuous)
-            if ($ContinuousListening.prop('checked')) {
+            if (continuousListening.checked) {
                 ignore_onend = false;
                 recognition.start();
             }
@@ -174,34 +177,23 @@ var speech = (function () {
 
     } // function speakText(textToSpeak) {
 
-    function startRecognizing(event) {
+    export function startRecognizing(event) {
         if (!recognizing) {
             recognition.start();
             ignore_onend = false;
-            STTButtonImage.src = 'Media/images/mic-slash.gif';
+            sTTButtonImage.src = 'Media/images/mic-slash.gif';
         }
     }
 
-    function stopSpeaking() {
+    export function stopSpeaking() {
         if (speaking) {
             speechSynth.cancel();
         }
     }
 
-    function stopAll() {
-        $ContinuousListening.prop('checked', false);
+    export function stopAll() {
+        continuousListening.checked = false
         recognition.abort();
         stopSpeaking();
     }
 
-
-    //=================================================================================================================
-    // This is what is exposed from this Module
-    return {
-        speakText,
-        stopSpeaking,
-        stopAll,
-        startRecognizing
-    };
-
-})(); // var speech = (function(){
