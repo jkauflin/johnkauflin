@@ -1,4 +1,4 @@
 <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "192.168.1.169,localhost"
+    Header set Access-Control-Allow-Origin "192.168.1.169"
     Header set Access-Control-Allow-Methods "GET, POST"
 </IfModule>

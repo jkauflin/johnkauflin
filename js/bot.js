@@ -27,8 +27,7 @@
  * 2021-01-25 JJK   Implementing JokeBot
  * 2021-04-13 JJK   Added logic to get userName from brain reply
  * --------------------------------------------------------------------------
- * 2023-10-28 JJK   Re-starting JohnBot development.  Just trying to send
- *                  non-cors bot commands through https html api
+ * 2023-10-28 JJK   Re-starting JohnBot development.
  *============================================================================*/
 
 var searchButton = document.getElementById("SearchButton")
