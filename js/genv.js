@@ -99,10 +99,14 @@ function _update(event) {
     cureDate.value = _addDays(harvestDate.value,14)
     productionDate.value = _addDays(cureDate.value,14)
 
+//    var daysToGerm = document.getElementById("daysToGerm")
+//var daysToBloom = document.getElementById("daysToBloom")
+
     let url = 'js/genvUpdateInfo.php';
     let paramData = {
         configDesc: configDesc.value,
         daysToBloom: daysToBloom.value,
+        daysToGerm: daysToGerm.value,
         germinationStart: germinationStart.value,
         plantingDate: plantingDate.value,
         harvestDate: harvestDate.value,

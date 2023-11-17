@@ -71,7 +71,8 @@ try {
 			"HeatInterval=?,HeatDuration=?,LightDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?,ReturnMessage=''," . 
 			"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
 		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("ssssssssssssss",$param->configDesc,$param->daysToBloom,$param->germinationStart,$param->plantingDate,
+		$stmt->bind_param("sssssssssssssss",$param->configDesc,$param->daysToBloom,$param->daysToGerm,
+			$param->germinationStart,$param->plantingDate,
 			$param->harvestDate,$param->cureDate,$param->productionDate,
 			$param->targetTemperature,$param->heatInterval,$param->heatDuration,$param->lightDuration,
 			$param->waterDuration,$param->waterInterval,$param->configCheckInterval);
