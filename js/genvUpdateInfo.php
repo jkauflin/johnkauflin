@@ -66,7 +66,7 @@ try {
 		$returnMsg = $param->requestCommand . " Request updated " . date("h:i:sa");
 
 	} else {
-		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,GerminationStart=?,PlantingDate=?," .
+		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,DaysToGerm=?,GerminationStart=?,PlantingDate=?," .
 			"HarvestDate=?,CureDate=?,ProductionDate=?,TargetTemperature=?," . 
 			"HeatInterval=?,HeatDuration=?,LightDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?,ReturnMessage=''," . 
 			"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
