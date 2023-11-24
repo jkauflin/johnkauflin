@@ -8,6 +8,7 @@
  2023-09-16 JJK  Added WaterOn request 
  2023-09-27 JJK  Added Selfie function
  2023-09-29 JJK  Added update of dates based on planting date
+ 2023-11-24 JJK  Modified for multiple image display
  *============================================================================*/
 
 var configDesc = document.getElementById("configDesc")
@@ -215,6 +216,6 @@ function _renderConfig(storeRec) {
         configCheckInterval.value = storeRec.ConfigCheckInterval
         returnMessage.value = storeRec.ReturnMessage
 
-        tempImg.src = storeRec.TempImg
+        //tempImg.src = storeRec.TempImg
     }
 }

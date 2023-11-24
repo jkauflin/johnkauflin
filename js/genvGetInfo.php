@@ -6,6 +6,7 @@ DESCRIPTION:  Get Genv info from the database
 -------------------------------------------------------------------------------
 Modification History
 2023-09-14	Initial version
+2023-11-24  Modified for multiple image display
 ================================================================================*/
 // Define a super global constant for the log file (this will be in scope for all functions)
 define("LOG_FILE", "./php.log");
@@ -67,6 +68,12 @@ try {
 	}
 	*/
 	$stmt->close();
+
+    //tempImg.src = storeRec.TempImg
+	// 11/24/2023 - maybe add a "TempImg" field back into the config table (so it get into the $rows structure)
+	// 				then do a query to get the latest image, and put the data into the field in $rows ???????????????????????
+
+
 
 	// Close the database connection
 	$conn->close();
