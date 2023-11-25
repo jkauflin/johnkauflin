@@ -8,7 +8,7 @@
  2023-09-16 JJK  Added WaterOn request 
  2023-09-27 JJK  Added Selfie function
  2023-09-29 JJK  Added update of dates based on planting date
- 2023-11-24 JJK  Modified for multiple image display
+ 2023-11-25 JJK  Modified the Selfie function to get images from the new table
  *============================================================================*/
 
 var configDesc = document.getElementById("configDesc")
@@ -39,6 +39,8 @@ var getDataButton = document.getElementById("GetDataButton")
 var updateButton = document.getElementById("UpdateButton")
 var waterButton = document.getElementById("WaterButton")
 var selfieButton = document.getElementById("SelfieButton")
+
+var selfieId = 0
 
 //=================================================================================================================
 // Bind events
@@ -168,10 +170,9 @@ function _water(event) {
 }
 
 function _selfie(event) {
-    let url = 'js/genvUpdateInfo.php';
+    let url = 'js/genvGetSelfie.php';
     let paramData = {
-        requestCommand: "Selfie",
-        requestValue: ""}
+        selfieId: selfieId}
     fetch(url, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -181,10 +182,13 @@ function _selfie(event) {
         if (!response.ok) {
             throw new Error('Response was not OK');
         }
-        return response.text();
+        return response.json();
     })
-    .then(message => {
-        updateDisplay.innerHTML = message;
+    .then(data => {
+        //console.log("ImgId = "+data.ImgId)
+        selfieId = data.ImgId - 1
+        tempImg.src = data.ImgData
+        updateDisplay.innerHTML = "Selfie TS: "+data.LastChangeTs;
     })
     .catch((err) => {
         console.error(`Error in Fetch to ${url}, ${err}`);

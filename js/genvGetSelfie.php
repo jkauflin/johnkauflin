@@ -5,7 +5,7 @@
 DESCRIPTION:  Get Genv info from the database
 -------------------------------------------------------------------------------
 Modification History
-2023-09-14	Initial version
+2023-11-25	Initial version - to get the next selfie image
 ================================================================================*/
 // Define a super global constant for the log file (this will be in scope for all functions)
 define("LOG_FILE", "./php.log");
@@ -44,6 +44,13 @@ try {
         throw new Exception('User does not have Admin permissions', 500);
     }
 
+	// Get the parameters sent as a JSON structure
+	header("Content-Type: application/json; charset=UTF-8");
+	// Get JSON as a string
+	$json_str = file_get_contents('php://input');
+	// Decode the string to get a JSON object
+	$param = json_decode($json_str);
+	
 	// Get the database connection
 	$conn = getConn($dbHost, $dbUser, $dbPassword, $dbName);
 
@@ -52,7 +59,18 @@ try {
 	//-----------------------------------------------------------------------------------
 	$sql = "SELECT * FROM genvMonitorConfig WHERE ConfigId = 1";
 	$stmt = $conn->prepare($sql)  or die($mysqli->error);
+
+	if ($param->selfieId > 0) {
+		$sql = "SELECT * FROM genvMonitorImg WHERE ImgId = ? ORDER BY ImgId DESC LIMIT 1; ";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param("i",$param->selfieId);
+	} else {
+		$sql = "SELECT * FROM genvMonitorImg ORDER BY ImgId DESC LIMIT 1; ";
+		$stmt = $conn->prepare($sql);
+	}
+
 	$stmt->execute();
+
 	$result = $stmt->get_result();
 	$row = $result->fetch_assoc();
 	/*
@@ -67,7 +85,7 @@ try {
 	}
 	*/
 	$stmt->close();
-	
+
 	// Close the database connection
 	$conn->close();
 	$conn = null;
