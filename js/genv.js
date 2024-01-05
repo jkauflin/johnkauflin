@@ -32,22 +32,36 @@ var waterInterval = document.getElementById("waterInterval")
 var waterDuration = document.getElementById("waterDuration")
 var configCheckInterval = document.getElementById("configCheckInterval")
 var returnMessage = document.getElementById("returnMessage")
-var tempImg = document.getElementById("SelfieImg")
+var imgDisplay = document.getElementById("ImgDisplay")
 var updateDisplay = document.getElementById("UpdateDisplay")
+var frameIntervalInput = document.getElementById("frameIntervalInput")
 
 var getDataButton = document.getElementById("GetDataButton")
 var updateButton = document.getElementById("UpdateButton")
 var waterButton = document.getElementById("WaterButton")
-var selfieButton = document.getElementById("SelfieButton")
+var GetImagesButton = document.getElementById("GetImagesButton")
+var ImgBackwardButton = document.getElementById("ImgBackwardButton")
+var ImgPlayButton = document.getElementById("ImgPlayButton")
+var ImgStopButton = document.getElementById("ImgStopButton")
+var ImgForwardButton = document.getElementById("ImgForwardButton")
 
-var selfieId = 0
+var currImg = 0
+var imgArray = []
+var frameIntervalMs = 70
+frameIntervalInput.value = frameIntervalMs
+var stopImagePlay = false
 
 //=================================================================================================================
 // Bind events
 getDataButton.addEventListener("click", _lookup);
 updateButton.addEventListener("click", _update);
 waterButton.addEventListener("click", _water);
-selfieButton.addEventListener("click", _selfie);
+GetImagesButton.addEventListener("click", _getImages);
+ImgBackwardButton.addEventListener("click", _backwardImages);
+ImgPlayButton.addEventListener("click", _playImages);
+ImgStopButton.addEventListener("click", _stopImages);
+ImgForwardButton.addEventListener("click", _forwardImages);
+
 
 var jjkloginEventElement = document.getElementById("jjkloginEventElement")
 jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
@@ -55,7 +69,11 @@ jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
         getDataButton.disabled = false
         updateButton.disabled = false
         waterButton.disabled = false
-        selfieButton.disabled = false
+        GetImagesButton.disabled = false
+        ImgBackwardButton.disabled = false
+        ImgPlayButton.disabled = false
+        ImgStopButton.disabled = false
+        ImgForwardButton.disabled = false
     }
 })
 
@@ -169,10 +187,16 @@ function _water(event) {
     });
 }
 
-function _selfie(event) {
+function _getImages(event) {
+    updateDisplay.innerHTML = "Getting images..."
+
+    // # of images to get (100)
+    // start date
+
     let url = 'js/genvGetSelfie.php';
     let paramData = {
-        selfieId: selfieId}
+        frameIntervalMs: frameIntervalMs
+    }
     fetch(url, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -185,16 +209,74 @@ function _selfie(event) {
         return response.json();
     })
     .then(data => {
-        //console.log("ImgId = "+data.ImgId)
-        selfieId = data.ImgId - 1
-        tempImg.src = data.ImgData
-        updateDisplay.innerHTML = "Selfie TS: "+data.LastChangeTs;
+        //console.log("Got the images")
+        imgArray = data
+        currImg = 0
+        displayImage()
     })
     .catch((err) => {
-        console.error(`Error in Fetch to ${url}, ${err}`);
-        updateDisplay.innerHTML = "Fetch data FAILED - check log";
-    });
+        console.error(`Error in Fetch to ${url}, ${err}`)
+        updateDisplay.innerHTML = "Fetch data FAILED - check log"
+    })
 }
+
+function displayImage() {
+    // {imgId: 1221, lastChangeTs: '2024-01-04 00:56:06', imgData: '
+    updateDisplay.innerHTML = "ImgTS: "+imgArray[currImg].lastChangeTs+" ("+imgArray[currImg].imgId+")"
+    imgDisplay.src = imgArray[currImg].imgData
+}
+
+function loopImages() {
+    displayImage()
+    if (currImg < imgArray.length-1 && !stopImagePlay) {
+        currImg++
+        setTimeout(loopImages,frameIntervalMs)
+    }
+}
+
+function _playImages() {
+    if (frameIntervalInput != null) {
+        if (frameIntervalInput.value > 0) {
+            frameIntervalMs = frameIntervalInput.value
+        }
+    }
+
+    currImg = 0
+    stopImagePlay = false
+    loopImages()
+}
+
+function _stopImages() {
+    if (stopImagePlay) {
+        // If already stopped, go to the beginning
+        currImg = 0
+        displayImage()
+    } else {
+        stopImagePlay = true
+    }
+}
+
+function _backwardImages() {
+    if (currImg > 0) {
+        currImg--
+        displayImage()
+    } else if (currImg == 0) {
+        currImg = imgArray.length-1
+        displayImage()
+    }
+}
+
+function _forwardImages() {
+    if (currImg < imgArray.length-1) {
+        currImg++
+        displayImage()
+    } else if (currImg == imgArray.length-1) {
+        currImg = 0
+        displayImage()
+    }
+}
+
+
 
 function _renderConfig(storeRec) {
     if (storeRec != null) {
@@ -202,10 +284,10 @@ function _renderConfig(storeRec) {
         daysToGerm.value = storeRec.DaysToGerm
         daysToBloom.value = storeRec.DaysToBloom
         germinationStart.value = storeRec.GerminationStart
-        plantingDate.value = storeRec.PlantingDate
         harvestDate.value = storeRec.HarvestDate
         cureDate.value = storeRec.CureDate
         productionDate.value = storeRec.ProductionDate
+        plantingDate.value = storeRec.PlantingDate
         targetTemperature.value = storeRec.TargetTemperature
         currTemperature.value = storeRec.CurrTemperature
         //document.getElementById("airInterval").value = storeRec.AirInterval
@@ -219,7 +301,5 @@ function _renderConfig(storeRec) {
         waterDuration.value = storeRec.WaterDuration
         configCheckInterval.value = storeRec.ConfigCheckInterval
         returnMessage.value = storeRec.ReturnMessage
-
-        //tempImg.src = storeRec.TempImg
     }
 }

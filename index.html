@@ -365,7 +365,9 @@ and being part of a wonderful music community
                         <input id="waterSeconds" type="number" class="form-control">
                         <label for="waterSeconds">Water secs</label>
                     </div>
-                    <button id="WaterButton" type="button" class="btn btn-warning m-2" disabled>Water</button>
+                    <button id="WaterButton" type="button" class="btn btn-warning m-2" disabled>
+                        <i class="fa fa-tint fa-2x"></i>
+                    </button>
                 </div>
             </div><!-- end of row -->
 
@@ -376,16 +378,8 @@ and being part of a wonderful music community
                         <label for="configDesc">Description</label>
                     </div>
                     <div class="form-floating m-1">
-                        <input id="germinationStart" type="date" class="form-control">
-                        <label for="germinationStart">Germination start</label>
-                    </div>
-                    <div class="form-floating m-1">
                         <input id="plantingDate" type="date" class="form-control">
                         <label for="plantingDate">Planting date</label>
-                    </div>
-                    <div class="form-floating m-1">
-                        <input id="harvestDate" type="date" class="form-control" disabled>
-                        <label for="harvestDate">Harvest start</label>
                     </div>
                     <div class="form-floating m-1">
                         <input id="returnMessage" type="text" class="form-control">
@@ -394,12 +388,51 @@ and being part of a wonderful music community
                 </div>
                 <div class="col p-0">
                     <div class="form-floating m-1">
-                        <input id="daysToBloom" type="number" class="form-control">
-                        <label for="daysToBloom">Days to bloom</label>
+                        <input id="frameIntervalInput" type="number" class="form-control">
+                        <label for="frameIntervalInput">Frame Interval ms</label>
+                    </div>
+                    <div class="form-floating m-0">
+                        <button id="GetImagesButton" type="button" class="btn my-2" disabled>
+                            <i class="fa fa-picture-o fa-2x"></i>
+                        </button>
+                        <button id="ImgBackwardButton" type="button" class="btn my-2" disabled>
+                            <i class="fa fa-step-backward"></i>
+                        </button>
+                        <button id="ImgPlayButton" type="button" class="btn my-2" disabled>
+                            <i class="fa fa-play"></i>
+                        </button>
+                        <button id="ImgStopButton" type="button" class="btn my-2" disabled>
+                            <i class="fa fa-stop"></i>
+                        </button>
+                        <button id="ImgForwardButton" type="button" class="btn my-2" disabled>
+                            <i class="fa fa-step-forward"></i>
+                        </button>
+                    </div>
+                    <div id="UpdateDisplay" class="my-2 mx-1"></div>
+                </div>
+            </div><!-- end of row -->
+
+            <img id="ImgDisplay" class="img-fluid rounded" width="75%" src=""/>
+
+            <div class="row my-2">
+                <div class="col p-0">
+                    <div class="form-floating m-1">
+                        <input id="germinationStart" type="date" class="form-control">
+                        <label for="germinationStart">Germination start</label>
                     </div>
                     <div class="form-floating m-1">
                         <input id="daysToGerm" type="text" class="form-control">
                         <label for="daysToGerm">Days to germinate</label>
+                    </div>
+                    <div class="form-floating m-1">
+                        <input id="harvestDate" type="date" class="form-control" disabled>
+                        <label for="harvestDate">Harvest start</label>
+                    </div>
+                </div>
+                <div class="col p-0">
+                    <div class="form-floating m-1">
+                        <input id="daysToBloom" type="number" class="form-control">
+                        <label for="daysToBloom">Days to bloom</label>
                     </div>
                     <div class="form-floating m-1">
                         <input id="cureDate" type="date" class="form-control" disabled>
@@ -409,16 +442,9 @@ and being part of a wonderful music community
                         <input id="productionDate" type="date" class="form-control" disabled>
                         <label for="productionDate">Production date</label>
                     </div>
-                    <div class="form-floating m-1">
-                        <button id="SelfieButton" type="button" class="btn btn-info m-2" disabled>Selfie</button>
-                    </div>
                 </div>
             </div><!-- end of row -->
         </form>
-
-        <div id="UpdateDisplay" class="m-2"></div>
-        <img id="SelfieImg" class="img-fluid rounded" src=""/>
-
     </div><!-- end of Genv tab -->
 
 

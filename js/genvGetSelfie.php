@@ -59,31 +59,43 @@ try {
 	//-----------------------------------------------------------------------------------
 	$sql = "SELECT * FROM genvMonitorConfig WHERE ConfigId = 1";
 	$stmt = $conn->prepare($sql)  or die($mysqli->error);
-
+	/*
 	if ($param->selfieId > 0) {
-		$sql = "SELECT * FROM genvMonitorImg WHERE ImgId = ? ORDER BY ImgId DESC LIMIT 1; ";
+		//$sql = "SELECT * FROM genvMonitorImg WHERE ImgId = ? ORDER BY ImgId DESC LIMIT 1; ";
+		$sql = "SELECT * FROM genvMonitorImg ORDER BY ImgId DESC LIMIT 300; ";
 		$stmt = $conn->prepare($sql);
 		$stmt->bind_param("i",$param->selfieId);
 	} else {
-		$sql = "SELECT * FROM genvMonitorImg ORDER BY ImgId DESC LIMIT 1; ";
+		$sql = "SELECT * FROM genvMonitorImg ORDER BY ImgId DESC LIMIT 300; ";
 		$stmt = $conn->prepare($sql);
 	}
+	*/
+	$sql = "SELECT * FROM genvMonitorImg ORDER BY ImgId DESC LIMIT 300; ";
+	$stmt = $conn->prepare($sql);
 
 	$stmt->execute();
 
+
+	class ImgRec {
+		public $imgId;
+		public $lastChangeTs;
+		public $imgData;
+	}
+
+	$outputArray = array();
+
+
 	$result = $stmt->get_result();
-	$row = $result->fetch_assoc();
-	/*
+	//$row = $result->fetch_assoc();
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
-			$albumRec = new AlbumRec();
-			$albumRec->albumKey =$row["AlbumKey"];
-			$albumRec->albumName = $row["AlbumName"];
-			$albumRec->albumDesc = $row["AlbumDesc"];
-			array_push($mediaInfo->albumList,$albumRec);
+			$imgRec = new ImgRec();
+			$imgRec->imgId =$row["ImgId"];
+			$imgRec->lastChangeTs =$row["LastChangeTs"];
+			$imgRec->imgData =$row["ImgData"];
+			array_push($outputArray,$imgRec);
 		}
 	}
-	*/
 	$stmt->close();
 
 	// Close the database connection
@@ -100,5 +112,6 @@ catch (Exception $e) {
 	}
 }
 
-echo json_encode($row);
+//echo json_encode($row);
+echo json_encode($outputArray);
 ?>
