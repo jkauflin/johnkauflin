@@ -51,6 +51,14 @@ var frameIntervalMs = 70
 frameIntervalInput.value = frameIntervalMs
 var stopImagePlay = false
 
+/* >>>>> can't set the width to a percentage in js, only pixels
+if (window.innerHeight < window.innerWidth){
+    imgDisplay = '70%'
+} else {
+    imgDisplay.width = '90%'
+}
+*/
+
 //=================================================================================================================
 // Bind events
 getDataButton.addEventListener("click", _lookup);
@@ -76,6 +84,7 @@ jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
         ImgForwardButton.disabled = false
     }
 })
+
 
 //=================================================================================================================
 // Module methods
