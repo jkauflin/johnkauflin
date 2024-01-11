@@ -70,7 +70,7 @@ try {
 		$stmt = $conn->prepare($sql);
 	}
 	*/
-	$sql = "SELECT * FROM genvMonitorImg ORDER BY ImgId DESC LIMIT 300; ";
+	$sql = "SELECT * FROM genvMonitorImg ORDER BY ImgId DESC LIMIT 100; ";
 	$stmt = $conn->prepare($sql);
 
 	$stmt->execute();
