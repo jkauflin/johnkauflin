@@ -55,12 +55,13 @@ try {
 	//error_log(date('[Y-m-d H:i] '). '$sql = ' . $sql . PHP_EOL, 3, LOG_FILE);
 	$conn = getConn($dbHost, $dbUser, $dbPassword, $dbName);
 
+	$currTs = date('Y-m-d H:i:s');
 	$returnMsg = "";
 	if ($param->requestCommand != "") {
 		$sql = "UPDATE genvMonitorConfig SET RequestCommand=?,RequestValue=?," .
-				"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
+				"LastUpdateTs=? WHERE ConfigId = 1 ";
 		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("ss",$param->requestCommand,$param->requestValue);
+		$stmt->bind_param("sss",$param->requestCommand,$param->requestValue,$currTs);
 		$stmt->execute();
 		$stmt->close();
 		$returnMsg = $param->requestCommand . " Request updated " . date("h:i:sa");
@@ -68,14 +69,14 @@ try {
 	} else {
 		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,DaysToGerm=?,GerminationStart=?,PlantingDate=?," .
 			"HarvestDate=?,CureDate=?,ProductionDate=?,TargetTemperature=?," . 
-			"HeatInterval=?,HeatDuration=?,LightDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?,ReturnMessage=''," . 
-			"LastUpdateTs=CURRENT_TIMESTAMP WHERE ConfigId = 1 ";
+			"HeatInterval=?,HeatDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?,ReturnMessage=''," . 
+			"LastUpdateTs=? WHERE ConfigId = 1 ";
 		$stmt = $conn->prepare($sql);
 		$stmt->bind_param("sssssssssssssss",$param->configDesc,$param->daysToBloom,$param->daysToGerm,
 			$param->germinationStart,$param->plantingDate,
 			$param->harvestDate,$param->cureDate,$param->productionDate,
-			$param->targetTemperature,$param->heatInterval,$param->heatDuration,$param->lightDuration,
-			$param->waterDuration,$param->waterInterval,$param->configCheckInterval);
+			$param->targetTemperature,$param->heatInterval,$param->heatDuration,
+			$param->waterDuration,$param->waterInterval,$param->configCheckInterval,$currTs);
 		$stmt->execute();
 		$stmt->close();
 		$returnMsg = date("h:i:sa");

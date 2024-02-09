@@ -9,36 +9,43 @@
  2023-09-27 JJK  Added Selfie function
  2023-09-29 JJK  Added update of dates based on planting date
  2023-11-25 JJK  Modified the Selfie function to get images from the new table
+ 2024-02-09 JJK  Updated for display changes
  *============================================================================*/
 
-var configDesc = document.getElementById("configDesc")
-var daysToGerm = document.getElementById("daysToGerm")
-var daysToBloom = document.getElementById("daysToBloom")
-var germinationStart = document.getElementById("germinationStart")
-var plantingDate = document.getElementById("plantingDate")
-var harvestDate = document.getElementById("harvestDate")
-var cureDate = document.getElementById("cureDate")
-var productionDate = document.getElementById("productionDate")
-var targetTemperature = document.getElementById("targetTemperature")
-var currTemperature = document.getElementById("currTemperature")
-//vardocument.getElementById("airInterval").value = storeRec.AirInterval;
-//vardocument.getElementById("airDuration").value = storeRec.AirDuration;
-var heatInterval = document.getElementById("heatInterval")
-var heatDuration = document.getElementById("heatDuration")
-//var document.getElementById("heatDurationMin").value = storeRec.HeatDurationMin;
-//var document.getElementById("heatDurationMax").value = storeRec.HeatDurationMax;
-var lightDuration =  document.getElementById("lightDuration")
-var waterInterval = document.getElementById("waterInterval")
-var waterDuration = document.getElementById("waterDuration")
-var configCheckInterval = document.getElementById("configCheckInterval")
-var returnMessage = document.getElementById("returnMessage")
-var imgDisplay = document.getElementById("ImgDisplay")
-var updateDisplay = document.getElementById("UpdateDisplay")
-var frameIntervalInput = document.getElementById("frameIntervalInput")
+ var configDesc = document.getElementById("configDesc")
+ var daysToGerm = document.getElementById("daysToGerm")
+ var daysToBloom = document.getElementById("daysToBloom")
+ var germinationStart = document.getElementById("germinationStart")
+ var plantingDate = document.getElementById("plantingDate")
+ var harvestDate = document.getElementById("harvestDate")
+ var cureDate = document.getElementById("cureDate")
+ var productionDate = document.getElementById("productionDate")
+ var targetTemperature = document.getElementById("targetTemperature")
+ var currTemperature = document.getElementById("currTemperature")
+ //var airInterval = document.getElementById("airInterval")
+ //var airDuration = document.getElementById("airDuration")
+ var heatInterval = document.getElementById("heatInterval")
+ var heatDuration = document.getElementById("heatDuration")
+ //var lightDuration =  document.getElementById("lightDuration")
+ var waterInterval = document.getElementById("waterInterval")
+ var waterDuration = document.getElementById("waterDuration")
+ var lastWaterTs = document.getElementById("lastWaterTs")
+ var lastWaterSecs = document.getElementById("lastWaterSecs")
+ var configCheckInterval = document.getElementById("configCheckInterval")
 
-var getDataButton = document.getElementById("GetDataButton")
-var updateButton = document.getElementById("UpdateButton")
-var waterButton = document.getElementById("WaterButton")
+ var lastUpdateTs = document.getElementById("lastUpdateTs")
+ var updateDisplay = document.getElementById("UpdateDisplay")
+ var imgDisplay = document.getElementById("ImgDisplay")
+ var returnMessage = document.getElementById("returnMessage")
+
+ var getDataButton = document.getElementById("GetDataButton")
+ var updateButton = document.getElementById("UpdateButton")
+ var waterButton = document.getElementById("WaterButton")
+ //var GetSelfieButton = document.getElementById("GetSelfieButton")
+
+var returnMessage = document.getElementById("returnMessage")
+//var frameIntervalInput = document.getElementById("frameIntervalInput")
+
 var GetImagesButton = document.getElementById("GetImagesButton")
 var ImgBackwardButton = document.getElementById("ImgBackwardButton")
 var ImgPlayButton = document.getElementById("ImgPlayButton")
@@ -48,16 +55,9 @@ var ImgForwardButton = document.getElementById("ImgForwardButton")
 var currImg = 0
 var imgArray = []
 var frameIntervalMs = 70
-frameIntervalInput.value = frameIntervalMs
+//frameIntervalInput.value = frameIntervalMs
 var stopImagePlay = false
 
-/* >>>>> can't set the width to a percentage in js, only pixels
-if (window.innerHeight < window.innerWidth){
-    imgDisplay = '70%'
-} else {
-    imgDisplay.width = '90%'
-}
-*/
 
 //=================================================================================================================
 // Bind events
@@ -65,11 +65,10 @@ getDataButton.addEventListener("click", _lookup);
 updateButton.addEventListener("click", _update);
 waterButton.addEventListener("click", _water);
 GetImagesButton.addEventListener("click", _getImages);
-ImgBackwardButton.addEventListener("click", _backwardImages);
+//ImgBackwardButton.addEventListener("click", _backwardImages);
 ImgPlayButton.addEventListener("click", _playImages);
-ImgStopButton.addEventListener("click", _stopImages);
+//ImgStopButton.addEventListener("click", _stopImages);
 ImgForwardButton.addEventListener("click", _forwardImages);
-
 
 var jjkloginEventElement = document.getElementById("jjkloginEventElement")
 jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
@@ -78,9 +77,9 @@ jjkloginEventElement.addEventListener('userJJKLoginAuth', function (event) {
         updateButton.disabled = false
         waterButton.disabled = false
         GetImagesButton.disabled = false
-        ImgBackwardButton.disabled = false
+        //ImgBackwardButton.disabled = false
         ImgPlayButton.disabled = false
-        ImgStopButton.disabled = false
+        //ImgStopButton.disabled = false
         ImgForwardButton.disabled = false
     }
 })
@@ -99,8 +98,6 @@ function _lookup(event) {
     })
     .then(data => {
         _renderConfig(data);
-        //console.log("TargetTemperature = "+data.TargetTemperature)
-        updateDisplay.innerHTML = "Last Update: "+data.LastUpdateTs;
     })
     .catch((err) => {
         console.error(`Error in Fetch to ${url}, ${err}`);
@@ -115,8 +112,8 @@ function paddy(num, padlen, padchar) {
 }
 
 function _addDays(inDate, days) {
-    var td = new Date(inDate)
-    td.setDate(td.getDate() + days)
+    let td = new Date(inDate)
+    td.setDate(td.getDate() + (parseInt(days)+1))
     let tempMonth = td.getMonth() + 1
     let tempDay = td.getDate()
     let outDate = td.getFullYear() + '-' + paddy(tempMonth,2) + '-' + paddy(tempDay,2)
@@ -125,12 +122,9 @@ function _addDays(inDate, days) {
 
 function _update(event) {
     // Update other dates based on planting date
-    harvestDate.value = _addDays(plantingDate.value,75)
+    harvestDate.value = _addDays(plantingDate.value,daysToBloom.value)
     cureDate.value = _addDays(harvestDate.value,14)
     productionDate.value = _addDays(cureDate.value,14)
-
-//    var daysToGerm = document.getElementById("daysToGerm")
-//var daysToBloom = document.getElementById("daysToBloom")
 
     let url = 'js/genvUpdateInfo.php';
     let paramData = {
@@ -145,7 +139,6 @@ function _update(event) {
         targetTemperature: targetTemperature.value,
         heatInterval: heatInterval.value,
         heatDuration: heatDuration.value,
-        lightDuration: lightDuration.value,
         waterDuration: waterDuration.value,
         waterInterval: waterInterval.value,
         configCheckInterval: configCheckInterval.value,
@@ -244,12 +237,13 @@ function loopImages() {
 }
 
 function _playImages() {
+    /*
     if (frameIntervalInput != null) {
         if (frameIntervalInput.value > 0) {
             frameIntervalMs = frameIntervalInput.value
         }
     }
-
+    */
     currImg = 0
     stopImagePlay = false
     loopImages()
@@ -285,30 +279,32 @@ function _forwardImages() {
     }
 }
 
+function _renderConfig(sr) {
+    if (sr != null) {
+        configDesc.value = sr.ConfigDesc
+        daysToGerm.value = sr.DaysToGerm
+        daysToBloom.value = sr.DaysToBloom
+        germinationStart.value = sr.GerminationStart
+        plantingDate.value = sr.PlantingDate
+        harvestDate.value = sr.HarvestDate
+        cureDate.value = sr.CureDate
+        productionDate.value = sr.ProductionDate
+        configCheckInterval.value = sr.ConfigCheckInterval
+        // sr.logMetricInterval  minutes for selfie
+        targetTemperature.value = sr.TargetTemperature
+        currTemperature.value = sr.CurrTemperature
+        //airInterval.value = sr.AirInterval
+        //airDuration.value = sr.AirDuration
+        heatInterval.value = sr.HeatInterval
+        heatDuration.value = sr.HeatDuration
+        //lightDuration.value = sr.LightDuration
+        waterInterval.value = sr.WaterInterval
+        waterDuration.value = sr.WaterDuration
 
+        lastUpdateTs.value = sr.LastUpdateTs
+        lastWaterTs.value = sr.LastWaterTs
+        lastWaterSecs.value = sr.LastWaterSecs
 
-function _renderConfig(storeRec) {
-    if (storeRec != null) {
-        configDesc.value = storeRec.ConfigDesc
-        daysToGerm.value = storeRec.DaysToGerm
-        daysToBloom.value = storeRec.DaysToBloom
-        germinationStart.value = storeRec.GerminationStart
-        harvestDate.value = storeRec.HarvestDate
-        cureDate.value = storeRec.CureDate
-        productionDate.value = storeRec.ProductionDate
-        plantingDate.value = storeRec.PlantingDate
-        targetTemperature.value = storeRec.TargetTemperature
-        currTemperature.value = storeRec.CurrTemperature
-        //document.getElementById("airInterval").value = storeRec.AirInterval
-        //document.getElementById("airDuration").value = storeRec.AirDuration
-        heatInterval.value = storeRec.HeatInterval
-        heatDuration.value = storeRec.HeatDuration
-        //document.getElementById("heatDurationMin").value = storeRec.HeatDurationMin
-        //document.getElementById("heatDurationMax").value = storeRec.HeatDurationMax
-        lightDuration.value = storeRec.LightDuration
-        waterInterval.value = storeRec.WaterInterval
-        waterDuration.value = storeRec.WaterDuration
-        configCheckInterval.value = storeRec.ConfigCheckInterval
-        returnMessage.value = storeRec.ReturnMessage
+        returnMessage.value = sr.ReturnMessage
     }
 }
