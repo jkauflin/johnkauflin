@@ -97,6 +97,7 @@ function _lookup(event) {
         return response.json();
     })
     .then(data => {
+        updateDisplay.innerHTML = ""
         _renderConfig(data);
     })
     .catch((err) => {
