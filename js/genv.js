@@ -58,6 +58,11 @@ var frameIntervalMs = 70
 //frameIntervalInput.value = frameIntervalMs
 var stopImagePlay = false
 
+var loggingSwitch = document.getElementById("loggingSwitch")
+var imagesSwitch = document.getElementById("imagesSwitch")
+loggingSwitch.checked = false;
+imagesSwitch.checked = false;
+
 
 //=================================================================================================================
 // Bind events
@@ -143,6 +148,8 @@ function _update(event) {
         waterDuration: waterDuration.value,
         waterInterval: waterInterval.value,
         configCheckInterval: configCheckInterval.value,
+        loggingOn: Number(loggingSwitch.checked),
+        selfieOn: Number(imagesSwitch.checked),
         requestCommand: ""
     }
     fetch(url, {
@@ -307,5 +314,16 @@ function _renderConfig(sr) {
         lastWaterSecs.value = sr.LastWaterSecs
 
         returnMessage.value = sr.ReturnMessage
+
+        if (sr.LoggingOn) {
+            loggingSwitch.checked = true;
+        } else {
+            loggingSwitch.checked = false;
+        }
+        if (sr.SelfieOn) {
+            imagesSwitch.checked = true;
+        } else {
+            imagesSwitch.checked = false;
+        }
     }
 }

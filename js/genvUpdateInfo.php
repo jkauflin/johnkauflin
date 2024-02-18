@@ -70,13 +70,13 @@ try {
 		$sql = "UPDATE genvMonitorConfig SET ConfigDesc=?,DaysToBloom=?,DaysToGerm=?,GerminationStart=?,PlantingDate=?," .
 			"HarvestDate=?,CureDate=?,ProductionDate=?,TargetTemperature=?," . 
 			"HeatInterval=?,HeatDuration=?,WaterDuration=?,WaterInterval=?,ConfigCheckInterval=?,ReturnMessage=''," . 
-			"LastUpdateTs=? WHERE ConfigId = 1 ";
+			"LoggingOn=?,SelfieOn=?,LastUpdateTs=? WHERE ConfigId = 1 ";
 		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("sssssssssssssss",$param->configDesc,$param->daysToBloom,$param->daysToGerm,
+		$stmt->bind_param("ssssssssssssssiis",$param->configDesc,$param->daysToBloom,$param->daysToGerm,
 			$param->germinationStart,$param->plantingDate,
 			$param->harvestDate,$param->cureDate,$param->productionDate,
 			$param->targetTemperature,$param->heatInterval,$param->heatDuration,
-			$param->waterDuration,$param->waterInterval,$param->configCheckInterval,$currTs);
+			$param->waterDuration,$param->waterInterval,$param->configCheckInterval,$param->loggingOn,$param->selfieOn,$currTs);
 		$stmt->execute();
 		$stmt->close();
 		$returnMsg = date("h:i:sa");
